@@ -1,0 +1,39 @@
+# Environments
+venv/
+env/
+*/env/
+*/venv/
+.env
+.env.*
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# SQLite database file
+db.sqlite3
+*.sqlite3
+
+# Django Static files collected by collectstatic
+staticfiles/
+
+# Media files
+mediafiles/
+media/
+
+# IDE / Editor specific files
+.idea/
+.vscode/
+.cursor/
+*.swp
+*.swo
+*.swn
+
+# OS specific files
+.DS_Store
+Thumbs.db
+
+# Cursor Rules / Memory
+*.mdc 
