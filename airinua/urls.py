@@ -7,6 +7,8 @@ urlpatterns = [
     # Додай свої URL-шляхи тут
     path('', views.index, name='index'), # Шлях для головної сторінки
     path('catalog/', views.catalog_view, name='catalog'), # Шлях для каталогу
+    path('services/', views.services_view, name='services'), # Шлях для послуг
+    path('about/', views.about_view, name='about'), # Шлях для сторінки "Про нас"
 
     # API Endpoints для AJAX
     path('api/products/filter/', views.filter_products, name='filter_products'),

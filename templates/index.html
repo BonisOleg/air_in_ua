@@ -3,6 +3,14 @@
 {% block title %}Головна - {{ block.super }}{% endblock %}
 
 {% block content %}
-<h1>Ласкаво просимо до Air In UA!</h1>
-<p>Це головна сторінка нашого сайту.</p>
+<section class="hero-section">
+    <div class="hero-option" onclick="location.href='{% url 'airinua:catalog' %}'">
+        <h2>Купити кондиціонер</h2>
+        <p>Каталог з фільтрами, брендами та BTU</p>
+    </div>
+    <div class="hero-option" onclick="location.href='{% url 'airinua:services' %}'">
+        <h2>Замовити послугу</h2>
+        <p>Монтаж, демонтаж, сервісне обслуговування</p>
+    </div>
+</section>
 {% endblock %}

@@ -6,16 +6,54 @@
 {% block content %}
 <h1>Каталог кондиціонерів</h1>
 
-<!-- Тут пізніше будуть фільтри -->
-<div class="filters-placeholder" style="margin-bottom: 20px; padding: 15px; background-color: #eee;">
-    <p>Місце для фільтрів (виробник, ціна, потужність)</p>
-</div>
+<!-- Фільтри -->
+<form id="product-filter-form"
+    style="margin-bottom: 20px; padding: 15px; background-color: #f0f0f0; border: 1px solid #ddd;">
+    <label>Виробник:</label>
+    <select name="manufacturer" class="filter-input">
+        <option value="">Усі виробники</option>
+        {% for m in manufacturers %}
+        <option value="{{ m.id }}">{{ m.name }}</option>
+        {% endfor %}
+    </select>
+
+    <label>BTU:</label>
+    <select name="btu" class="filter-input">
+        <option value="">Усі BTU</option>
+        <option value="07">07 BTU</option>
+        <option value="09">09 BTU</option>
+        <option value="12">12 BTU</option>
+        <option value="18">18 BTU</option>
+        <option value="24">24 BTU</option>
+        <option value="28">28 BTU</option>
+        <option value="36">36 BTU</option>
+    </select>
+
+    <label>Площа:</label>
+    <select name="area" class="filter-input">
+        <option value="">Усі площі</option>
+        <option value="20">до 20 м²</option>
+        <option value="25">до 25 м²</option>
+        <option value="35">до 35 м²</option>
+        <option value="50">до 50 м²</option>
+        <option value="60">до 60 м²</option>
+        <option value="80">до 80 м²</option>
+        <option value="100">до 100 м²</option>
+    </select>
+
+    <label>Ціна:</label>
+    <input type="number" name="price_min" placeholder="Від" class="filter-input" style="width: 80px;">
+    -
+    <input type="number" name="price_max" placeholder="До" class="filter-input" style="width: 80px;">
+
+    <!-- Можна додати кнопку "Скинути фільтри", якщо потрібно -->
+</form>
 
 <div id="product-list-container">
     {% for product in products %}
     {% include 'includes/product_card.html' %}
     {% empty %}
-    <p>Наразі немає доступних товарів у цій категорії.</p>
+    <p>Наразі немає доступних товарів.</p>
     {% endfor %}
 </div>
 
