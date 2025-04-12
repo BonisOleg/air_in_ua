@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Air In UA - Кондиціонери та Сервіс{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <!-- Тут можна додати інші мета-теги або посилання на шрифти, якщо потрібно -->
+</head>
+
+<body>
+
+    <header>
+        <!-- Тут буде хедер сайту (логотип, навігація) -->
+        <p>HEADER placeholder</p>
+    </header>
+
+    <main>
+        {% block content %}
+        <!-- Сюди буде вставлятись унікальний контент кожної сторінки -->
+        {% endblock %}
+    </main>
+
+    <footer>
+        <!-- Тут буде футер сайту (контакти, копірайт) -->
+        <p>FOOTER placeholder</p>
+        <button id="toggle-feedback-form" class="cta-button">Зворотній зв'язок</button>
+    </footer>
+
+    {% include 'includes/feedback_form.html' %}
+
+    <script src="{% static 'js/main.js' %}" defer></script>
+    {% block scripts %}
+    <!-- Сюди можна додавати специфічні для сторінки скрипти -->
+    {% endblock %}
+</body>
+
+</html>

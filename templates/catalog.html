@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Каталог товарів - {{ block.super }}{% endblock %}
+
+{% block content %}
+<h1>Каталог кондиціонерів</h1>
+
+<!-- Тут пізніше будуть фільтри -->
+<div class="filters-placeholder" style="margin-bottom: 20px; padding: 15px; background-color: #eee;">
+    <p>Місце для фільтрів (виробник, ціна, потужність)</p>
+</div>
+
+<div id="product-list-container">
+    {% for product in products %}
+    {% include 'includes/product_card.html' %}
+    {% empty %}
+    <p>Наразі немає доступних товарів у цій категорії.</p>
+    {% endfor %}
+</div>
+
+{% endblock %}
