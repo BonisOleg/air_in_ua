@@ -1,0 +1,9 @@
+<div id="feedback-form-container" class="form-wrapper"
+    style="display: none; border: 1px dashed blue; padding: 20px; margin-top: 20px;">
+    <h2>Залишити заявку</h2>
+    <form method="post" id="feedback-form" action="#"> <!-- Поки що заглушка в action -->
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="button">Надіслати</button>
+    </form>
+</div>

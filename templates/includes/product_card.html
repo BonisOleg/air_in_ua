@@ -1,0 +1,16 @@
+<div class="card" style="border: 1px solid #ccc; margin-bottom: 15px; padding: 10px;">
+    {% if product.image %}
+    <img src="{{ product.image.url }}" alt="{{ product.name }}"
+        style="max-width: 150px; height: auto; display: block; margin-bottom: 10px;">
+    {% else %}
+    <div
+        style="width: 150px; height: 100px; background-color: #eee; display: flex; align-items: center; justify-content: center; margin-bottom: 10px;">
+        Фото</div>
+    {% endif %}
+    <h3>{{ product.name }}</h3>
+    <p><strong>Ціна:</strong> {{ product.price }} грн</p>
+    <p><strong>Потужність:</strong> {{ product.get_btu_display }} / {{ product.get_area_coverage_display }}</p>
+    <p><strong>Виробник:</strong> {{ product.manufacturer.name }}</p>
+    <!-- Кнопка для деталей/замовлення (додамо пізніше) -->
+    <button class="button details-button" data-product-id="{{ product.id }}">Детальніше</button>
+</div>
