@@ -1,10 +1,12 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Product, Manufacturer, Service # Додаємо Service
+from .models import Product, Manufacturer, Service, FeedbackRequest # Додано FeedbackRequest
 # FeedbackForm тут більше не потрібна напряму
 from django.http import JsonResponse # Додаємо JsonResponse
 # csrf_exempt більше не потрібен
 from django.template.loader import render_to_string # Для рендерингу HTML-фрагменту
 from .forms import FeedbackForm # Імпортуємо для submit_feedback
+from django.core.mail import EmailMultiAlternatives # Замінюємо send_mail на EmailMultiAlternatives
+from django.conf import settings # Для отримання ADMIN_EMAIL (поки що немає)
 
 # Create your views here.
 def index(request):
@@ -85,16 +87,57 @@ def filter_products(request):
 def submit_feedback(request):
     """Обробляє AJAX-запит для форми зворотного зв'язку."""
     if request.method == 'POST':
-        # Використовуємо форму напряму, не передаючи її в контекст
         form = FeedbackForm(request.POST)
         if form.is_valid():
-            form.save() # Зберігаємо заявку в базу даних
+            # Отримуємо ID товару з запиту, якщо він є
+            product_id = request.POST.get('product_id')
+            product = None
+            if product_id:
+                try:
+                    product = Product.objects.get(id=product_id)
+                except Product.DoesNotExist:
+                    # Можна повернути помилку або просто проігнорувати, 
+                    # якщо ID неправильний
+                    pass 
+
+            # Зберігаємо форму, але поки не в БД
+            feedback = form.save(commit=False)
+            # Встановлюємо зв'язок з товаром
+            feedback.product = product
+            # Тепер зберігаємо в БД
+            feedback.save()
+            
+            # --- Відправка Email з HTML та Text версіями --- 
+            subject = 'Нова заявка з сайту Air In UA'
+            from_email = settings.DEFAULT_FROM_EMAIL
+            to_email = [settings.ADMIN_EMAIL]
+            
+            # Контекст для рендерингу шаблонів
+            context = {
+                'name': form.cleaned_data['name'],
+                'phone': form.cleaned_data['phone'],
+                'contact_method_display': feedback.get_contact_method_display(), # Отримуємо читабельне значення choice
+                'product': product,
+            }
+            
+            # Рендеримо текстову та HTML версії
+            text_content = render_to_string('email/feedback_notification.txt', context)
+            html_content = render_to_string('email/feedback_notification.html', context)
+            
+            try:
+                # Створюємо лист з обома версіями
+                msg = EmailMultiAlternatives(subject, text_content, from_email, to_email)
+                msg.attach_alternative(html_content, "text/html")
+                msg.send()
+            except Exception as e:
+                # Логування помилки
+                print(f"Помилка відправки email: {e}") 
+            # --- Кінець відправки Email ---
+
             return JsonResponse({'status': 'success', 'message': 'Заявку успішно відправлено!'})
         else:
-            # Повертаємо помилки валідації
-            return JsonResponse({'status': 'error', 'errors': form.errors}, status=400) # Повертаємо 400 Bad Request
-    # Якщо метод не POST
-    return JsonResponse({'status': 'invalid method', 'message': 'Будь ласка, використовуйте метод POST.'}, status=405) # Повертаємо 405 Method Not Allowed
+            return JsonResponse({'status': 'error', 'errors': form.errors}, status=400)
+    return JsonResponse({'status': 'invalid method', 'message': 'Будь ласка, використовуйте метод POST.'}, status=405)
 
 def product_detail_modal(request, product_id):
     product = get_object_or_404(Product, id=product_id)

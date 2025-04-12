@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Нова заявка з сайту Air In UA</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .container {
+            padding: 20px;
+            border: 1px solid #eee;
+            border-radius: 5px;
+            max-width: 600px;
+            margin: 20px auto;
+        }
+
+        h2 {
+            color: #0056b3;
+        }
+
+        /* Синій */
+        strong {
+            color: #555;
+        }
+
+        .product-info {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #f8f8f8;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Нова заявка з сайту Air In UA</h2>
+        <p><strong>Ім'я клієнта:</strong> {{ name }}</p>
+        <p><strong>Телефон:</strong> {{ phone }}</p>
+        <p><strong>Бажаний спосіб зв'язку:</strong> {{ contact_method_display }}</p>
+
+        {% if product %}
+        <div class="product-info">
+            <strong>Зацікавив товар:</strong><br>
+            Назва: {{ product.name }}<br>
+            ID: {{ product.id }}
+        </div>
+        {% endif %}
+        <hr>
+        <p><small>Це повідомлення надіслано автоматично з сайту Air In UA.</small></p>
+    </div>
+</body>
+
+</html>
