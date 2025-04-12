@@ -12,19 +12,22 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 import os
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Завантажуємо змінні з .env файлу
+load_dotenv(BASE_DIR / '.env', override=True) 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-j_z2qco&+p54okhpv&kkdn9eg40(#oj9($^nufe97si7sva&@s'
+SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-fallback-key-if-not-set')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DEBUG', 'True') == 'True'
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
@@ -129,7 +132,6 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
-# https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
@@ -138,7 +140,9 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = ''
-EMAIL_HOST_PASSWORD = '' # WARNING: DO NOT COMMIT THIS TO VERSION CONTROL!
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER # Відправляти з тієї ж адреси
-ADMIN_EMAIL = ' # Адреса для отримання заявок
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
+
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+ADMIN_EMAIL = os.getenv("ADMIN_EMAIL", DEFAULT_FROM_EMAIL)
+
