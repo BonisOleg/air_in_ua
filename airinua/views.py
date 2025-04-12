@@ -1,40 +1,91 @@
 from django.shortcuts import render
-from .models import Product # Імпортуємо модель Product
-from .forms import FeedbackForm # Імпортуємо форму
+from .models import Product, Manufacturer, Service # Додаємо Service
+# FeedbackForm тут більше не потрібна напряму
 from django.http import JsonResponse # Додаємо JsonResponse
-from django.views.decorators.csrf import csrf_exempt # Додаємо csrf_exempt
+# csrf_exempt більше не потрібен
+from django.template.loader import render_to_string # Для рендерингу HTML-фрагменту
+from .forms import FeedbackForm # Імпортуємо для submit_feedback
 
 # Create your views here.
 def index(request):
     """Відображає головну сторінку сайту."""
-    form = FeedbackForm() # Створюємо екземпляр форми
-    context = {
-        'form': form, # Передаємо форму в контекст
-    }
+    # Форма тепер глобально в контексті завдяки процесору
+    context = {}
     return render(request, 'index.html', context)
 
 def catalog_view(request):
     """Відображає сторінку каталогу з доступними товарами."""
     products = Product.objects.filter(is_available=True)
-    form = FeedbackForm() # Створюємо екземпляр форми
+    manufacturers = Manufacturer.objects.all() # Отримуємо виробників для фільтра
+    # Форма тепер глобально в контексті
     context = {
         'products': products,
-        'form': form, # Передаємо форму в контекст
+        'manufacturers': manufacturers, # Передаємо виробників
     }
     return render(request, 'catalog.html', context)
+
+def services_view(request):
+    """Відображає сторінку з переліком послуг."""
+    services = Service.objects.all() # Отримуємо всі послуги
+    # Форма тепер глобально в контексті
+    context = {
+        'services': services,
+    }
+    return render(request, 'services.html', context)
+
+def about_view(request):
+    """Відображає сторінку 'Про нас'."""
+    # Форма тепер глобально в контексті
+    context = {}
+    return render(request, 'about.html', context)
 
 # --- AJAX Endpoints --- 
 
 def filter_products(request):
-    """Заглушка для AJAX-фільтрації товарів."""
-    # Тут буде логіка фільтрації на основі GET-параметрів
-    # Поки що просто повертаємо статус ok
-    return JsonResponse({'status': 'ok', 'message': 'filter ready'})
+    """Фільтрує товари за GET-параметрами та повертає HTML-фрагмент."""
+    products = Product.objects.filter(is_available=True)
 
-@csrf_exempt # УВАГА: Тимчасово для тестування. Потрібно налаштувати CSRF для AJAX.
+    # Отримуємо значення фільтрів з GET-запиту
+    manufacturer_id = request.GET.get('manufacturer')
+    btu = request.GET.get('btu')
+    area = request.GET.get('area') # Зверни увагу на модельне поле - area_coverage
+    price_min = request.GET.get('price_min')
+    price_max = request.GET.get('price_max')
+
+    # Застосовуємо фільтри, якщо вони є
+    if manufacturer_id:
+        products = products.filter(manufacturer_id=manufacturer_id)
+    if btu:
+        products = products.filter(btu=btu)
+    if area:
+        # Важливо: Треба адаптувати фільтрацію площі до значень у AREA_CHOICES.
+        # Наприклад, якщо area='20', треба фільтрувати продукти, де area_coverage='20'.
+        # Якщо модельне поле area_coverage зберігає лише число, можливо знадобиться інша логіка.
+        # Припускаємо, що area_coverage зберігає значення '20', '25' і т.д.
+        products = products.filter(area_coverage=area)
+    if price_min:
+        try:
+            products = products.filter(price__gte=price_min)
+        except ValueError: # Обробка, якщо введено не число
+            pass
+    if price_max:
+        try:
+            products = products.filter(price__lte=price_max)
+        except ValueError:
+            pass
+            
+    # Рендеримо відфільтрований список товарів у HTML-рядок
+    html = render_to_string(
+        'includes/product_list.html', 
+        {'products': products}
+    )
+    # Повертаємо HTML у JSON-відповіді
+    return JsonResponse({'html': html})
+
 def submit_feedback(request):
     """Обробляє AJAX-запит для форми зворотного зв'язку."""
     if request.method == 'POST':
+        # Використовуємо форму напряму, не передаючи її в контекст
         form = FeedbackForm(request.POST)
         if form.is_valid():
             form.save() # Зберігаємо заявку в базу даних

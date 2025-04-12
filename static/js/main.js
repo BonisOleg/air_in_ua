@@ -1,12 +1,26 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const toggleBtn = document.getElementById('toggle-feedback-form');
-    const formContainer = document.getElementById('feedback-form-container');
+    // --- Обробник для плаваючої кнопки та модального вікна ---
+    const modal = document.getElementById('feedback-modal');
+    const toggle = document.getElementById('feedback-toggle-btn');
+    const closeButton = modal ? modal.querySelector('.modal-close') : null;
 
-    if (toggleBtn && formContainer) {
-        toggleBtn.addEventListener('click', () => {
-            // Перевіряємо поточний стан display і змінюємо на протилежний
-            const isHidden = formContainer.style.display === 'none' || formContainer.style.display === '';
-            formContainer.style.display = isHidden ? 'block' : 'none';
+    if (toggle && modal) {
+        toggle.addEventListener('click', function () {
+            modal.style.display = 'flex';
+        });
+    }
+
+    if (closeButton) {
+        closeButton.addEventListener('click', function () {
+            modal.style.display = 'none';
+        });
+    }
+
+    if (modal) {
+        modal.addEventListener('click', function (event) {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
         });
     }
 
@@ -26,43 +40,38 @@ document.addEventListener('DOMContentLoaded', () => {
     const feedbackForm = document.getElementById('feedback-form');
     if (feedbackForm) {
         feedbackForm.addEventListener('submit', function (e) {
-            e.preventDefault(); // Запобігаємо стандартній відправці
+            e.preventDefault();
 
             const formData = new FormData(feedbackForm);
             const submitButton = feedbackForm.querySelector('button[type="submit"]');
             const originalButtonText = submitButton.textContent;
 
-            // Показуємо, що йде відправка
             submitButton.disabled = true;
             submitButton.textContent = 'Надсилання...';
 
-            fetch('/api/feedback/submit/', { // Використовуємо наш API endpoint
+            fetch('/api/feedback/submit/', {
                 method: 'POST',
                 headers: {
-                    'X-CSRFToken': getCSRFToken(), // Додаємо CSRF-токен
-                    // 'Content-Type': 'application/json' // Не потрібно для FormData
+                    'X-CSRFToken': getCSRFToken(),
                 },
-                body: formData // Відправляємо дані форми
+                body: formData
             })
                 .then(response => {
                     if (!response.ok) {
-                        // Якщо статус відповіді не 2xx, обробляємо як помилку
                         return response.json().then(errData => {
                             throw new Error(errData.message || 'Помилка сервера');
                         });
                     }
-                    return response.json(); // Парсимо JSON-відповідь
+                    return response.json();
                 })
                 .then(data => {
                     if (data.status === 'success') {
                         alert(data.message || 'Дякуємо! Ми звʼяжемось із вами.');
-                        feedbackForm.reset(); // Очищуємо форму
-                        // Можна також сховати форму після успішної відправки
-                        if (formContainer) {
-                            formContainer.style.display = 'none';
+                        feedbackForm.reset();
+                        if (modal) {
+                            modal.style.display = 'none';
                         }
                     } else {
-                        // Показуємо помилку, якщо статус 'error'
                         alert('Помилка при відправці: \n' + JSON.stringify(data.errors || 'Перевірте дані.'));
                         console.error('Validation errors:', data.errors);
                     }
@@ -72,12 +81,50 @@ document.addEventListener('DOMContentLoaded', () => {
                     alert('Помилка при відправці: ' + error.message);
                 })
                 .finally(() => {
-                    // Повертаємо кнопку до початкового стану незалежно від результату
                     submitButton.disabled = false;
                     submitButton.textContent = originalButtonText;
                 });
         });
     }
 
-    // Тут буде інша JS логіка (напр., для AJAX)
+    // --- Логіка AJAX-фільтрації товарів ---
+    const filterForm = document.getElementById('product-filter-form');
+    const productListContainer = document.getElementById('product-list-container');
+
+    if (filterForm && productListContainer) {
+        filterForm.addEventListener('input', handleFilterChange);
+        filterForm.addEventListener('change', handleFilterChange);
+
+        function handleFilterChange() {
+            const formData = new FormData(filterForm);
+            const params = new URLSearchParams();
+
+            formData.forEach((value, key) => {
+                if (value) {
+                    params.append(key, value);
+                }
+            });
+
+            const queryString = params.toString();
+            const fetchUrl = `/api/products/filter/?${queryString}`;
+
+            productListContainer.innerHTML = '<p>Оновлення...</p>';
+
+            fetch(fetchUrl)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    productListContainer.innerHTML = data.html;
+                })
+                .catch(error => {
+                    console.error('Filter error:', error);
+                    productListContainer.innerHTML = '<p>Помилка завантаження товарів.</p>';
+                });
+        }
+    }
+
 });

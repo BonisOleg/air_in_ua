@@ -1,0 +1,435 @@
+:root {
+    --color-blue-100: #C9EBFD;
+    --color-blue-200: #99D4FA;
+    --color-blue-300: #63B4ED;
+    --color-blue-400: #358ED3;
+
+    --color-teal-100: #B2EDEB;
+    --color-teal-200: #7DDDD9;
+    --color-teal-300: #36BAB4;
+    --color-teal-400: #0A6F6A;
+
+    --color-beige-100: #FFF1CF;
+    --color-beige-200: #FFE4A5;
+    --color-beige-300: #FFD272;
+    --color-beige-400: #E9AE3B;
+
+    --color-red-100: #FFD4D4;
+    --color-red-200: #FFA6A6;
+    --color-red-300: #FF6B6B;
+    --color-red-400: #D92F2F;
+
+    --color-text: #1F2D3D;
+    --color-white: #FFFFFF;
+    --color-bg: #FDFDFD;
+    --color-shadow: rgba(0, 0, 0, 0.1);
+}
+
+/* --- Глобальні стилі --- */
+html {
+    box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: inherit;
+}
+
+body {
+    margin: 0;
+    font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: 700;
+    line-height: 1.3;
+    margin-top: 0;
+    margin-bottom: 0.5em;
+}
+
+p {
+    margin-top: 0;
+    margin-bottom: 1em;
+}
+
+a {
+    color: var(--color-blue-300);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+a:hover {
+    color: var(--color-blue-400);
+}
+
+/* --- Загальні Компоненти --- */
+.container {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.section {
+    padding: 60px 20px;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.title {
+    font-size: 32px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.card {
+    background: var(--color-white);
+    border-radius: 16px;
+    box-shadow: 0 4px 16px var(--color-shadow);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+    padding: 24px;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.button {
+    display: inline-block;
+    border-radius: 14px;
+    padding: 12px 24px;
+    background: var(--color-red-200);
+    color: var(--color-text) !important;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+    font-weight: 600;
+    text-align: center;
+}
+
+.button:hover {
+    background: var(--color-red-300);
+}
+
+.cta-button {
+    display: inline-block;
+    border-radius: 14px;
+    padding: 12px 24px;
+    background: var(--color-red-300);
+    color: var(--color-white) !important;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+    font-weight: 600;
+    text-align: center;
+}
+
+.cta-button:hover {
+    background: var(--color-red-400);
+}
+
+.input,
+select.filter-input,
+input[type="text"].filter-input,
+input[type="number"].filter-input,
+textarea.input,
+.form-field input,
+.form-field select,
+.form-field textarea {
+    width: 100%;
+    border-radius: 12px;
+    padding: 12px 16px;
+    border: 1px solid var(--color-shadow);
+    outline: none;
+    font-size: 16px;
+    font-family: inherit;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    background-color: var(--color-white);
+    color: var(--color-text);
+}
+
+.input:focus,
+select.filter-input:focus,
+input[type="text"].filter-input:focus,
+input[type="number"].filter-input:focus,
+textarea.input:focus,
+.form-field input:focus,
+.form-field select:focus,
+.form-field textarea:focus {
+    border-color: var(--color-blue-300);
+    box-shadow: 0 0 0 3px rgba(99, 180, 237, 0.2);
+}
+
+.form-field {
+    margin-bottom: 15px;
+}
+
+.form-field label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+/* --- Hero Section Styles --- */
+
+.hero-section {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    gap: 40px;
+    padding: 80px 20px;
+    flex-wrap: wrap;
+}
+
+.hero-option {
+    background: var(--color-beige-100);
+    border-radius: 16px;
+    padding: 40px;
+    width: 100%;
+    max-width: 320px;
+    text-align: center;
+    box-shadow: 0 4px 16px var(--color-shadow);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.hero-option:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 20px var(--color-shadow);
+    background: var(--color-beige-200);
+}
+
+.hero-option h2 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: var(--color-blue-400);
+}
+
+.hero-option p {
+    margin-bottom: 0;
+    color: var(--color-text);
+}
+
+@media (min-width: 768px) {
+    .hero-option {
+        width: calc(50% - 20px);
+    }
+}
+
+/* --- Services Section Styles --- */
+
+.services-section {
+    /* Тут можна додати стилі, якщо знадобиться */
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 32px;
+    margin-top: 40px;
+}
+
+.service-card img {
+    /* Можливо, будуть стилі для зображень */
+}
+
+.service-card h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.service-card p {
+    margin-bottom: 15px;
+}
+
+.service-card p:last-of-type {
+    margin-bottom: 0;
+}
+
+.service-card .button {
+    margin-top: 15px;
+}
+
+.service-card {
+    /* Можливо, будуть потрібні специфічні стилі */
+}
+
+.service-card:hover {
+    /* Окремий ховер для карток послуг */
+    background: var(--color-blue-100);
+}
+
+/* --- About Section Styles --- */
+
+.about-section {
+    max-width: 800px;
+    /* Обмеження ширини для читабельності */
+}
+
+.about-content p {
+    margin-bottom: 25px;
+    /* Збільшимо відступ між параграфами */
+    font-size: 17px;
+    /* Трохи збільшимо шрифт */
+    line-height: 1.8;
+    color: var(--color-text);
+    /* Переконаємось, що колір застосовано */
+}
+
+.about-content p:last-of-type {
+    margin-bottom: 0;
+}
+
+.about-section .title {
+    margin-bottom: 35px;
+    /* Трохи збільшимо відступ */
+}
+
+/* --- Header Styles --- */
+.site-header {
+    background: var(--color-blue-400);
+    padding: 15px 0;
+    color: var(--color-white);
+    box-shadow: 0 2px 4px var(--color-shadow);
+}
+
+.site-header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--color-white);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.logo:hover {
+    color: var(--color-red-300);
+}
+
+.nav {
+    display: flex;
+    align-items: center;
+}
+
+.nav a {
+    margin-left: 30px;
+    color: var(--color-white);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 17px;
+    transition: color 0.2s ease;
+}
+
+.nav a:hover {
+    color: var(--color-beige-400);
+}
+
+.nav a.active {
+    color: var(--color-beige-300);
+    font-weight: 700;
+}
+
+/* --- Footer Styles --- */
+.site-footer {
+    background: var(--color-beige-200);
+    text-align: center;
+    padding: 30px 20px;
+    margin-top: 60px;
+    font-size: 14px;
+    color: var(--color-text);
+}
+
+.site-footer p {
+    margin-bottom: 10px;
+}
+
+/* --- Floating Feedback Button & Modal Styles --- */
+
+.floating-feedback-button {
+    position: fixed;
+    bottom: 60px;
+    left: 40px;
+    background: var(--color-red-300);
+    color: var(--color-white);
+    border: none;
+    border-radius: 50%;
+    width: 56px;
+    height: 56px;
+    font-size: 22px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px var(--color-shadow);
+    transition: background 0.3s ease;
+    z-index: 999;
+}
+
+.floating-feedback-button:hover {
+    background: var(--color-red-400);
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 998;
+}
+
+.modal-window {
+    background: var(--color-white);
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    max-width: 500px;
+    width: 90%;
+    position: relative;
+}
+
+.modal-close {
+    margin-top: 20px;
+    background: var(--color-blue-300);
+    color: var(--color-white);
+    border: none;
+    padding: 10px 16px;
+    border-radius: 12px;
+    cursor: pointer;
+    display: block;
+    /* Щоб кнопка займала ширину і відступ працював */
+    margin-left: auto;
+    /* Вирівнюємо кнопку закриття вправо */
+    margin-right: auto;
+    /* Якщо потрібно по центру */
+}
+
+.modal-close:hover {
+    background: var(--color-blue-400);
+}

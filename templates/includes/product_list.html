@@ -1,0 +1,5 @@
+{% for product in products %}
+{% include 'includes/product_card.html' %}
+{% empty %}
+<p>На жаль, за вашими фільтрами нічого не знайдено.</p>
+{% endfor %}
