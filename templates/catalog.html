@@ -49,12 +49,23 @@
     <!-- Можна додати кнопку "Скинути фільтри", якщо потрібно -->
 </form>
 
-<div id="product-list-container">
+<!-- Оновлений контейнер для списку товарів -->
+<div id="product-list-container" class="products-grid"> <!-- Додамо клас для grid-розмітки -->
     {% for product in products %}
-    {% include 'includes/product_card.html' %}
+    <div class="product-card" data-id="{{ product.id }}">
+        {% include 'includes/product_card.html' with product=product %}
+    </div>
     {% empty %}
-    <p>Наразі немає доступних товарів.</p>
+    <p>Наразі немає доступних товарів за вашим запитом.</p>
     {% endfor %}
+</div>
+
+<!-- Модальне вікно для деталей товару -->
+<div id="product-modal" class="modal-overlay" style="display:none;">
+    <div class="modal-window" id="product-modal-content">
+        <!-- Вміст буде завантажено через AJAX -->
+        <button class="modal-close">Закрити</button>
+    </div>
 </div>
 
 {% endblock %}

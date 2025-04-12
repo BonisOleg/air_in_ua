@@ -119,6 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 })
                 .then(data => {
                     productListContainer.innerHTML = data.html;
+                    initializeProductCardClicks();
                 })
                 .catch(error => {
                     console.error('Filter error:', error);
@@ -126,5 +127,78 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
         }
     }
+
+    // --- Логіка для модального вікна деталей товару ---
+    const productModal = document.getElementById('product-modal');
+    const productModalContent = document.getElementById('product-modal-content');
+    const productModalCloseButton = productModal ? productModal.querySelector('.modal-close') : null;
+
+    function initializeProductCardClicks() {
+        const productCards = document.querySelectorAll('#product-list-container .product-card');
+        productCards.forEach(card => {
+            if (!card.dataset.clickListenerAdded) {
+                card.addEventListener('click', function () {
+                    const productId = this.dataset.id;
+                    productModalContent.innerHTML = '<p>Завантаження...</p><button class="modal-close">Закрити</button>';
+                    productModal.style.display = 'flex';
+
+                    fetch(`/api/product/${productId}/`)
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Помилка завантаження деталей товару.');
+                            }
+                            return response.text();
+                        })
+                        .then(html => {
+                            productModalContent.innerHTML = html;
+                            productModalContent.appendChild(productModalCloseButton.cloneNode(true));
+                            const newCloseButton = productModalContent.querySelector('.modal-close');
+                            if (newCloseButton) {
+                                newCloseButton.addEventListener('click', closeProductModal);
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Product detail error:', error);
+                            productModalContent.innerHTML = `<p>${error.message}</p>`;
+                            if (productModalCloseButton) {
+                                productModalContent.appendChild(productModalCloseButton.cloneNode(true));
+                                const errorCloseButton = productModalContent.querySelector('.modal-close');
+                                if (errorCloseButton) {
+                                    errorCloseButton.addEventListener('click', closeProductModal);
+                                }
+                            } else {
+                                productModalContent.innerHTML += '<button class="modal-close">Закрити</button>';
+                                const newErrorCloseButton = productModalContent.querySelector('.modal-close');
+                                if (newErrorCloseButton) {
+                                    newErrorCloseButton.addEventListener('click', closeProductModal);
+                                }
+                            }
+                        });
+                });
+                card.dataset.clickListenerAdded = 'true';
+            }
+        });
+    }
+
+    function closeProductModal() {
+        if (productModal) {
+            productModal.style.display = 'none';
+            productModalContent.innerHTML = '<button class="modal-close">Закрити</button>';
+        }
+    }
+
+    if (productModal) {
+        productModal.addEventListener('click', function (event) {
+            if (event.target === productModal) {
+                closeProductModal();
+            }
+        });
+    }
+
+    if (productModalCloseButton) {
+        productModalCloseButton.addEventListener('click', closeProductModal);
+    }
+
+    initializeProductCardClicks();
 
 });

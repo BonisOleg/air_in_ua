@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from .models import Product, Manufacturer, Service # Додаємо Service
 # FeedbackForm тут більше не потрібна напряму
 from django.http import JsonResponse # Додаємо JsonResponse
@@ -95,3 +95,7 @@ def submit_feedback(request):
             return JsonResponse({'status': 'error', 'errors': form.errors}, status=400) # Повертаємо 400 Bad Request
     # Якщо метод не POST
     return JsonResponse({'status': 'invalid method', 'message': 'Будь ласка, використовуйте метод POST.'}, status=405) # Повертаємо 405 Method Not Allowed
+
+def product_detail_modal(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+    return render(request, 'includes/product_modal_detail.html', {'product': product})

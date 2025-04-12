@@ -4,11 +4,6 @@
     --color-blue-300: #63B4ED;
     --color-blue-400: #358ED3;
 
-    --color-teal-100: #B2EDEB;
-    --color-teal-200: #7DDDD9;
-    --color-teal-300: #36BAB4;
-    --color-teal-400: #0A6F6A;
-
     --color-beige-100: #FFF1CF;
     --color-beige-200: #FFE4A5;
     --color-beige-300: #FFD272;
@@ -102,11 +97,11 @@ a:hover {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     overflow: hidden;
     padding: 24px;
-}
-
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
+    height: 100%;
 }
 
 .button {
@@ -117,10 +112,10 @@ a:hover {
     color: var(--color-text) !important;
     border: none;
     cursor: pointer;
-    transition: background-color 0.3s ease;
     text-decoration: none;
     font-weight: 600;
     text-align: center;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .button:hover {
@@ -135,14 +130,47 @@ a:hover {
     color: var(--color-white) !important;
     border: none;
     cursor: pointer;
-    transition: background-color 0.3s ease;
     text-decoration: none;
     font-weight: 600;
     text-align: center;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .cta-button:hover {
     background: var(--color-red-400);
+}
+
+.button-details,
+.button-details-alt {
+    display: inline-block;
+    border-radius: 14px;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: 600;
+    text-align: center;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    margin-top: auto;
+}
+
+.button-details {
+    background: var(--color-blue-300);
+    color: var(--color-white) !important;
+}
+
+.button-details:hover {
+    background: var(--color-red-300);
+}
+
+.button-details-alt {
+    background: var(--color-beige-300);
+    color: var(--color-text) !important;
+}
+
+.button-details-alt:hover {
+    background: var(--color-red-300);
+    color: var(--color-white) !important;
 }
 
 .input,
@@ -250,7 +278,7 @@ textarea.input:focus,
 }
 
 .service-card img {
-    /* Можливо, будуть стилі для зображень */
+    /* Стилі для зображень в картках послуг */
 }
 
 .service-card h3 {
@@ -271,7 +299,7 @@ textarea.input:focus,
 }
 
 .service-card {
-    /* Можливо, будуть потрібні специфічні стилі */
+    /* Специфічні стилі для картки послуги */
 }
 
 .service-card:hover {
@@ -412,6 +440,7 @@ textarea.input:focus,
     max-width: 500px;
     width: 90%;
     position: relative;
+    text-align: center;
 }
 
 .modal-close {
@@ -422,14 +451,80 @@ textarea.input:focus,
     padding: 10px 16px;
     border-radius: 12px;
     cursor: pointer;
-    display: block;
-    /* Щоб кнопка займала ширину і відступ працював */
-    margin-left: auto;
-    /* Вирівнюємо кнопку закриття вправо */
-    margin-right: auto;
-    /* Якщо потрібно по центру */
+    display: inline-block;
+    transition: background-color 0.3s ease;
 }
 
 .modal-close:hover {
     background: var(--color-blue-400);
+}
+
+/* --- Product Catalog & Modal Styles --- */
+
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
+    align-items: stretch;
+}
+
+.product-card {
+    cursor: pointer;
+}
+
+.product-card:hover {
+    box-shadow: 0 4px 16px var(--color-shadow);
+    transform: translateY(-5px);
+}
+
+.product-card-content {
+    margin-bottom: 15px;
+}
+
+.product-card-content h3 {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+.product-card-content .price {
+    font-weight: bold;
+    color: var(--color-blue-400);
+    margin-bottom: 10px;
+    display: block;
+}
+
+.product-card img {
+    max-width: 80%;
+    height: 150px;
+    object-fit: contain;
+    margin: 15px auto;
+    display: block;
+}
+
+.product-detail {
+    /* Стилі для деталей товару */
+}
+
+.product-detail h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: var(--color-blue-400);
+}
+
+.product-detail p {
+    margin-bottom: 12px;
+}
+
+.product-detail img {
+    max-width: 90%;
+    height: auto;
+    max-height: 300px;
+    object-fit: contain;
+    margin: 15px auto 20px auto;
+    border-radius: 12px;
+    display: block;
+}
+
+.product-detail .cta-button {
+    margin-top: 15px;
 }
