@@ -1,6 +1,10 @@
 <h2>Залишити заявку</h2>
-<form method="post" id="feedback-form" action="#"> <!-- Поки що заглушка в action -->
+<form id="feedback-form-actual" method="post" action="#" data-action-url="{% url 'airinua:submit_feedback' %}">
     {% csrf_token %}
-    {{ feedback_form.as_p }}
-    <button type="submit" class="button">Надіслати</button>
+    {{ form.as_p }}
+    {% if product %}
+    <input type="hidden" name="product_id" value="{{ product.id }}">
+    {% endif %}
+    <button type="submit" class="cta-button">Відправити заявку</button>
+    <div class="form-message" style="margin-top: 15px;"></div>
 </form>

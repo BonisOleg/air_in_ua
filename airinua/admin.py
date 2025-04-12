@@ -87,27 +87,29 @@ class ServiceAdmin(admin.ModelAdmin):
         (_("Деталі"), {'fields': ('description', 'image'), 'classes': ('collapse',)}),
     )
 
+@admin.register(FeedbackRequest, site=admin_site) # Реєструємо через декоратор для кастомної адмінки
+@admin.register(FeedbackRequest, site=admin.site) # Реєструємо через декоратор для стандартної адмінки
 class FeedbackRequestAdmin(admin.ModelAdmin):
     list_display = ('name', 'phone', 'contact_method', 'product', 'created_at')
     search_fields = ('name', 'phone')
     list_filter = ('contact_method', 'created_at', 'product')
-    readonly_fields = ('created_at', 'product', 'name', 'phone', 'contact_method')
+    # Зробимо поля тільки для читання, щоб не можна було змінити заявку
+    readonly_fields = ('created_at', 'product', 'name', 'phone', 'contact_method') 
     fieldsets = (
         (_("Інформація про клієнта"), {'fields': ('name', 'phone', 'contact_method')}),
         (_("Деталі заявки"), {'fields': ('product', 'created_at')}),
     )
 
     def has_add_permission(self, request):
-        return False
+        return False # Забороняємо створювати заявки через адмінку
 
     def has_delete_permission(self, request, obj=None):
-        return False
+        return False # Забороняємо видаляти заявки
 
 # Реєстрація моделей через кастомний сайт
 admin_site.register(Manufacturer, ManufacturerAdmin)
 admin_site.register(Product, ProductAdmin)
 admin_site.register(Service, ServiceAdmin)
-admin_site.register(FeedbackRequest, FeedbackRequestAdmin)
 
 # --- Додаткова реєстрація для стандартного admin.site --- #
 from django.contrib import admin # Переконуємось, що стандартний admin імпортовано
@@ -115,7 +117,6 @@ from django.contrib import admin # Переконуємось, що станда
 admin.site.register(Manufacturer, ManufacturerAdmin)
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Service, ServiceAdmin)
-admin.site.register(FeedbackRequest, FeedbackRequestAdmin)
 
 # Закоментовані @admin.register залишаються закоментованими
 # @admin.register(Manufacturer)

@@ -5,5 +5,9 @@
     {% if product.image %}
     <img src="{{ product.image.url }}" alt="{{ product.name }}" style="max-width:100%; border-radius:12px;">
     {% endif %}
+    <div class="feedback-form-modal-container">
+        {% include 'includes/feedback_form.html' with form=feedback_form product=product %}
+    </div>
     <button class="cta-button">Замовити</button>
+    <button class="modal-close button">Закрити</button>
 </div>

@@ -69,29 +69,18 @@ class Service(models.Model):
 
 
 class FeedbackRequest(models.Model):
-    CONTACT_CHOICES = [
-        ('telegram', 'Telegram'),
-        ('viber', 'Viber'),
-        ('call', _('Дзвінок')),
-    ]
-
-    name = models.CharField(max_length=100, verbose_name=_("Ім'я клієнта"))
-    phone = models.CharField(max_length=20, verbose_name=_("Телефон"))
-    contact_method = models.CharField(max_length=10, choices=CONTACT_CHOICES, verbose_name=_("Спосіб зв'язку"))
-    product = models.ForeignKey(
-        Product,
-        on_delete=models.SET_NULL, # Якщо товар видалять, заявка залишиться
-        null=True,
-        blank=True,
-        verbose_name=_("Товар (якщо є)")
-    )
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Дата створення"))
+    name = models.CharField("Ім'я", max_length=255)
+    phone = models.CharField("Телефон", max_length=20)
+    contact_method = models.CharField("Спосіб зв'язку", max_length=10, choices=[('telegram', 'Telegram'), ('viber', 'Viber'), ('call', 'Подзвонити')])
+    product = models.ForeignKey('Product', null=True, blank=True, on_delete=models.SET_NULL, verbose_name="Товар", related_name="feedbacks")
+    created_at = models.DateTimeField("Дата створення", auto_now_add=True)
 
     def __str__(self):
-        product_info = f" - {self.product}" if self.product else ""
-        return f"Заявка від {self.name} ({self.created_at.strftime('%Y-%m-%d %H:%M')}){product_info}"
+        if self.product:
+            return f'Заявка від {self.name} ({self.phone}) на товар "{self.product.name}"'
+        return f"Заявка від {self.name} ({self.phone})"
 
     class Meta:
-        verbose_name = _("Заявка")
-        verbose_name_plural = _("Заявки")
-        ordering = ['-created_at'] # Показувати новіші першими
+        verbose_name = "Заявка на зворотній зв'язок"
+        verbose_name_plural = "Заявки на зворотній зв'язок"
+        ordering = ['-created_at']
