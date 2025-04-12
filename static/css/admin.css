@@ -1,0 +1,390 @@
+/* --- Глобальні змінні та перевизначення --- */
+:root {
+    --ua-yellow: #FFD900;
+    --ua-blue: #0077FF;
+    --ua-bg: #F0F8FF;
+    /* AliceBlue */
+    --ua-white: #FFFFFF;
+    --ua-text: #1F2D3D;
+    --ua-text-light: #FFFFFF;
+    --ua-border: #cce5ff;
+    /* Світліший синій для кордонів */
+    --ua-hover-bg: #e6f2ff;
+    /* Дуже світлий синій для ховеру */
+
+    /* Перевизначаємо стандартні змінні адмінки Django */
+    --primary: var(--ua-blue);
+    --secondary: var(--ua-yellow);
+    --accent: var(--ua-blue);
+    --primary-fg: var(--ua-text-light);
+
+    --body-fg: var(--ua-text);
+    --body-bg: var(--ua-bg);
+    --body-quiet-color: #666;
+    --body-loud-color: var(--ua-blue);
+
+    --header-color: var(--ua-yellow);
+    --header-branding-color: var(--ua-yellow);
+    --header-bg: var(--ua-blue);
+    --header-link-color: var(--ua-yellow);
+
+    --breadcrumbs-fg: var(--ua-blue);
+    --breadcrumbs-link-fg: var(--ua-blue);
+    --breadcrumbs-bg: var(--ua-bg);
+
+    --link-fg: var(--ua-blue);
+    --link-hover-color: #0056b3;
+    --link-selected-fg: #0056b3;
+
+    --hairline-color: var(--ua-border);
+    --border-color: var(--ua-border);
+
+    --error-fg: #ba2121;
+    --message-success-bg: #dfd;
+    --message-warning-bg: #ffc;
+    --message-error-bg: #ffefef;
+
+    --darkened-bg: #f8f8f8;
+    /* Світліший сірий */
+    --selected-bg: var(--ua-hover-bg);
+    --selected-row: var(--selected-bg);
+
+    --button-fg: var(--ua-blue);
+    --button-bg: var(--ua-yellow);
+    --button-hover-bg: var(--ua-blue);
+    --default-button-fg: var(--ua-blue);
+    --default-button-bg: var(--ua-yellow);
+    --default-button-hover-bg: var(--ua-blue);
+    --close-button-bg: #888;
+    --close-button-hover-bg: #747474;
+    --delete-button-bg: #ba2121;
+    --delete-button-hover-bg: #a41515;
+
+    --module-bg: var(--ua-white);
+    --module-fg: var(--ua-text);
+    --module-accent-fg: var(--ua-text-light);
+    --module-accent-bg: var(--ua-blue);
+    --module-border-color: var(--ua-border);
+    --module-link-color: var(--ua-blue);
+    --module-selected-bg: var(--selected-bg);
+    --module-selected-fg: var(--body-fg);
+
+    /* Додаткові, які могли пропустити */
+    --object-tools-fg: var(--button-fg);
+    --object-tools-bg: var(--ua-white);
+    --object-tools-border-color: var(--border-color);
+    --object-tools-link-fg: var(--link-fg);
+    --object-tools-link-hover-color: var(--link-hover-color);
+}
+
+body {
+    background-color: var(--ua-bg) !important;
+    color: var(--ua-text) !important;
+}
+
+/* --- Загальні контейнери --- */
+#container,
+#content,
+#content-main {
+    background-color: var(--ua-bg);
+}
+
+.main>.content {
+    padding: 20px;
+    background-color: var(--ua-bg);
+}
+
+/* --- Хедер --- */
+#header {
+    background-color: var(--ua-blue) !important;
+    color: var(--ua-yellow) !important;
+}
+
+#header h1 a,
+#header #site-name a {
+    color: var(--ua-yellow) !important;
+    font-weight: bold;
+}
+
+/* Стилі для посилань користувача у хедері */
+#user-tools a:link,
+#user-tools a:visited {
+    color: var(--ua-text-light) !important;
+    /* Встановлюємо білий колір */
+    text-decoration: underline;
+    font-weight: normal;
+    /* Зробимо їх не жирними */
+}
+
+#user-tools a:hover {
+    color: var(--ua-yellow) !important;
+    /* Жовтий при ховері */
+    text-decoration: underline;
+}
+
+/* --- Хлібні крихти --- */
+.breadcrumbs {
+    background: var(--ua-bg);
+    padding: 10px 40px;
+    border: none;
+    color: var(--ua-blue);
+}
+
+.breadcrumbs a {
+    color: var(--ua-blue) !important;
+}
+
+/* --- Бічна панель --- */
+#nav-sidebar {
+    background-color: var(--module-bg);
+    border-right: 1px solid var(--border-color);
+}
+
+#nav-sidebar .module {
+    background: transparent;
+    /* Робимо прозорим, щоб бачити фон сайдбару */
+}
+
+#nav-sidebar .module table th,
+#nav-sidebar .module table td {
+    background: var(--ua-white);
+    color: var(--ua-text);
+}
+
+#nav-sidebar .module table a {
+    color: var(--ua-blue) !important;
+}
+
+/* --- Основний контент --- */
+
+/* Заголовки модулів */
+.module caption,
+.module h2 {
+    background: var(--module-accent-bg) !important;
+    color: var(--module-accent-fg) !important;
+    font-weight: 600;
+}
+
+/* Таблиці результатів */
+div.results {
+    background-color: var(--ua-white);
+}
+
+.module table {
+    background-color: var(--ua-white);
+    border: 1px solid var(--border-color);
+}
+
+.module table thead th {
+    background-color: var(--darkened-bg);
+    color: var(--body-loud-color);
+    font-weight: bold;
+    border-bottom: 2px solid var(--primary);
+}
+
+.module table tbody td,
+.module table tbody th {
+    background-color: var(--ua-white);
+    color: var(--ua-text);
+    border-bottom: 1px solid var(--border-color);
+    border-top: none;
+}
+
+.module table tbody tr:last-child td,
+.module table tbody tr:last-child th {
+    border-bottom: none;
+}
+
+.module table tbody tr:hover td,
+.module table tbody tr:hover th {
+    background-color: var(--selected-row);
+}
+
+/* Фільтри */
+#changelist-filter {
+    background-color: var(--module-bg);
+    border: 1px solid var(--border-color);
+    color: var(--ua-text);
+}
+
+#changelist-filter h2,
+#changelist-filter h3 {
+    color: var(--body-loud-color);
+    background-color: transparent;
+    border-bottom: 1px solid var(--border-color);
+}
+
+#changelist-filter a {
+    color: var(--ua-blue) !important;
+}
+
+#changelist-filter a:hover,
+#changelist-filter li.selected a {
+    color: #0056b3 !important;
+    text-decoration: underline;
+}
+
+/* Пошук */
+#changelist-search {
+    background-color: transparent;
+}
+
+#changelist-search input[type="text"] {
+    border: 1px solid var(--border-color);
+    background-color: var(--ua-white);
+    color: var(--ua-text);
+}
+
+#changelist-search input[type="submit"] {
+    background: var(--ua-blue) !important;
+    color: var(--ua-yellow) !important;
+    border: none !important;
+    border-radius: 4px;
+}
+
+/* Форми редагування/додавання */
+.aligned label {
+    color: var(--ua-text);
+}
+
+.aligned .form-row {
+    border-bottom: 1px solid var(--border-color);
+}
+
+.aligned input,
+.aligned select,
+.aligned textarea {
+    border: 1px solid var(--border-color);
+    background-color: var(--ua-white);
+    color: var(--ua-text);
+}
+
+.aligned .form-row p,
+.aligned .help {
+    color: #666;
+    /* Сірий для підказок */
+}
+
+/* Кнопки */
+.button,
+input[type=submit],
+input[type=button],
+.submit-row input {
+    /* Застосуємо базові стилі кнопок тут, якщо потрібно */
+    /* Наприклад, transition */
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.button.default,
+input[type=submit].default,
+.submit-row input.default {
+    background: var(--default-button-bg) !important;
+    color: var(--default-button-fg) !important;
+    /* Синій текст на жовтому */
+    border: none !important;
+    font-weight: bold;
+    padding: 8px 15px;
+    border-radius: 4px;
+}
+
+/* Більш специфічний селектор для ховеру кнопок збереження */
+.submit-row>input.default:hover,
+.submit-row>input[name="_save"]:hover,
+.submit-row>input[name="_addanother"]:hover,
+.submit-row>input[name="_continue"]:hover {
+    background: var(--default-button-hover-bg) !important;
+    /* Синій фон */
+    color: var(--ua-text-light) !important;
+    /* Білий текст */
+}
+
+/* Стилі для кнопки Видалити */
+a.deletelink,
+.submit-row a.deletelink {
+    display: inline-block;
+    /* Щоб виглядали як кнопки */
+    background: var(--delete-button-bg) !important;
+    /* Червоний фон */
+    color: var(--ua-text-light) !important;
+    /* Білий текст */
+    padding: 8px 15px;
+    border-radius: 4px;
+    font-weight: bold;
+    text-decoration: none;
+    border: none;
+}
+
+a.deletelink:hover,
+.submit-row a.deletelink:hover {
+    background: var(--delete-button-hover-bg) !important;
+    /* Темно-червоний фон */
+    color: var(--ua-text-light) !important;
+    /* Білий текст */
+    text-decoration: none;
+}
+
+.object-tools {
+    background-color: var(--object-tools-bg);
+    border: 1px solid var(--object-tools-border-color);
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.object-tools a.addlink {
+    background-color: var(--button-bg);
+    color: var(--button-fg) !important;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.object-tools a.addlink:hover {
+    background-color: var(--button-hover-bg);
+    color: var(--ua-text-light) !important;
+    text-decoration: none;
+}
+
+/* Посилання */
+a:link,
+a:visited {
+    color: var(--ua-blue) !important;
+}
+
+a:hover {
+    color: #0056b3 !important;
+}
+
+/* Пагінація */
+.paginator {
+    background-color: var(--darkened-bg);
+    color: var(--body-quiet-color);
+    border-top: 1px solid var(--border-color);
+}
+
+.paginator a:link,
+.paginator a:visited {
+    background-color: var(--module-bg) !important;
+}
+
+.paginator a.current {
+    background: var(--primary) !important;
+    color: var(--primary-fg) !important;
+}
+
+/* Стилі для масового додавання */
+.formset-row td {
+    padding: 8px 10px;
+    vertical-align: top;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.formset-row input,
+.formset-row select,
+.formset-row textarea {
+    width: 95%;
+}
+
+.formset-row table {
+    border: none;
+}

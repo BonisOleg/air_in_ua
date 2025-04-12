@@ -13,4 +13,5 @@ urlpatterns = [
     # API Endpoints для AJAX
     path('api/products/filter/', views.filter_products, name='filter_products'),
     path('api/feedback/submit/', views.submit_feedback, name='submit_feedback'),
+    path('api/product/<int:product_id>/', views.product_detail_modal, name='product_modal'), # Новий ендпоінт
 ]

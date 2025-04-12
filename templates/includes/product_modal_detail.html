@@ -1,0 +1,9 @@
+<div class="product-detail">
+    <h3>{{ product.name }}</h3>
+    <p>{{ product.description }}</p>
+    <p><strong>{{ product.price }} грн</strong></p>
+    {% if product.image %}
+    <img src="{{ product.image.url }}" alt="{{ product.name }}" style="max-width:100%; border-radius:12px;">
+    {% endif %}
+    <button class="cta-button">Замовити</button>
+</div>
