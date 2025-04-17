@@ -1,10 +1,11 @@
 from django.contrib import admin
 from django.urls import path
 from django.shortcuts import render, redirect
+from django import forms
 from django.forms import modelformset_factory
 from django.utils.translation import gettext_lazy as _
 
-from .models import Manufacturer, Product, Service, FeedbackRequest
+from .models import Manufacturer, Product, Service, FeedbackRequest, ProductImage
 
 # --- Кастомний Admin Site ---
 class UAAdminSite(admin.AdminSite):
@@ -23,7 +24,32 @@ class UAAdminSite(admin.AdminSite):
 
 admin_site = UAAdminSite(name='uaadmin')
 
-# --- Моделі Адмінки ---
+# --- Інлайн для зображень товару ---
+class ProductImageInline(admin.TabularInline):
+    model = ProductImage
+    extra = 1 # Показувати одне порожнє поле для додавання за замовчуванням
+    fields = ('image', 'alt_text') # Поля для редагування
+    # Якщо додали сортування, можна використати readonly_fields = ('sort_order',)
+    
+# --- Кастомна форма для масового додавання з полями галереї ---
+class ProductBulkForm(forms.ModelForm):
+    # Додаємо до 10 полів для галереї
+    gallery_image_1 = forms.ImageField(required=False, label=_("Фото галереї 1"))
+    gallery_image_2 = forms.ImageField(required=False, label=_("Фото галереї 2"))
+    gallery_image_3 = forms.ImageField(required=False, label=_("Фото галереї 3"))
+    gallery_image_4 = forms.ImageField(required=False, label=_("Фото галереї 4"))
+    gallery_image_5 = forms.ImageField(required=False, label=_("Фото галереї 5"))
+    gallery_image_6 = forms.ImageField(required=False, label=_("Фото галереї 6"))
+    gallery_image_7 = forms.ImageField(required=False, label=_("Фото галереї 7"))
+    gallery_image_8 = forms.ImageField(required=False, label=_("Фото галереї 8"))
+    gallery_image_9 = forms.ImageField(required=False, label=_("Фото галереї 9"))
+    gallery_image_10 = forms.ImageField(required=False, label=_("Фото галереї 10"))
+
+    class Meta:
+        model = Product
+        fields = ('name', 'manufacturer', 'price', 'btu', 'area_coverage', 'image', 'is_available',
+                  # Не додаємо gallery_image сюди напряму, вони йдуть окремо
+                 )
 
 class ManufacturerAdmin(admin.ModelAdmin):
     search_fields = ['name']
@@ -34,6 +60,8 @@ class ProductAdmin(admin.ModelAdmin):
     list_filter = ('manufacturer', 'btu', 'area_coverage', 'is_available')
     list_editable = ('price', 'is_available')
     change_list_template = "admin/product_changelist.html"
+    # Додаємо інлайн для зображень
+    inlines = [ProductImageInline]
     fieldsets = (
         (_("Основна інформація"), {
             'fields': ('name', 'manufacturer', 'price')
@@ -41,7 +69,7 @@ class ProductAdmin(admin.ModelAdmin):
         (_("Технічні характеристики"), {
             'fields': ('btu', 'area_coverage', 'description')
         }),
-        (_("Зображення та доступність"), {
+        (_("Головне зображення (для картки)"), { # Уточнено назву секції
             'fields': ('image', 'is_available')
         }),
     )
@@ -54,17 +82,38 @@ class ProductAdmin(admin.ModelAdmin):
         return custom_urls + urls
 
     def bulk_add_products_view(self, request):
+        # Використовуємо нашу кастомну форму
         ProductFormSet = modelformset_factory(
             Product,
-            fields=('name', 'manufacturer', 'price', 'btu', 'area_coverage', 'image', 'is_available'),
+            # fields= ProductBulkForm.Meta.fields, # Визначаємо поля в формі
+            form=ProductBulkForm, # Вказуємо кастомну форму
             extra=10
         )
 
         if request.method == 'POST':
             formset = ProductFormSet(request.POST, request.FILES, queryset=Product.objects.none())
             if formset.is_valid():
-                formset.save()
-                self.message_user(request, _("Товари успішно додано."))
+                instances = formset.save(commit=False) # Ще не зберігаємо в БД
+                saved_count = 0
+                gallery_images_added = 0
+                
+                for i, instance in enumerate(instances):
+                    # Зберігаємо основний продукт
+                    instance.save() 
+                    saved_count += 1
+                    
+                    # Обробляємо додаткові зображення галереї
+                    form = formset.forms[i] # Отримуємо конкретну форму з формсету
+                    for j in range(1, 11): 
+                        field_name = f'gallery_image_{j}'
+                        image_file = form.cleaned_data.get(field_name)
+                        if image_file:
+                            ProductImage.objects.create(product=instance, image=image_file)
+                            gallery_images_added += 1
+                            
+                if saved_count:
+                     self.message_user(request, _("%(count)d товарів успішно додано. Додано %(gallery_count)d фото в галереї.") % {'count': saved_count, 'gallery_count': gallery_images_added})
+                # formset.save() # Цей рядок більше не потрібен, бо ми зберегли вручну
                 return redirect('..')
             else:
                 self.message_user(request, _("Будь ласка, виправте помилки нижче."), level='error')
@@ -103,9 +152,6 @@ class FeedbackRequestAdmin(admin.ModelAdmin):
     def has_add_permission(self, request):
         return False # Забороняємо створювати заявки через адмінку
 
-    def has_delete_permission(self, request, obj=None):
-        return False # Забороняємо видаляти заявки
-
 # Реєстрація моделей через кастомний сайт
 admin_site.register(Manufacturer, ManufacturerAdmin)
 admin_site.register(Product, ProductAdmin)
@@ -117,9 +163,3 @@ from django.contrib import admin # Переконуємось, що станда
 admin.site.register(Manufacturer, ManufacturerAdmin)
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Service, ServiceAdmin)
-
-# Закоментовані @admin.register залишаються закоментованими
-# @admin.register(Manufacturer)
-# @admin.register(Product)
-# @admin.register(Service)
-# @admin.register(FeedbackRequest)

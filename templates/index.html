@@ -3,14 +3,18 @@
 {% block title %}Головна - {{ block.super }}{% endblock %}
 
 {% block content %}
+
+<div class="main-title-container">
+    <h1 class="main-page-title">Air in UA</h1>
+</div>
+
 <section class="hero-section">
-    <div class="hero-option" onclick="location.href='{% url 'airinua:catalog' %}'">
+    <div class="hero-option hero-option--catalog" data-url="{% url 'airinua:catalog' %}">
         <h2>Купити кондиціонер</h2>
-        <p>Каталог з фільтрами, брендами та BTU</p>
     </div>
-    <div class="hero-option" onclick="location.href='{% url 'airinua:services' %}'">
+    <div class="hero-option hero-option--services" data-url="{% url 'airinua:services' %}">
         <h2>Замовити послугу</h2>
-        <p>Монтаж, демонтаж, сервісне обслуговування</p>
     </div>
 </section>
+
 {% endblock %}

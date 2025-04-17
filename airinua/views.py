@@ -1,12 +1,18 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Product, Manufacturer, Service, FeedbackRequest # Додано FeedbackRequest
 # FeedbackForm тут більше не потрібна напряму
-from django.http import JsonResponse # Додаємо JsonResponse
+from django.http import JsonResponse, HttpResponseNotFound # Додаємо JsonResponse та HttpResponseNotFound
 # csrf_exempt більше не потрібен
 from django.template.loader import render_to_string # Для рендерингу HTML-фрагменту
 from .forms import FeedbackForm # Імпортуємо для submit_feedback
 from django.core.mail import EmailMultiAlternatives # Замінюємо send_mail на EmailMultiAlternatives
-from django.conf import settings # Для отримання ADMIN_EMAIL (поки що немає)
+from django.conf import settings # Для отримання ADMIN_EMAIL
+import logging
+# Додаємо імпорти для пагінації
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger 
+
+# Отримуємо logger
+logger = logging.getLogger(__name__)
 
 # Create your views here.
 def index(request):
@@ -16,13 +22,39 @@ def index(request):
     return render(request, 'index.html', context)
 
 def catalog_view(request):
-    """Відображає сторінку каталогу з доступними товарами."""
-    products = Product.objects.filter(is_available=True)
+    """Відображає сторінку каталогу з доступними товарами та пагінацією."""
+    # products = Product.objects.filter(is_available=True)
+    product_list = Product.objects.filter(is_available=True) # Спочатку просто фільтруємо
     manufacturers = Manufacturer.objects.all() # Отримуємо виробників для фільтра
-    # Форма тепер глобально в контексті
+    feedback_form = FeedbackForm() # Створюємо екземпляр форми
+
+    # Отримуємо параметр сортування
+    sort_by = request.GET.get('sort_by', '')
+    if sort_by == 'price_asc':
+        product_list = product_list.order_by('price')
+    elif sort_by == 'price_desc':
+        product_list = product_list.order_by('-price')
+    else:
+        # За замовчуванням сортуємо за назвою
+        product_list = product_list.order_by('name') 
+
+    # Налаштування пагінації (після сортування)
+    paginator = Paginator(product_list, 15) # 15 товарів на сторінку
+    page_number = request.GET.get('page')
+    try:
+        page_obj = paginator.get_page(page_number)
+    except PageNotAnInteger:
+        # Якщо номер сторінки не ціле число, показуємо першу сторінку
+        page_obj = paginator.get_page(1)
+    except EmptyPage:
+        # Якщо номер сторінки поза діапазоном, показуємо останню сторінку
+        page_obj = paginator.get_page(paginator.num_pages)
+    
     context = {
-        'products': products,
+        # 'products': products, # Замінюємо повний список на об'єкт сторінки
+        'page_obj': page_obj,
         'manufacturers': manufacturers, # Передаємо виробників
+        'form': feedback_form, # Додаємо форму до контексту
     }
     return render(request, 'catalog.html', context)
 
@@ -53,6 +85,7 @@ def filter_products(request):
     area = request.GET.get('area') # Зверни увагу на модельне поле - area_coverage
     price_min = request.GET.get('price_min')
     price_max = request.GET.get('price_max')
+    sort_by = request.GET.get('sort_by', '') # Отримуємо сортування
 
     # Застосовуємо фільтри, якщо вони є
     if manufacturer_id:
@@ -76,6 +109,15 @@ def filter_products(request):
         except ValueError:
             pass
             
+    # Застосовуємо сортування
+    if sort_by == 'price_asc':
+        products = products.order_by('price')
+    elif sort_by == 'price_desc':
+        products = products.order_by('-price')
+    else:
+        # За замовчуванням сортуємо за назвою для AJAX, або залиш як є, якщо фільтри вже щось відсортували
+        products = products.order_by('name')
+
     # Рендеримо відфільтрований список товарів у HTML-рядок
     html = render_to_string(
         'includes/product_list.html', 
@@ -99,12 +141,26 @@ def submit_feedback(request):
                     # Можна повернути помилку або просто проігнорувати, 
                     # якщо ID неправильний
                     pass 
+            
+            # Отримуємо ID послуги з запиту, якщо він є
+            service_id = request.POST.get('service_id')
+            service = None
+            if service_id:
+                try:
+                    service = Service.objects.get(id=service_id)
+                except Service.DoesNotExist:
+                    pass
+
+            # Отримуємо джерело запиту
+            request_source = request.POST.get('request_source')
+            is_master_call = request_source == 'master_call'
 
             # Зберігаємо форму, але поки не в БД
             feedback = form.save(commit=False)
-            # Встановлюємо зв'язок з товаром
+            # Встановлюємо зв'язок з товаром (якщо є)
             feedback.product = product
-            # Тепер зберігаємо в БД
+            # Можливо, в майбутньому додати поле service до моделі FeedbackRequest?
+            # Поки що не зберігаємо зв'язок з послугою в базі, лише в листі.
             feedback.save()
             
             # --- Відправка Email з HTML та Text версіями --- 
@@ -112,12 +168,23 @@ def submit_feedback(request):
             from_email = settings.DEFAULT_FROM_EMAIL
             to_email = [settings.ADMIN_EMAIL]
             
+            # --- Прибираємо генерацію URL зображення --- 
+            # image_url = None
+            # if product and product.image:
+            #     scheme = request.scheme
+            #     host = request.get_host()
+            #     image_url = f"{scheme}://{host}{product.image.url}"
+            # --- Кінець прибирання URL ---
+
             # Контекст для рендерингу шаблонів
             context = {
                 'name': form.cleaned_data['name'],
                 'phone': form.cleaned_data['phone'],
-                'contact_method_display': feedback.get_contact_method_display(), # Отримуємо читабельне значення choice
+                'contact_method_display': feedback.get_contact_method_display(),
                 'product': product,
+                'service': service, # Додаємо послугу до контексту
+                'is_master_call': is_master_call, # Додаємо прапорець виклику майстра
+                # 'product_image_url': image_url, # Більше не передаємо URL
             }
             
             # Рендеримо текстову та HTML версії
@@ -130,8 +197,8 @@ def submit_feedback(request):
                 msg.attach_alternative(html_content, "text/html")
                 msg.send()
             except Exception as e:
-                # Логування помилки
-                print(f"Помилка відправки email: {e}") 
+                # Логування помилки через стандартний logging
+                logger.error(f"Помилка відправки email: {e}")
             # --- Кінець відправки Email ---
 
             return JsonResponse({'status': 'success', 'message': 'Заявку успішно відправлено!'})

@@ -1,4 +1,3 @@
-<h2>Залишити заявку</h2>
 <form id="feedback-form-actual" method="post" action="#" data-action-url="{% url 'airinua:submit_feedback' %}">
     {% csrf_token %}
     {{ form.as_p }}

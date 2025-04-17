@@ -68,6 +68,22 @@ class Service(models.Model):
         ordering = ['name']
 
 
+class ProductImage(models.Model):
+    product = models.ForeignKey(Product, related_name='images', on_delete=models.CASCADE, verbose_name=_("Товар"))
+    image = models.ImageField(upload_to='products/gallery/', verbose_name=_("Зображення"))
+    alt_text = models.CharField(max_length=255, blank=True, verbose_name=_("Альтернативний текст (для SEO)"))
+    # Можна додати порядок сортування, якщо потрібно
+    # sort_order = models.PositiveIntegerField(default=0, blank=False, null=False) 
+
+    class Meta:
+        verbose_name = _("Зображення товару")
+        verbose_name_plural = _("Зображення товарів")
+        # ordering = ['sort_order'] # Якщо додали сортування
+
+    def __str__(self):
+        return f"Зображення для {self.product.name}"
+
+
 class FeedbackRequest(models.Model):
     name = models.CharField("Ім'я", max_length=255)
     phone = models.CharField("Телефон", max_length=20)

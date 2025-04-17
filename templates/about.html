@@ -4,31 +4,210 @@
 {% block title %}Про нас - {{ block.super }}{% endblock %}
 
 {% block content %}
-<section class="section about-section">
-    <h1 class="title">Про компанію Air In UA</h1>
-    <div class="about-content">
-        <p>
-            <strong>Air In UA</strong> — це не просто магазин кліматичної техніки. Це ваша команда експертів, яка
-            допоможе створити ідеальний мікроклімат у вашому домі чи офісі. Ми спеціалізуємося на продажу, професійному
-            встановленні та якісному сервісному обслуговуванні кондиціонерів по всій Україні.
-        </p>
-        <p>
-            Ми цінуємо ваш час та комфорт, тому працюємо швидко, надійно та без зайвої бюрократії. Наші фахівці
-            допоможуть підібрати оптимальну техніку саме під ваші потреби та бюджет, враховуючи особливості приміщення
-            та ваші побажання. Ми надаємо офіційну гарантію на обладнання та виконані роботи, а також завжди готові
-            проконсультувати вас на будь-якому етапі співпраці.
-        </p>
-        <p>
-            У нашому каталозі представлені десятки моделей кондиціонерів від провідних світових виробників, що пройшли
-            перевірку часом та заслужили довіру споживачів. Наші монтажні бригади складаються з досвідчених майстрів із
-            досвідом роботи понад 5 років, які використовують лише якісні матеріали та сучасне обладнання.
-        </p>
-        <p>
-            <strong>Наша місія</strong> — зробити процес вибору, покупки та встановлення кондиціонера максимально
-            простим, зрозумілим та приємним для вас. Ми — не просто продавці, ми ваш надійний партнер у створенні
-            комфорту.
-        </p>
-        <!-- Можна додати фото команди або офісу -->
+<div class="page-container about-page">
+    <div class="page-title text-center">
+        <img src="{% static 'img/logo.png' %}" alt="Air In UA Logo" class="logo-large">
+        <h1>Про компанію Air In UA</h1>
     </div>
-</section>
+
+    <!-- Продаж кліматичної техніки -->
+    <section class="content-block from-right animate-section" data-delay="100">
+        <h2>Продаж кліматичної техніки</h2>
+        <div class="block-body">
+            <div class="block-image">
+                <img src="{% static 'img/buy.png' %}" alt="Кліматична техніка">
+            </div>
+            <div class="block-text">
+                <p>У нашому каталозі представлені десятки моделей кондиціонерів від провідних світових виробників, що
+                    заслужили довіру споживачів. Ми допоможемо підібрати оптимальне рішення саме під ваші потреби та
+                    бюджет, враховуючи особливості приміщення та ваші побажання.</p>
+                <a href="{% url 'airinua:catalog' %}" class="btn-learn-more">Переглянути каталог</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Професійне встановлення -->
+    <section class="content-block from-left animate-section" data-delay="200">
+        <h2>Професійне встановлення</h2>
+        <div class="block-body">
+            <div class="block-text">
+                <p>Наші монтажні бригади складаються з досвідчених майстрів із стажем роботи понад 5 років. Вони
+                    використовують лише якісні матеріали та сучасне обладнання, гарантуючи бездоганну роботу системи.
+                </p>
+                <a href="{% url 'airinua:services' %}" class="btn-learn-more">Наші послуги</a>
+            </div>
+            <div class="block-image">
+                <img src="{% static 'img/serv.png' %}" alt="Монтаж кондиціонера">
+            </div>
+        </div>
+    </section>
+
+    <!-- Сервісне обслуговування -->
+    <section class="content-block from-right animate-section" data-delay="300">
+        <h2>Сервісне обслуговування</h2>
+        <div class="block-body">
+            <div class="block-image">
+                <img src="{% static 'img/buy.png' %}" alt="Сервісне обслуговування">
+            </div>
+            <div class="block-text">
+                <p>Регулярне обслуговування кондиціонера продовжує термін його служби та зберігає ефективність роботи.
+                    Наші фахівці проводять повну діагностику, чистку, дезінфекцію та заправку фреоном — все, щоб ваша
+                    система працювала як нова.</p>
+                <a href="{% url 'airinua:services' %}" class="btn-learn-more">Замовити обслуговування</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ремонт кліматичної техніки -->
+    <section class="content-block from-left animate-section" data-delay="400">
+        <h2>Ремонт кліматичної техніки</h2>
+        <div class="block-body">
+            <div class="block-text">
+                <p>Якщо ваш кондиціонер вийшов з ладу, не панікуйте! Наші майстри швидко діагностують проблему та
+                    проведуть якісний ремонт будь-якої складності. Ми працюємо з усіма поширеними марками та моделями
+                    кондиціонерів.</p>
+                <div class="about-cta">
+                    <button type="button" class="btn-learn-more open-global-feedback-btn"
+                        id="master-call-button">Викликати майстра</button>
+                </div>
+            </div>
+            <div class="block-image">
+                <img src="{% static 'img/serv.png' %}" alt="Ремонт кондиціонерів">
+            </div>
+        </div>
+    </section>
+
+    <!-- Наші переваги -->
+    <section class="content-block reveal-on-scroll animate-section" data-delay="500">
+        <h2 class="text-center">Наші переваги</h2>
+        <div class="flip-cards-container">
+            <div class="flip-card" tabindex="0">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <h3>Комплексний підхід</h3>
+                    </div>
+                    <div class="flip-card-back">
+                        <p>Ми супроводжуємо клієнта на всіх етапах: від вибору обладнання до регулярного обслуговування.
+                            З нами ви отримуєте повний цикл послуг в одному місці.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="flip-card" tabindex="0">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <h3>Професіоналізм та досвід</h3>
+                    </div>
+                    <div class="flip-card-back">
+                        <p>Наші спеціалісти мають високу кваліфікацію та багаторічний досвід роботи з кліматичними
+                            системами різної складності.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="flip-card" tabindex="0">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <h3>Гарантія якості</h3>
+                    </div>
+                    <div class="flip-card-back">
+                        <p>Ми надаємо офіційну гарантію як на обладнання, так і на всі виконані роботи. Ваш спокій та
+                            комфорт — наш пріоритет.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="flip-card" tabindex="0">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <h3>Оперативність</h3>
+                    </div>
+                    <div class="flip-card-back">
+                        <p>Ми цінуємо ваш час, тому працюємо швидко, надійно та без зайвої бюрократії. Консультація,
+                            виїзд на об'єкт, монтаж чи ремонт — все відбувається в максимально стислі терміни.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Визначаємо, чи мобільний пристрій
+        const isMobile = window.innerWidth <= 768;
+
+        // Збираємо всі елементи, які потрібно анімувати при скролі
+        const allSections = document.querySelectorAll('.animate-section');
+
+        // Налаштовуємо Intersection Observer для анімації при скролі
+        const observerOptions = {
+            root: null, // спостерігаємо відносно viewport
+            rootMargin: isMobile ? '0px' : '-10% 0px', // різні налаштування для пристроїв
+            threshold: isMobile ? 0.05 : 0.1 // поріг видимості (5% для мобільних, 10% для десктоп)
+        };
+
+        const observerCallback = (entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // setTimeout для кращої надійності на мобільних
+                    setTimeout(() => {
+                        entry.target.classList.add('is-visible');
+                    }, 50);
+
+                    // Припиняємо спостереження після анімації
+                    observer.unobserve(entry.target);
+                }
+            });
+        };
+
+        const intersectionObserver = new IntersectionObserver(observerCallback, observerOptions);
+
+        // Функція для налаштування анімацій після завантаження сторінки
+        const setupAnimations = () => {
+            // РІЗНА ЛОГІКА ДЛЯ МОБІЛЬНИХ І ДЕСКТОПУ
+            if (isMobile) {
+                // На мобільних ВСІМА елементами керує Observer
+
+                // Спочатку видаляємо всі класи is-visible, якщо вони є
+                allSections.forEach(section => section.classList.remove('is-visible'));
+
+                // Додаємо всі секції до Observer
+                allSections.forEach(section => intersectionObserver.observe(section));
+
+            } else {
+                // На десктопі перший блок анімується одразу, решта - при скролі
+                if (allSections.length > 0) {
+                    // Перша секція анімується одразу
+                    setTimeout(() => {
+                        allSections[0].classList.add('is-visible');
+                    }, 0);
+
+                    // Всі інші секції анімуються через Observer
+                    for (let i = 1; i < allSections.length; i++) {
+                        intersectionObserver.observe(allSections[i]);
+                    }
+                }
+            }
+        };
+
+        // Запускаємо анімації при завантаженні сторінки
+        window.addEventListener('load', setupAnimations);
+
+        // Додатково: прослуховуємо зміну розміру вікна, щоб коригувати анімації
+        let resizeTimer;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => {
+                // Перевизначаємо мобільність при зміні розміру вікна
+                const wasAdjustedForMobile = isMobile;
+                const isNowMobile = window.innerWidth <= 768;
+
+                // Якщо змінився тип пристрою, перезавантажуємо анімації
+                if (wasAdjustedForMobile !== isNowMobile) {
+                    location.reload(); // Простий спосіб - перезавантаження сторінки
+                }
+            }, 250);
+        });
+    });
+</script>
 {% endblock %}

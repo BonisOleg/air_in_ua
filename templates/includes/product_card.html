@@ -1,27 +1,30 @@
 {% load static %}
-{# templates/includes/product_card.html #}
 
-{# Використовуємо спільний клас .card для базових стилів #}
-{# Обгортка .product-card додається в catalog.html #}
+<article class="article-card product-card" data-id="{{ product.id }}"
+    data-image-src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/placeholder.png' %}{% endif %}"
+    data-title="{{ product.name }}" data-price="{{ product.price }}"
+    data-modal-content-id="product-{{ product.id }}-content">
 
-{% if product.image %}
-<img src="{{ product.image.url }}" alt="{{ product.name }}">
-{% else %}
-{# Можна додати плейсхолдер, якщо треба #}
-<img src="{% static 'img/placeholder.png' %}" alt="Фото відсутнє" style="opacity: 0.5;">
-{% endif %}
+    <a href="#" class="article-card-image-link article-modal-trigger">
+        <div class="article-card-image">
+            {% if product.image %}
+            <img src="{{ product.image.url }}" alt="{{ product.name }}">
+            {% else %}
+            <img src="{% static 'img/placeholder.png' %}" alt="Фото відсутнє" class="product-image-placeholder">
+            {% endif %}
+        </div>
+    </a>
 
-<div class="product-card-content">
-    <h3>{{ product.name }}</h3>
-    <span class="price">{{ product.price }} грн</span>
-    {# Можна додати інші короткі характеристики сюди, якщо потрібно #}
-    {# <p>BTU: {{ product.btu }}</p> #}
-</div>
-
-{# Кнопка з чергуванням стилів #}
-{% cycle 'blue' 'yellow' as button_color silent %}
-{% if button_color == 'blue' %}
-<button class="button-details">Детальніше</button>
-{% else %}
-<button class="button-details-alt">Детальніше</button>
-{% endif %}
+    <div class="article-card-content">
+        <h3 class="article-card-title">
+            <a href="#" class="article-modal-trigger">{{ product.name }}</a>
+        </h3>
+        <div class="article-card-excerpt">
+            {% if product.description %}
+            <p>{{ product.description|truncatechars:100 }}</p>
+            {% endif %}
+        </div>
+        <span class="article-card-price">{{ product.price }} грн</span>
+        <button class="button article-modal-trigger">Детальніше</button>
+    </div>
+</article>
