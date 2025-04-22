@@ -445,7 +445,7 @@ textarea.input:focus,
 }
 
 .logo {
-    height: 70px;
+    height: 40px;
     object-fit: contain;
     vertical-align: middle;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -1850,7 +1850,7 @@ textarea.input:focus,
     }
 
     .logo {
-        height: 50px;
+        height: 40px;
     }
 
     /* ВАЖЛИВО: Показуємо бургер-меню тільки на мобільних пристроях */
@@ -1878,11 +1878,18 @@ textarea.input:focus,
         padding: 50px 0;
         overflow-y: auto;
         /* Додаємо скрол, якщо контенту багато */
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
     }
 
     .nav.active {
         transform: translateY(0);
         /* Анімація виїзду залишається */
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        transition: transform 0.3s ease, opacity 0.3s ease;
     }
 
     .nav a {
