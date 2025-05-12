@@ -3,7 +3,7 @@
     <p>{{ product.description }}</p>
     <p><strong>{{ product.price }} грн</strong></p>
     {% if product.image %}
-    <img src="{{ product.image.url }}" alt="{{ product.name }}" style="max-width:100%; border-radius:12px;">
+    <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-detail-image">
     {% endif %}
     <div class="feedback-form-modal-container">
         {% include 'includes/feedback_form.html' with form=feedback_form product=product %}

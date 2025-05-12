@@ -1,0 +1,34 @@
+/* Анімації для сторінки "Про нас" */
+
+/* Загальні анімації для всіх елементів */
+.reveal-on-scroll {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 1.3s ease-out, transform 1.3s ease-out;
+}
+
+.reveal-on-scroll.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Анімації для елементів, що з'являються зліва */
+.about-page .from-left {
+    opacity: 0;
+    transform: translateX(-100px);
+    transition: opacity 1.3s ease-in-out, transform 1.3s ease-in-out;
+}
+
+/* Анімації для елементів, що з'являються справа */
+.about-page .from-right {
+    opacity: 0;
+    transform: translateX(100px);
+    transition: opacity 1.3s ease-in-out, transform 1.3s ease-in-out;
+}
+
+/* Загальний клас для видимості */
+.about-page .from-left.is-visible,
+.about-page .from-right.is-visible {
+    opacity: 1;
+    transform: translateX(0);
+}

@@ -7,7 +7,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Air In UA - Кондиціонери та Сервіс{% endblock %}</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}?v={% now 'U' %}">
+    <link rel="stylesheet" href="{% static 'css/animations.css' %}?v={% now 'U' %}">
     <!-- Тут можна додати інші мета-теги або посилання на шрифти, якщо потрібно -->
 </head>
 
@@ -15,11 +16,22 @@
 
     <header class="site-header">
         <div class="container">
-            <a href="{% url 'airinua:index' %}" class="logo">Air In UA</a>
+            <a href="{% url 'airinua:index' %}" class="logo-link">
+                <img src="{% static 'img/logo.png' %}" alt="Air In UA" class="logo">
+            </a>
+
+            <!-- Бургер-меню для мобільних пристроїв -->
+            <div class="burger-menu">
+                <div class="burger-line"></div>
+                <div class="burger-line"></div>
+                <div class="burger-line"></div>
+            </div>
+
             <nav class="nav">
+                <a href="{% url 'airinua:about' %}">Про нас</a>
                 <a href="{% url 'airinua:catalog' %}">Каталог</a>
                 <a href="{% url 'airinua:services' %}">Послуги</a>
-                <a href="{% url 'airinua:about' %}">Про нас</a>
+                <button class="cta-button call-me-button">Подзвоніть мені</button>
             </nav>
         </div>
     </header>
@@ -32,19 +44,28 @@
 
     <footer class="site-footer">
         <div class="container">
-            <p>&copy; {% now "Y" %} Air In UA. Усі права захищено.</p>
+            <p>&copy; {% now "Y" %} Air In. Усі права захищено.</p>
+            <div class="footer-contacts">
+                <span class="footer-contacts-label">Контакти:</span>
+                <div class="footer-socials">
+                    <a href="#" class="footer-icon footer-icon-telegram" title="Telegram">Telegram</a>
+                    <a href="#" class="footer-icon footer-icon-viber" title="Viber">Viber</a>
+                    <a href="#" class="footer-icon footer-icon-gmail" title="Email">Email</a>
+                </div>
+            </div>
         </div>
     </footer>
 
-    <!-- Кнопка зворотного зв'язку -->
-    <button id="feedback-toggle-btn" class="floating-feedback-button" title="Зворотній звʼязок">📞</button>
-
-    <!-- Модальне вікно форми -->
-    <div id="feedback-modal" class="modal-overlay" style="display: none;">
-        <div class="modal-window">
-            {% include 'includes/feedback_form.html' %}
-            <button class="modal-close">Закрити</button>
+    <!-- Модальне вікно для форми зворотного зв'язку -->
+    <div id="feedbackModal" class="modal feedback-modal">
+        <div class="modal-content feedback-modal-content">
+            <div class="modal-close feedback-modal-close">&times;</div>
+            <div class="modal-scroll-container">
+                <h2>Залишити заявку</h2>
+                {% include 'includes/feedback_form.html' %}
+            </div>
         </div>
+        <div class="modal-overlay feedback-modal-overlay"></div>
     </div>
 
     <script src="{% static 'js/main.js' %}" defer></script>

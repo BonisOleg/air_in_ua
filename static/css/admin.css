@@ -374,7 +374,8 @@ a:hover {
 
 /* Стилі для масового додавання */
 .formset-row td {
-    padding: 8px 10px;
+    padding: 5px 8px;
+    /* Зменшуємо падінги */
     vertical-align: top;
     border-bottom: 1px solid var(--border-color);
 }
@@ -387,4 +388,69 @@ a:hover {
 
 .formset-row table {
     border: none;
+}
+
+/* Специфічні стилі для сторінки масового додавання товарів */
+/* Припускаємо, що форма рендериться всередині таблиці, як стандартний формсет */
+#product_formset table th,
+#product_formset table td {
+    padding: 5px 6px;
+    /* Ще менше падінги тут */
+}
+
+/* Зменшуємо ширину колонок для фото галереї */
+#product_formset th[data-field-name^="gallery_image_"],
+#product_formset td.field-gallery_image_1,
+#product_formset td.field-gallery_image_2,
+#product_formset td.field-gallery_image_3,
+#product_formset td.field-gallery_image_4,
+#product_formset td.field-gallery_image_5,
+#product_formset td.field-gallery_image_6,
+#product_formset td.field-gallery_image_7,
+#product_formset td.field-gallery_image_8,
+#product_formset td.field-gallery_image_9,
+#product_formset td.field-gallery_image_10 {
+    width: 80px;
+    /* Фіксована ширина для поля вибору файлу */
+    min-width: 80px;
+    text-align: center;
+    padding-left: 3px;
+    padding-right: 3px;
+}
+
+/* Стилізуємо саме поле вибору файлу (обережно, вигляд різниться в браузерах) */
+#product_formset td.field-gallery_image_1 input[type="file"],
+#product_formset td.field-gallery_image_2 input[type="file"],
+#product_formset td.field-gallery_image_3 input[type="file"],
+#product_formset td.field-gallery_image_4 input[type="file"],
+#product_formset td.field-gallery_image_5 input[type="file"],
+#product_formset td.field-gallery_image_6 input[type="file"],
+#product_formset td.field-gallery_image_7 input[type="file"],
+#product_formset td.field-gallery_image_8 input[type="file"],
+#product_formset td.field-gallery_image_9 input[type="file"],
+#product_formset td.field-gallery_image_10 input[type="file"] {
+    font-size: 11px;
+    /* Менший шрифт для кнопки */
+    padding: 2px;
+    /* Менший падінг всередині кнопки */
+    max-width: 75px;
+}
+
+/* Приховуємо зайві лейбли для фото галереї */
+#product_formset td.field-gallery_image_2 label,
+#product_formset td.field-gallery_image_3 label,
+#product_formset td.field-gallery_image_4 label,
+#product_formset td.field-gallery_image_5 label,
+#product_formset td.field-gallery_image_6 label,
+#product_formset td.field-gallery_image_7 label,
+#product_formset td.field-gallery_image_8 label,
+#product_formset td.field-gallery_image_9 label,
+#product_formset td.field-gallery_image_10 label {
+    display: none;
+}
+
+/* Додаємо трохи місця між основними полями і галереєю */
+#product_formset td.field-is_available {
+    padding-right: 15px;
+    /* Додаємо відступ перед першим фото */
 }

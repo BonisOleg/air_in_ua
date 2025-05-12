@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}Сторінку не знайдено | Air in UA{% endblock %}
+
+{% block content %}
+<div class="container error-container">
+    <div class="error-box">
+        <h1>404</h1>
+        <h2>Сторінку не знайдено</h2>
+        <p>На жаль, сторінка, яку ви шукаєте, не існує або була переміщена.</p>
+        <a href="{% url 'index' %}" class="cta-button">Повернутися на головну</a>
+    </div>
+</div>
+{% endblock %}

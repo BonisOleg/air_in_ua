@@ -1,71 +1,218 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
 
 {% block title %}Каталог товарів - {{ block.super }}{% endblock %}
 
 {% block content %}
-<h1>Каталог кондиціонерів</h1>
+<div class="catalog-page">
+    <!-- Фільтри (ліва колонка, закріплена) -->
+    <aside class="catalog-filters">
+        <form id="product-filter-form">
 
-<!-- Фільтри -->
-<form id="product-filter-form"
-    style="margin-bottom: 20px; padding: 15px; background-color: #f0f0f0; border: 1px solid #ddd;">
-    <label>Виробник:</label>
-    <select name="manufacturer" class="filter-input">
-        <option value="">Усі виробники</option>
-        {% for m in manufacturers %}
-        <option value="{{ m.id }}">{{ m.name }}</option>
-        {% endfor %}
-    </select>
+            {# Переносимо сортування на початок #}
+            <h2>Сортувати:</h2>
+            <div class="filter-group">
+                <select name="sort_by" class="filter-input">
+                    <option value="">За замовчуванням</option>
+                    <option value="price_asc">Спочатку дешевші</option>
+                    <option value="price_desc">Спочатку дорожчі</option>
+                </select>
+            </div>
 
-    <label>BTU:</label>
-    <select name="btu" class="filter-input">
-        <option value="">Усі BTU</option>
-        <option value="07">07 BTU</option>
-        <option value="09">09 BTU</option>
-        <option value="12">12 BTU</option>
-        <option value="18">18 BTU</option>
-        <option value="24">24 BTU</option>
-        <option value="28">28 BTU</option>
-        <option value="36">36 BTU</option>
-    </select>
+            <h2>Виробник:</h2>
+            <div class="filter-group">
+                <select name="manufacturer" class="filter-input">
+                    <option value="">Усі виробники</option>
+                    {% for m in manufacturers %}
+                    <option value="{{ m.id }}">{{ m.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
 
-    <label>Площа:</label>
-    <select name="area" class="filter-input">
-        <option value="">Усі площі</option>
-        <option value="20">до 20 м²</option>
-        <option value="25">до 25 м²</option>
-        <option value="35">до 35 м²</option>
-        <option value="50">до 50 м²</option>
-        <option value="60">до 60 м²</option>
-        <option value="80">до 80 м²</option>
-        <option value="100">до 100 м²</option>
-    </select>
+            <h2>Площа:</h2>
+            <div class="filter-group">
+                <select name="area" class="filter-input">
+                    <option value="">Усі площі</option>
+                    <option value="20">до 20 м²</option>
+                    <option value="25">до 25 м²</option>
+                    <option value="35">до 35 м²</option>
+                    <option value="50">до 50 м²</option>
+                    <option value="60">до 60 м²</option>
+                    <option value="80">до 80 м²</option>
+                    <option value="100">до 100 м²</option>
+                </select>
+            </div>
 
-    <label>Ціна:</label>
-    <input type="number" name="price_min" placeholder="Від" class="filter-input" style="width: 80px;">
-    -
-    <input type="number" name="price_max" placeholder="До" class="filter-input" style="width: 80px;">
+            <h2>BTU:</h2>
+            <div class="filter-group">
+                <select name="btu" class="filter-input">
+                    <option value="">Усі BTU</option>
+                    <option value="07">07 BTU</option>
+                    <option value="09">09 BTU</option>
+                    <option value="12">12 BTU</option>
+                    <option value="18">18 BTU</option>
+                    <option value="24">24 BTU</option>
+                    <option value="28">28 BTU</option>
+                    <option value="36">36 BTU</option>
+                </select>
+            </div>
 
-    <!-- Можна додати кнопку "Скинути фільтри", якщо потрібно -->
-</form>
+            {# Повертаємо фільтр ціни "Від-До" в кінець #}
+            <h2>Ціна:</h2>
+            <div class="filter-group price-range">
+                <input type="number" name="price_min" placeholder="Від" class="filter-input">
+                <span>—</span>
+                <input type="number" name="price_max" placeholder="До" class="filter-input">
+            </div>
 
-<!-- Оновлений контейнер для списку товарів -->
-<div id="product-list-container" class="products-grid"> <!-- Додамо клас для grid-розмітки -->
-    {% for product in products %}
-    <div class="product-card" data-id="{{ product.id }}">
-        {% include 'includes/product_card.html' with product=product %}
+        </form>
+    </aside>
+
+    <!-- Основний контент (права колонка) -->
+    <div class="catalog-content">
+        <h1>Каталог кондиціонерів</h1>
+
+        <!-- Сітка товарів з анімацією появи -->
+        <div class="articles-grid reveal-on-scroll" id="product-list-container">
+            {% for product in page_obj %}
+            <article class="article-card product-card" data-id="{{ product.id }}"
+                data-image-src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/placeholder.png' %}{% endif %}"
+                data-title="{{ product.name }}" data-price="{{ product.price }}"
+                data-modal-content-id="product-{{ product.id }}-content">
+
+                <a href="#" class="article-card-image-link article-modal-trigger">
+                    <div class="article-card-image">
+                        {% if product.image %}
+                        <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                        {% else %}
+                        <img src="{% static 'img/placeholder.png' %}" alt="Фото відсутнє">
+                        {% endif %}
+                    </div>
+                </a>
+
+                <div class="article-card-content">
+                    <h3 class="article-card-title">
+                        <a href="#" class="article-modal-trigger">{{ product.name }}</a>
+                    </h3>
+                    <div class="article-card-excerpt">
+                        {% if product.description %}
+                        <p>{{ product.description|truncatechars:100 }}</p>
+                        {% endif %}
+                    </div>
+                    <span class="article-card-price">{{ product.price }} грн</span>
+                    <button class="button article-modal-trigger">Детальніше</button>
+                </div>
+            </article>
+            {% empty %}
+            <p class="no-products-message">Наразі немає доступних товарів за вашим запитом.</p>
+            {% endfor %}
+        </div>
+
+        {# Обгортаємо блок пагінації для центрування #}
+        <div class="pagination-controls">
+            <div class="pagination">
+                <span class="step-links">
+                    {% if page_obj.has_previous %}
+                    <a href="?page=1" class="pagination-link">&laquo; {% trans 'перша' %}</a>
+                    <a href="?page={{ page_obj.previous_page_number }}" class="pagination-link">{% trans 'попередня'
+                        %}</a>
+                    {% endif %}
+
+                    <span class="current-page">
+                        {% blocktrans with current_page=page_obj.number total_pages=page_obj.paginator.num_pages %}
+                        Сторінка {{ current_page }} з {{ total_pages }}
+                        {% endblocktrans %}
+                    </span>
+
+                    {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}" class="pagination-link">{% trans 'наступна' %}</a>
+                    <a href="?page={{ page_obj.paginator.num_pages }}" class="pagination-link">{% trans 'остання' %}
+                        &raquo;</a>
+                    {% endif %}
+                </span>
+            </div>
+        </div>
+
     </div>
-    {% empty %}
-    <p>Наразі немає доступних товарів за вашим запитом.</p>
+</div>
+
+<!-- Приховані повні описи товарів для модальних вікон -->
+<div class="modal-product-content-storage" id="modalProductContentStorage">
+    {% for product in page_obj %}
+    <div id="product-{{ product.id }}-content">
+        {# Замінюємо старий блок зображення на нову галерею #}
+        <div class="product-gallery-container">
+            {# Головне зображення галереї #}
+            <div class="gallery-main-image">
+                {% if product.image %}
+                <img src="{{ product.image.url }}" alt="{{ product.name }} - головне фото" class="active-gallery-image">
+                {% else %}
+                <img src="{% static 'img/placeholder.png' %}" alt="Фото відсутнє" class="active-gallery-image">
+                {% endif %}
+            </div>
+            {# Мініатюри #}
+            {% if product.images.all or product.image %} {# Показуємо мініатюри, якщо є галерея АБО головне фото #}
+            <div class="gallery-thumbnails">
+                {# Спочатку головне фото (якщо є) #}
+                {% if product.image %}
+                <img src="{{ product.image.url }}" alt="Мініатюра: {{ product.name }} - головне фото"
+                    data-full-src="{{ product.image.url }}" class="gallery-thumb active-thumb">
+                {% endif %}
+                {# Потім зображення з галереї #}
+                {% for img_obj in product.images.all %}
+                <img src="{{ img_obj.image.url }}" alt="Мініатюра: {{ img_obj.alt_text|default:product.name }}"
+                    data-full-src="{{ img_obj.image.url }}" class="gallery-thumb">
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+
+        <h2>{{ product.name }}</h2>
+        <div class="product-specs">
+            <div class="spec-item">
+                <span class="spec-label">Виробник:</span>
+                <span class="spec-value">{{ product.manufacturer.name }}</span>
+            </div>
+            <div class="spec-item">
+                <span class="spec-label">Потужність:</span>
+                <span class="spec-value">{{ product.btu }} BTU</span>
+            </div>
+            <div class="spec-item">
+                <span class="spec-label">Площа охолодження:</span>
+                <span class="spec-value">до {{ product.area_coverage }} м²</span>
+            </div>
+            <div class="spec-item">
+                <span class="spec-label">Ціна:</span>
+                <span class="spec-value price">{{ product.price }} грн</span>
+            </div>
+        </div>
+
+        <div class="product-description">
+            <h3>Опис</h3>
+            <p>{{ product.description }}</p>
+        </div>
+
+        <!-- Кнопка Замовити -->
+        <div class="product-actions">
+            <button class="cta-button product-order-btn" data-product-id="{{ product.id }}">Замовити</button>
+        </div>
+    </div>
     {% endfor %}
 </div>
 
-<!-- Модальне вікно для деталей товару -->
-<div id="product-modal" class="modal-overlay" style="display:none;">
-    <div class="modal-window" id="product-modal-content">
-        <!-- Вміст буде завантажено через AJAX -->
-        <button class="modal-close">Закрити</button>
+<!-- Модальне вікно для товарів -->
+<div id="articleModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-close article-modal-close">&times;</div>
+        <div class="modal-scroll-container">
+            <div class="modal-title"></div>
+            <div class="modal-full-content"></div>
+        </div>
     </div>
+    <div class="modal-overlay article-modal-overlay"></div>
 </div>
+
+<!-- Модальне вікно для форми зворотного зв'язку ВИДАЛЕНО ЗВІДСИ -->
 
 {% endblock %}

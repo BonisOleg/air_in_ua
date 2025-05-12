@@ -44,11 +44,26 @@
         <p><strong>Телефон:</strong> {{ phone }}</p>
         <p><strong>Бажаний спосіб зв'язку:</strong> {{ contact_method_display }}</p>
 
-        {% if product %}
+        {# Додаємо блок для виклику майстра #}
+        {% if is_master_call %}
+        <div class="product-info" style="background-color: #e8f0fe; border-left: 4px solid var(--color-blue-300);">
+            <strong>Запит:</strong> Виклик майстра (зі сторінки "Про нас")
+        </div>
+        {# Блоки для товару та послуги #}
+        {% elif product %}
         <div class="product-info">
             <strong>Зацікавив товар:</strong><br>
             Назва: {{ product.name }}<br>
+            Виробник: {{ product.manufacturer.name }}<br>
+            Ціна: {{ product.price }} грн<br>
             ID: {{ product.id }}
+        </div>
+        {% elif service %}
+        <div class="product-info">
+            <strong>Замовлено послугу:</strong><br>
+            Назва: {{ service.name }}<br>
+            Ціна: від {{ service.price|floatformat:"0" }} грн<br>
+            ID: {{ service.id }}
         </div>
         {% endif %}
         <hr>
