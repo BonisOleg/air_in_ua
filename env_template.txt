@@ -1,0 +1,15 @@
+# Django налаштування
+DJANGO_SECRET_KEY=django-insecure-9pw!vj+_e71rqv@j7&1xx3q90#qp=h80#nv5!4e$0+9fqw-2f#
+DJANGO_DEBUG=False
+DJANGO_ALLOWED_HOSTS=airinua.com,www.airinua.com,127.0.0.1,localhost
+
+# База даних
+DATABASE_URL=sqlite:///db.sqlite3
+
+# Налаштування Email (важливо замінити на реальні дані)
+EMAIL_HOST=smtp.gmail.com
+EMAIL_PORT=587
+EMAIL_USE_TLS=True
+EMAIL_HOST_USER=your_email@gmail.com
+EMAIL_HOST_PASSWORD=your_app_password
+ADMIN_EMAIL=admin@example.com 

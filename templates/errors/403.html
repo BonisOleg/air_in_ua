@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}Доступ заборонено | Air in UA{% endblock %}
+
+{% block content %}
+<div class="container error-container">
+    <div class="error-box">
+        <h1>403</h1>
+        <h2>Доступ заборонено</h2>
+        <p>На жаль, у вас немає доступу до цієї сторінки.</p>
+        <a href="{% url 'index' %}" class="cta-button">Повернутися на головну</a>
+    </div>
+</div>
+{% endblock %}

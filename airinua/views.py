@@ -209,3 +209,23 @@ def submit_feedback(request):
 def product_detail_modal(request, product_id):
     product = get_object_or_404(Product, id=product_id)
     return render(request, 'includes/product_modal_detail.html', {'product': product})
+
+def error_404_view(request, exception=None):
+    """
+    Обробник для помилки 404 (Сторінку не знайдено)
+    """
+    return render(request, 'errors/404.html', status=404)
+
+
+def error_500_view(request, exception=None):
+    """
+    Обробник для помилки 500 (Внутрішня помилка сервера)
+    """
+    return render(request, 'errors/500.html', status=500)
+
+
+def error_403_view(request, exception=None):
+    """
+    Обробник для помилки 403 (Доступ заборонено)
+    """
+    return render(request, 'errors/403.html', status=403)

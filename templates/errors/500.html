@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}Помилка сервера | Air in UA{% endblock %}
+
+{% block content %}
+<div class="container error-container">
+    <div class="error-box">
+        <h1>500</h1>
+        <h2>Внутрішня помилка сервера</h2>
+        <p>На жаль, виникла технічна проблема. Наші спеціалісти вже працюють над її вирішенням.</p>
+        <a href="{% url 'index' %}" class="cta-button">Повернутися на головну</a>
+    </div>
+</div>
+{% endblock %}
