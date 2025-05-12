@@ -21,7 +21,7 @@ services:
       - key: WEB_CONCURRENCY
         value: 4 # Рекомендоване значення, можна налаштувати
       - key: PYTHON_VERSION
-        value: "3.11" # Вкажіть вашу версію Python, якщо потрібно (припускаю 3.11)
+        value: "3.11.9" # Вказано повну версію для Render
       # Обов'язково додайте ваші змінні для пошти та інші сюди або в панелі Render:
       # - key: DJANGO_ALLOWED_HOSTS
       #   value: "your-app-name.onrender.com" # Замініть your-app-name
