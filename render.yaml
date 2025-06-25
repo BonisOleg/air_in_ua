@@ -10,18 +10,22 @@ services:
     runtime: python
     plan: free # Або інший план
     buildCommand: "./build.sh"
-    startCommand: "gunicorn config.wsgi:application" # Переконайтесь, що 'config' це правильна назва
+    startCommand: "python manage.py migrate && gunicorn config.wsgi:application" # Спочатку міграції, потім запуск
     envVars:
       - key: DATABASE_URL
         fromDatabase:
           name: mysitedb # Має збігатися з 'name' у секції databases
           property: connectionString
-      - key: SECRET_KEY
+      - key: DJANGO_SECRET_KEY
         generateValue: true # Render згенерує випадковий ключ
       - key: WEB_CONCURRENCY
         value: 4 # Рекомендоване значення, можна налаштувати
       - key: PYTHON_VERSION
         value: "3.11.9" # Вказано повну версію для Render
+      - key: DJANGO_LOG_LEVEL
+        value: "INFO"
+      - key: DJANGO_SECURE_HSTS_SECONDS
+        value: "31536000"
       # Обов'язково додайте ваші змінні для пошти та інші сюди або в панелі Render:
       # - key: DJANGO_ALLOWED_HOSTS
       #   value: "your-app-name.onrender.com" # Замініть your-app-name
