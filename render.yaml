@@ -26,6 +26,8 @@ services:
         value: "INFO"
       - key: DJANGO_SECURE_HSTS_SECONDS
         value: "31536000"
+      - key: DJANGO_ALLOWED_HOSTS
+        value: "www.airinua.com,airinua.com"
       # Обов'язково додайте ваші змінні для пошти та інші сюди або в панелі Render:
       # - key: DJANGO_ALLOWED_HOSTS
       #   value: "your-app-name.onrender.com" # Замініть your-app-name
