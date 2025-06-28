@@ -10,16 +10,16 @@
         <h1>{% trans "Наші послуги" %}</h1>
 
         <!-- Динамічна сітка послуг з анімацією появи -->
-        <div class="reveal-on-scroll" id="service-list-container">
+        <div class="reveal-on-scroll articles-grid" id="service-list-container">
             {% for service in services %}
             <article class="article-card service-card article-modal-trigger" data-id="service-{{ service.pk }}"
                 data-modal-content-id="service-{{ service.pk }}-content"
-                data-image-src="{% if service.image %}{{ service.image.url }}{% else %}{% static 'img/placeholder.png' %}{% endif %}">
+                data-image-src="{% if service.image %}{% static service.image %}{% else %}{% static 'img/service.png' %}{% endif %}">
                 <div class="article-card-image">
                     {% if service.image %}
-                    <img src="{{ service.image.url }}" alt="{{ service.name }}">
+                    <img src="{% static service.image %}" alt="{{ service.name }}">
                     {% else %}
-                    <img src="{% static 'img/placeholder.png' %}" alt="Фото відсутнє" class="product-image-placeholder">
+                    <img src="{% static 'img/service.png' %}" alt="Фото відсутнє" class="product-image-placeholder">
                     {% endif %}
                 </div>
                 <div class="article-card-content">

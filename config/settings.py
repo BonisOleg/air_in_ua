@@ -42,7 +42,7 @@ if RENDER_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
 if not ALLOWED_HOSTS and DEBUG:
-    ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+    ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '0.0.0.0']
 elif not ALLOWED_HOSTS and not DEBUG:
     pass  # Безпечно: Django видасть помилку, якщо ALLOWED_HOSTS порожній у продакшені
 # Якщо додаєте кастомний домен — додайте його у DJANGO_ALLOWED_HOSTS або через Render
@@ -81,6 +81,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sitemaps',  # Додано для sitemap
     'airinua',
 ]
 

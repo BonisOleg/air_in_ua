@@ -1,0 +1,270 @@
+{% extends 'base.html' %}
+
+{% block title %}Заправка кондиціонерів Київ - Дозаправка фреоном | Air In UA{% endblock %}
+
+{% block meta_description %}Заправка кондиціонерів у Києві ❄️ Дозаправка фреоном R32, R410A. Перевірка тиску, усунення
+витоків. Гарантія якості. ☎ Дзвоніть!{% endblock %}
+
+{% block meta_keywords %}заправка кондиціонерів Київ, дозаправка фреоном Київ, заправка R32, заправка R410A, витік
+фреону{% endblock %}
+
+{% block breadcrumb_schema %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Головна",
+      "item": "{{ request.scheme }}://{{ request.get_host }}{% url 'airinua:index' %}"
+    },
+    {
+      "@type": "ListItem", 
+      "position": 2,
+      "name": "Заправка кондиціонерів Київ",
+      "item": "{{ request.build_absolute_uri }}"
+    }
+  ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "Заправка кондиціонерів у Києві",
+  "description": "Професійна заправка кондиціонерів фреоном R32, R410A. Перевірка тиску, пошук витоків, дозаправка.",
+  "provider": {
+    "@type": "LocalBusiness",
+    "name": "Air In UA",
+    "telephone": "+380XXXXXXXXX",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Київ",
+      "addressCountry": "UA"
+    }
+  },
+  "areaServed": {
+    "@type": "City",
+    "name": "Київ"
+  },
+  "offers": {
+    "@type": "Offer",
+    "name": "Заправка кондиціонера фреоном",
+    "priceSpecification": {
+      "@type": "PriceSpecification",
+      "price": "800",
+      "priceCurrency": "UAH"
+    }
+  }
+}
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="seo-page">
+    <!-- Hero секція -->
+    <section class="seo-hero">
+        <div class="container">
+            <h1>Заправка кондиціонерів у Києві</h1>
+            <p class="seo-subtitle">Дозаправка фреоном R32, R410A • Перевірка тиску • Усунення витоків</p>
+            <div class="cta-section">
+                <button class="cta-button call-me-button">Замовити заправку</button>
+                <p>Виїзд майстра в день звернення</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Основний контент -->
+    <section class="seo-content">
+        <div class="container">
+
+            <!-- Коли потрібна заправка -->
+            <details class="seo-accordion">
+                <summary>
+                    <h2>🌡️ Коли потрібна заправка кондиціонера</h2>
+                </summary>
+                <div class="accordion-content">
+                    <div class="warning-signs">
+                        <div class="sign-item">
+                            <h4>❄️ Погіршення охолодження</h4>
+                            <p>Кондиціонер працює, але кімната охолоджується повільно або недостатньо</p>
+                        </div>
+                        <div class="sign-item">
+                            <h4>🧊 Обмерзання трубок</h4>
+                            <p>На мідних трубках або внутрішньому блоці утворюється лід</p>
+                        </div>
+                        <div class="sign-item">
+                            <h4>⚡ Підвищене споживання електроенергії</h4>
+                            <p>Кондиціонер споживає більше електрики при тій же ефективності</p>
+                        </div>
+                        <div class="sign-item">
+                            <h4>🔊 Незвичні звуки</h4>
+                            <p>Компресор працює з підвищеним шумом або булькотінням</p>
+                        </div>
+                        <div class="sign-item">
+                            <h4>💨 Теплий повітряний потік</h4>
+                            <p>З кондиціонера йде тепле або кімнатної температури повітря</p>
+                        </div>
+                        <div class="sign-item">
+                            <h4>🛠️ Після ремонту</h4>
+                            <p>Після заміни компонентів системи або усунення витоків</p>
+                        </div>
+                    </div>
+                </div>
+            </details>
+
+            <!-- Типи фреону -->
+            <details class="seo-accordion">
+                <summary>
+                    <h2>🧪 Типи фреону для кондиціонерів</h2>
+                </summary>
+                <div class="accordion-content">
+                    <h3>R32 (Дифторметан)</h3>
+                    <ul>
+                        <li>Сучасний екологічний фреон</li>
+                        <li>Висока енергоефективність</li>
+                        <li>Використовується в нових моделях Daikin, Mitsubishi</li>
+                        <li>Нижчий вплив на озоновий шар</li>
+                    </ul>
+
+                    <h3>R410A (Пуристон)</h3>
+                    <ul>
+                        <li>Найпоширеніший тип фреону</li>
+                        <li>Використовується в більшості сучасних кондиціонерів</li>
+                        <li>Високий тиск у системі</li>
+                        <li>Потребує спеціального обладнання</li>
+                    </ul>
+
+                    <h3>R22 (Фреон-22)</h3>
+                    <ul>
+                        <li>Застарілий тип фреону</li>
+                        <li>Використовувався в старих моделях</li>
+                        <li>Поступово виводиться з обігу</li>
+                        <li>Дорожчий через обмежене виробництво</li>
+                    </ul>
+                </div>
+            </details>
+
+            <!-- Процес заправки -->
+            <details class="seo-accordion">
+                <summary>
+                    <h2>⚙️ Як проходить заправка кондиціонера</h2>
+                </summary>
+                <div class="accordion-content">
+                    <ol>
+                        <li><strong>Діагностика системи</strong> - Перевіряємо тиск у системі та стан компонентів</li>
+                        <li><strong>Пошук витоків</strong> - Виявляємо місця можливих витоків фреону</li>
+                        <li><strong>Вакуумування</strong> - Видаляємо повітря та вологу з системи</li>
+                        <li><strong>Заправка фреоном</strong> - Заправляємо систему необхідною кількістю фреону</li>
+                        <li><strong>Перевірка тиску</strong> - Контролюємо робочий тиск у системі</li>
+                        <li><strong>Тестування</strong> - Перевіряємо роботу кондиціонера в усіх режимах</li>
+                    </ol>
+                </div>
+            </details>
+
+            <!-- Ціни -->
+            <details class="seo-accordion">
+                <summary>
+                    <h2>💰 Ціни на заправку кондиціонерів у Києві</h2>
+                </summary>
+                <div class="accordion-content">
+                    <div class="price-table">
+                        <div class="price-row">
+                            <span>Діагностика системи</span>
+                            <span>300 грн</span>
+                        </div>
+                        <div class="price-row">
+                            <span>Заправка R410A (до 1 кг)</span>
+                            <span>від 800 грн</span>
+                        </div>
+                        <div class="price-row">
+                            <span>Заправка R32 (до 1 кг)</span>
+                            <span>від 900 грн</span>
+                        </div>
+                        <div class="price-row">
+                            <span>Заправка R22 (до 1 кг)</span>
+                            <span>від 1200 грн</span>
+                        </div>
+                        <div class="price-row">
+                            <span>Пошук витоків</span>
+                            <span>від 500 грн</span>
+                        </div>
+                        <div class="price-row">
+                            <span>Вакуумування системи</span>
+                            <span>від 400 грн</span>
+                        </div>
+                    </div>
+                    <p><strong>* Ціна залежить від типу фреону та кількості</strong></p>
+                </div>
+            </details>
+
+            <!-- FAQ -->
+            <details class="seo-accordion">
+                <summary>
+                    <h2>❓ Часті питання про заправку кондиціонерів</h2>
+                </summary>
+                <div class="accordion-content">
+                    <div class="faq-item">
+                        <h4>Як часто потрібно заправляти кондиціонер?</h4>
+                        <p>При нормальній роботі кондиціонер не потребує дозаправки 5-7 років. Якщо фреон закінчується
+                            швидше - є витік у системі.</p>
+                    </div>
+                    <div class="faq-item">
+                        <h4>Скільки фреону потрібно для заправки?</h4>
+                        <p>Зазвичай 0,5-2 кг залежно від потужності кондиціонера. Точну кількість визначає майстер за
+                            технічними характеристиками.</p>
+                    </div>
+                    <div class="faq-item">
+                        <h4>Чи можна заправити кондиціонер самостійно?</h4>
+                        <p>Ні, заправка потребує спеціального обладнання та знань. Неправильна заправка може зламати
+                            компресор.</p>
+                    </div>
+                    <div class="faq-item">
+                        <h4>Що буде, якщо не заправити кондиціонер?</h4>
+                        <p>Компресор може перегрітися та вийти з ладу. Ремонт компресора коштує значно дорожче за
+                            заправку.</p>
+                    </div>
+                </div>
+            </details>
+
+            <!-- Переваги нашої заправки -->
+            <details class="seo-accordion">
+                <summary>
+                    <h2>✅ Переваги нашої заправки кондиціонерів</h2>
+                </summary>
+                <div class="accordion-content">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
+                        <div>
+                            <h4>🔧 Професійне обладнання</h4>
+                            <p>Використовуємо сучасні манометричні колектори та вакуумні насоси</p>
+                        </div>
+                        <div>
+                            <h4>🧪 Якісний фреон</h4>
+                            <p>Працюємо тільки з оригінальним фреоном від перевірених постачальників</p>
+                        </div>
+                        <div>
+                            <h4>🔍 Пошук витоків</h4>
+                            <p>Обов'язково шукаємо та усуваємо причини витоку фреону</p>
+                        </div>
+                        <div>
+                            <h4>📋 Гарантія якості</h4>
+                            <p>Надаємо гарантію 6 місяців на виконані роботи</p>
+                        </div>
+                    </div>
+                </div>
+            </details>
+
+            <!-- CTA секція -->
+            <div class="cta-section">
+                <h2>Потрібна заправка кондиціонера?</h2>
+                <p>Наші майстри приїдуть сьогодні та професійно заправлять ваш кондиціонер</p>
+                <button class="cta-button call-me-button">Замовити заправку</button>
+            </div>
+
+        </div>
+    </section>
+</div>
+{% endblock %}

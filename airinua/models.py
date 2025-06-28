@@ -57,7 +57,7 @@ class Service(models.Model):
     name = models.CharField(max_length=255, verbose_name=_("Назва послуги"))
     description = models.TextField(blank=True, verbose_name=_("Опис послуги"))
     price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name=_("Ціна послуги, грн"))
-    image = models.ImageField(upload_to='services/', verbose_name=_("Зображення послуги"), blank=True, null=True)
+    image = models.CharField(max_length=255, blank=True, null=True, verbose_name=_("Шлях до зображення"), help_text=_("Наприклад: img/service.png"))
 
     def __str__(self):
         return self.name

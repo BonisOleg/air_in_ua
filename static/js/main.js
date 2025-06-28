@@ -78,6 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     // Тут дуже важливо перестворити обробники подій для модалок товарів
                     // та всі скрипти, які мають працювати з новими елементами
                     initProductCardEvents();
+                    initOrderButtonEvents();
                     observeElements(); // Перезапускаємо анімацію появи
                 })
                 .catch(error => {
@@ -85,6 +86,34 @@ document.addEventListener('DOMContentLoaded', () => {
                     productListContainer.innerHTML = '<p>Помилка завантаження товарів.</p>';
                 });
         }
+    }
+
+    // --- Функція для ініціалізації кнопок замовлення ---
+    function initOrderButtonEvents() {
+        // Обробники для кнопок замовлення поза модальними вікнами
+        document.querySelectorAll('.product-order-btn, .cta-button[data-product-id], .cta-button[data-service-id]').forEach(button => {
+            // Перевіряємо чи вже є обробник
+            if (button.hasAttribute('data-listener-added')) return;
+
+            button.addEventListener('click', function (e) {
+                e.preventDefault();
+                console.log('[Main] Order button clicked outside modal.');
+
+                const productId = this.dataset.productId;
+                const serviceId = this.dataset.serviceId;
+                const source = productId ? 'product_page' : (serviceId ? 'service_page' : 'general');
+
+                // Викликаємо глобальну функцію відкриття модалки форми
+                if (typeof window.openGlobalFeedbackModal === 'function') {
+                    window.openGlobalFeedbackModal({ productId: productId, serviceId: serviceId, source: source });
+                } else {
+                    console.error('Global function openGlobalFeedbackModal is not defined!');
+                }
+            });
+
+            // Позначаємо що обробник додано
+            button.setAttribute('data-listener-added', 'true');
+        });
     }
 
     // --- Функція для ініціалізації всіх подій на картках товарів ---
@@ -452,15 +481,18 @@ document.addEventListener('DOMContentLoaded', () => {
         if (feedbackModalClose) feedbackModalClose.addEventListener('click', closeFeedbackModal);
         if (feedbackModalOverlay) feedbackModalOverlay.addEventListener('click', closeFeedbackModal);
 
-        // Обробник для кнопки "Подзвоніть мені"
-        if (callMeButton) {
-            console.log('Attaching listener to Call Me button:', callMeButton);
-            callMeButton.addEventListener('click', function () {
-                console.log('[Global] Call Me button clicked.');
-                window.openGlobalFeedbackModal(); // Викликаємо глобальну функцію без ID
+        // Обробник для всіх кнопок "Подзвоніть мені" (включаючи з класом cta-button)
+        const allCallMeButtons = document.querySelectorAll('.call-me-button, .cta-button.call-me-button');
+        if (allCallMeButtons.length > 0) {
+            console.log('Attaching listeners to Call Me buttons:', allCallMeButtons.length);
+            allCallMeButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    console.log('[Global] Call Me button clicked.');
+                    window.openGlobalFeedbackModal(); // Викликаємо глобальну функцію без ID
+                });
             });
         } else {
-            console.warn('Call Me button (.call-me-button) not found.');
+            console.warn('Call Me buttons (.call-me-button) not found.');
         }
 
         // AJAX Відправка форми зворотного зв'язку
@@ -534,6 +566,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Ініціалізуємо кнопки замовлення на початку
+    initOrderButtonEvents();
+
     // --- Ініціалізація скриптів для конкретних сторінок --- 
 
     // Додаємо клас для body на контентних сторінках
@@ -583,13 +618,13 @@ document.addEventListener('DOMContentLoaded', () => {
         // Делегування події для кнопки "Замовити" всередині articleModal
         if (articleModalContent) {
             articleModalContent.addEventListener('click', function (e) {
-                const orderButton = e.target.closest('.product-order-btn');
+                const orderButton = e.target.closest('.product-order-btn, .cta-button[data-product-id], .cta-button[data-service-id]');
                 if (orderButton) {
                     console.log('[Main] Order button clicked inside article modal.');
                     e.preventDefault();
                     e.stopPropagation();
                     const productId = orderButton.dataset.productId;
-                    const serviceId = orderButton.dataset.serviceId; // Отримуємо ID послуги
+                    const serviceId = orderButton.dataset.serviceId;
                     // Визначаємо джерело: 'product' чи 'service'
                     const source = productId ? 'product_modal' : (serviceId ? 'service_modal' : null);
 
@@ -604,5 +639,60 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     }
+
+    // Функція для вирівнювання висоти карток
+    function equalizeCardHeights() {
+        const rows = {};
+        const cards = document.querySelectorAll('.article-card');
+        const grid = document.querySelector('.articles-grid');
+
+        if (!grid || cards.length === 0) return;
+
+        // Спочатку скидаємо висоту всіх карток
+        cards.forEach(card => {
+            card.style.height = 'auto';
+        });
+
+        // Знаходимо картки в кожному ряду
+        cards.forEach(card => {
+            const rect = card.getBoundingClientRect();
+            const row = Math.floor(rect.top);
+            rows[row] = rows[row] || [];
+            rows[row].push(card);
+        });
+
+        // Встановлюємо максимальну висоту для кожного ряду
+        Object.values(rows).forEach(rowCards => {
+            const maxHeight = Math.max(...rowCards.map(card => card.offsetHeight));
+            rowCards.forEach(card => {
+                card.style.height = `${maxHeight}px`;
+            });
+        });
+    }
+
+    // Викликаємо функцію при завантаженні та при зміні розміру вікна
+    window.addEventListener('load', equalizeCardHeights);
+    window.addEventListener('resize', debounce(equalizeCardHeights, 250));
+
+    // Викликаємо функцію після завантаження зображень
+    window.addEventListener('load', () => {
+        const images = document.querySelectorAll('.article-card-image img');
+        let loadedImages = 0;
+
+        function onImageLoad() {
+            loadedImages++;
+            if (loadedImages === images.length) {
+                equalizeCardHeights();
+            }
+        }
+
+        images.forEach(img => {
+            if (img.complete) {
+                onImageLoad();
+            } else {
+                img.addEventListener('load', onImageLoad);
+            }
+        });
+    });
 
 }); // Кінець DOMContentLoaded

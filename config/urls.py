@@ -20,11 +20,20 @@ from django.conf import settings
 from django.conf.urls.static import static
 # from django.views.static import serve # Переконайся, що цей імпорт закоментовано або видалено
 from airinua.admin import admin_site # Якщо використовуєш кастомну адмінку
+from django.contrib.sitemaps.views import sitemap
+from airinua.sitemaps import StaticViewSitemap, ProductSitemap, ServiceSitemap
+
+sitemaps = {
+    'static': StaticViewSitemap,
+    'products': ProductSitemap,
+    'services': ServiceSitemap,
+}
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('uaadmin/', admin_site.urls), # Якщо використовуєш кастомну адмінку
     path('', include('airinua.urls')), # Підключення URL додатку airinua
+    path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
 ]
 
 # Статичні файли (CSS, JavaScript, Images) в режимі Debug

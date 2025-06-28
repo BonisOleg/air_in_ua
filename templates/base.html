@@ -4,74 +4,230 @@
 <html lang="uk">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Air In UA - Кондиціонери та Сервіс{% endblock %}</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}?v={% now 'U' %}">
-    <link rel="stylesheet" href="{% static 'css/animations.css' %}?v={% now 'U' %}">
-    <!-- Тут можна додати інші мета-теги або посилання на шрифти, якщо потрібно -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Air In UA - Кондиціонери та Сервіс у Києві{% endblock %}</title>
+
+  <!-- SEO Meta теги -->
+  <meta name="description"
+    content="{% block meta_description %}Продаж, монтаж, сервіс, чистка та ремонт кондиціонерів у Києві. Професійні послуги з кондиціонування. ☎ Дзвоніть зараз!{% endblock %}">
+  <meta name="keywords"
+    content="{% block meta_keywords %}кондиціонери Київ, монтаж кондиціонерів Київ, сервіс кондиціонерів Київ, чистка кондиціонера Київ, ремонт кондиціонерів Київ{% endblock %}">
+  <meta name="author" content="Air In UA">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="{% block canonical %}{{ request.build_absolute_uri }}{% endblock %}">
+
+  <!-- Додаткові SEO мета-теги для 2025 -->
+  <meta name="geo.region" content="UA-30">
+  <meta name="geo.placename" content="Київ">
+  <meta name="geo.position" content="50.4501;30.5234">
+  <meta name="ICBM" content="50.4501, 30.5234">
+
+  <!-- Мета-теги для AI-пошуку -->
+  <meta name="format-detection" content="telephone=yes">
+  <meta name="theme-color" content="#358ED3">
+  <meta name="msapplication-TileColor" content="#358ED3">
+
+  <!-- Preconnect для швидкості -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- Open Graph для соцмереж -->
+  <meta property="og:title"
+    content="{% block og_title %}{{ title|default:'Air In UA - Кондиціонери у Києві' }}{% endblock %}">
+  <meta property="og:description"
+    content="{% block og_description %}Продаж, монтаж, сервіс кондиціонерів у Києві. Професійні послуги з кондиціонування.{% endblock %}">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="{{ request.build_absolute_uri }}">
+  <meta property="og:site_name" content="Air In UA">
+  <meta property="og:locale" content="uk_UA">
+  <meta property="og:image" content="{% block og_image %}{% static 'img/logo.png' %}{% endblock %}">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title"
+    content="{% block twitter_title %}{{ title|default:'Air In UA - Кондиціонери у Києві' }}{% endblock %}">
+  <meta name="twitter:description"
+    content="{% block twitter_description %}Продаж, монтаж, сервіс кондиціонерів у Києві{% endblock %}">
+  <meta name="twitter:image" content="{% static 'img/logo.png' %}">
+
+  <!-- Schema.org мікроразмітка -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "Air In UA",
+      "image": "{% static 'img/logo.png' %}",
+      "description": "Продаж, монтаж, сервіс, чистка та ремонт кондиціонерів у Києві",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Київ",
+        "addressCountry": "UA",
+        "addressRegion": "Київська область"
+      },
+      "telephone": "+380XXXXXXXXX",
+      "priceRange": "$$",
+      "serviceArea": {
+        "@type": "City",
+        "name": "Київ"
+      },
+      "areaServed": [
+        {
+          "@type": "City",
+          "name": "Київ"
+        },
+        {
+          "@type": "Place",
+          "name": "Київська область"
+        }
+      ],
+      "openingHours": "Mo-Su 08:00-20:00",
+      "url": "{{ request.build_absolute_uri }}",
+      "sameAs": [
+        "https://www.facebook.com/airinua",
+        "https://www.instagram.com/airinua"
+      ],
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Послуги з кондиціонерів",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Монтаж кондиціонерів Київ",
+              "description": "Професійний монтаж кондиціонерів будь-якої складності"
+            }
+          },
+          {
+            "@type": "Offer", 
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Сервіс кондиціонерів Київ",
+              "description": "Регулярне обслуговування та діагностика кондиціонерів"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service", 
+              "name": "Чистка кондиціонерів Київ",
+              "description": "Професійна чистка та дезінфекція кондиціонерів"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Ремонт кондиціонерів Київ", 
+              "description": "Якісний ремонт кондиціонерів всіх марок"
+            }
+          }
+        ]
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.8",
+        "reviewCount": "127"
+      }
+    }
+    </script>
+
+  <!-- Breadcrumb Schema -->
+  {% block breadcrumb_schema %}{% endblock %}
+
+  <link rel="stylesheet" href="{% static 'css/style.css' %}?v={% now 'U' %}">
+  <link rel="stylesheet" href="{% static 'css/animations.css' %}?v={% now 'U' %}">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="{% static 'img/favicon.ico' %}">
+  <link rel="apple-touch-icon" sizes="180x180" href="{% static 'img/apple-touch-icon.png' %}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{% static 'img/favicon-32x32.png' %}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{% static 'img/favicon-16x16.png' %}">
+
+  <!-- Web App Manifest -->
+  <link rel="manifest" href="{% static 'manifest.json' %}">
+
+  {% block extra_head %}{% endblock %}
 </head>
 
 <body>
+  <!-- Skip to main content для accessibility -->
+  <a href="#main-content" class="sr-only sr-only-focusable">Перейти до основного контенту</a>
 
-    <header class="site-header">
-        <div class="container">
-            <a href="{% url 'airinua:index' %}" class="logo-link">
-                <img src="{% static 'img/logo.png' %}" alt="Air In UA" class="logo">
-            </a>
+  <header class="site-header">
+    <div class="container">
+      <a href="{% url 'airinua:index' %}" class="logo-link">
+        <img src="{% static 'img/logo.png' %}" alt="Air In UA - Кондиціонери Київ" class="logo">
+      </a>
 
-            <!-- Бургер-меню для мобільних пристроїв -->
-            <div class="burger-menu">
-                <div class="burger-line"></div>
-                <div class="burger-line"></div>
-                <div class="burger-line"></div>
-            </div>
+      <!-- Бургер-меню для мобільних пристроїв -->
+      <div class="burger-menu">
+        <div class="burger-line"></div>
+        <div class="burger-line"></div>
+        <div class="burger-line"></div>
+      </div>
 
-            <nav class="nav">
-                <a href="{% url 'airinua:about' %}">Про нас</a>
-                <a href="{% url 'airinua:catalog' %}">Каталог</a>
-                <a href="{% url 'airinua:services' %}">Послуги</a>
-                <button class="cta-button call-me-button">Подзвоніть мені</button>
-            </nav>
-        </div>
-    </header>
-
-    <main>
-        {% block content %}
-        <!-- Сюди буде вставлятись унікальний контент кожної сторінки -->
-        {% endblock %}
-    </main>
-
-    <footer class="site-footer">
-        <div class="container">
-            <p>&copy; {% now "Y" %} Air In. Усі права захищено.</p>
-            <div class="footer-contacts">
-                <span class="footer-contacts-label">Контакти:</span>
-                <div class="footer-socials">
-                    <a href="#" class="footer-icon footer-icon-telegram" title="Telegram">Telegram</a>
-                    <a href="#" class="footer-icon footer-icon-viber" title="Viber">Viber</a>
-                    <a href="#" class="footer-icon footer-icon-gmail" title="Email">Email</a>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Модальне вікно для форми зворотного зв'язку -->
-    <div id="feedbackModal" class="modal feedback-modal">
-        <div class="modal-content feedback-modal-content">
-            <div class="modal-close feedback-modal-close">&times;</div>
-            <div class="modal-scroll-container">
-                <h2>Залишити заявку</h2>
-                {% include 'includes/feedback_form.html' %}
-            </div>
-        </div>
-        <div class="modal-overlay feedback-modal-overlay"></div>
+      <nav class="nav" role="navigation" aria-label="Головне меню">
+        <a href="{% url 'airinua:about' %}">Про нас</a>
+        <a href="{% url 'airinua:catalog' %}">Каталог</a>
+        <a href="{% url 'airinua:services' %}">Послуги</a>
+        <a href="{% url 'airinua:contacts' %}">Контакти</a>
+        <button class="cta-button call-me-button">Подзвоніть мені</button>
+      </nav>
     </div>
+  </header>
 
-    <script src="{% static 'js/main.js' %}" defer></script>
-    {% block scripts %}
-    <!-- Сюди можна додавати специфічні для сторінки скрипти -->
+  <main id="main-content">
+    {% block content %}
+    <!-- Сюди буде вставлятись унікальний контент кожної сторінки -->
     {% endblock %}
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <!-- Послуги компанії -->
+      <div class="footer-services">
+        <h3>Наші послуги у Києві:</h3>
+        <nav class="footer-nav" role="navigation" aria-label="Послуги">
+          <a href="{% url 'airinua:montazh-kondytsioneriv-kyiv' %}">Монтаж кондиціонерів</a>
+          <a href="{% url 'airinua:servis-kondytsioneriv-kyiv' %}">Сервіс кондиціонерів</a>
+          <a href="{% url 'airinua:chystka-kondytsioneriv-kyiv' %}">Чистка кондиціонерів</a>
+          <a href="{% url 'airinua:remont-kondytsioneriv-kyiv' %}">Ремонт кондиціонерів</a>
+          <a href="{% url 'airinua:zapravka-kondytsioneriv-kyiv' %}">Заправка кондиціонерів</a>
+        </nav>
+      </div>
+
+      <p>&copy; {% now "Y" %} Air In UA. Усі права захищено.</p>
+      <div class="footer-contacts">
+        <span class="footer-contacts-label">Контакти:</span>
+        <div class="footer-socials">
+          <a href="#" class="footer-icon footer-icon-telegram" title="Telegram">Telegram</a>
+          <a href="#" class="footer-icon footer-icon-viber" title="Viber">Viber</a>
+          <a href="#" class="footer-icon footer-icon-gmail" title="Email">Email</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Модальне вікно для форми зворотного зв'язку -->
+  <div id="feedbackModal" class="modal feedback-modal">
+    <div class="modal-content feedback-modal-content">
+      <div class="modal-close feedback-modal-close">&times;</div>
+      <div class="modal-scroll-container">
+        <h2>Залишити заявку</h2>
+        {% include 'includes/feedback_form.html' %}
+      </div>
+    </div>
+    <div class="modal-overlay feedback-modal-overlay"></div>
+  </div>
+
+  <script src="{% static 'js/main.js' %}" defer></script>
+  {% block scripts %}
+  <!-- Сюди можна додавати специфічні для сторінки скрипти -->
+  {% endblock %}
 </body>
 
 </html>

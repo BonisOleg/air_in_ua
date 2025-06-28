@@ -1,0 +1,19 @@
+User-agent: *
+Allow: /
+
+# Блокуємо службові сторінки
+Disallow: /admin/
+Disallow: /api/
+Disallow: /tmp/
+Disallow: /logs/
+Disallow: /passenger_wsgi.py
+Disallow: /*.txt$
+Disallow: /venv/
+
+# Дозволяємо статичні файли
+Allow: /static/
+Allow: /media/
+
+# Додаємо посилання на sitemap
+Sitemap: https://airinua.com/sitemap.xml
+Sitemap: https://airinua.com/sitemap-images.xml 

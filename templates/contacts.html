@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+
+{% block title %}Контакти - Air In UA | Кондиціонери у Києві{% endblock %}
+
+{% block meta_description %}Контакти компанії Air In UA. Телефон, адреса, графік роботи. Викликати майстра з
+кондиціонерів у Києві.{% endblock %}
+
+{% block content %}
+<div class="seo-page">
+    <div class="container">
+        <div class="seo-hero">
+            <h1>Контакти Air In UA</h1>
+            <p class="seo-subtitle">Зв'яжіться з нами для замовлення послуг з кондиціонерів у Києві</p>
+        </div>
+
+        <div class="seo-content">
+            <details class="seo-accordion" open>
+                <summary>
+                    <h2>Контактна інформація</h2>
+                </summary>
+                <div class="accordion-content">
+                    <div class="contact-info">
+                        <h3>📞 Телефон</h3>
+                        <p><a href="tel:+380XXXXXXXXX">+380 XX XXX XX XX</a></p>
+
+                        <h3>📍 Робочі райони</h3>
+                        <p>Київ та Київська область</p>
+
+                        <h3>🕐 Графік роботи</h3>
+                        <p>Пн-Нд: 8:00 - 20:00<br>
+                            Екстрені виклики: цілодобово</p>
+
+                        <h3>✉️ Email</h3>
+                        <p><a href="mailto:info@airinua.com">info@airinua.com</a></p>
+                    </div>
+                </div>
+            </details>
+
+            <details class="seo-accordion">
+                <summary>
+                    <h2>Райони обслуговування в Києві</h2>
+                </summary>
+                <div class="accordion-content">
+                    <div class="districts-grid">
+                        <div class="district-item">
+                            <h4>Центральні райони</h4>
+                            <ul>
+                                <li>Печерський район</li>
+                                <li>Шевченківський район</li>
+                                <li>Поділський район</li>
+                            </ul>
+                        </div>
+
+                        <div class="district-item">
+                            <h4>Лівий берег</h4>
+                            <ul>
+                                <li>Дніпровський район</li>
+                                <li>Дарницький район</li>
+                                <li>Позняки, Осокорки</li>
+                            </ul>
+                        </div>
+
+                        <div class="district-item">
+                            <h4>Правий берег</h4>
+                            <ul>
+                                <li>Солом'янський район</li>
+                                <li>Святошинський район</li>
+                                <li>Оболонський район</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </details>
+        </div>
+
+        <div class="cta-section">
+            <h2>Потрібна консультація?</h2>
+            <p>Зателефонуйте нам прямо зараз</p>
+            <button class="cta-button call-me-button">Подзвонити</button>
+        </div>
+    </div>
+</div>
+
+<!-- Schema.org LocalBusiness -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "Air In UA",
+  "description": "Продаж, монтаж, сервіс кондиціонерів у Києві",
+  "telephone": "+380XXXXXXXXX",
+  "email": "info@airinua.com",
+  "url": "https://airinua.com",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Київ",
+    "addressCountry": "UA"
+  },
+  "areaServed": [
+    {
+      "@type": "City",
+      "name": "Київ"
+    },
+    {
+      "@type": "State", 
+      "name": "Київська область"
+    }
+  ],
+  "openingHours": "Mo-Su 08:00-20:00",
+  "serviceType": [
+    "Монтаж кондиціонерів",
+    "Сервіс кондиціонерів", 
+    "Чистка кондиціонерів",
+    "Ремонт кондиціонерів"
+  ]
+}
+</script>
+{% endblock %}

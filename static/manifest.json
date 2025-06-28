@@ -1,0 +1,45 @@
+{
+    "name": "Air In UA - Кондиціонери Київ",
+    "short_name": "Air In UA",
+    "description": "Продаж, монтаж, сервіс кондиціонерів у Києві",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#C9EBFD",
+    "theme_color": "#358ED3",
+    "orientation": "portrait-primary",
+    "icons": [
+        {
+            "src": "/static/img/icon-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "/static/img/icon-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ],
+    "categories": [
+        "business",
+        "utilities"
+    ],
+    "lang": "uk",
+    "dir": "ltr",
+    "scope": "/",
+    "screenshots": [
+        {
+            "src": "/static/img/screenshot-wide.png",
+            "sizes": "1280x720",
+            "type": "image/png",
+            "form_factor": "wide"
+        },
+        {
+            "src": "/static/img/screenshot-narrow.png",
+            "sizes": "640x1136",
+            "type": "image/png",
+            "form_factor": "narrow"
+        }
+    ]
+}

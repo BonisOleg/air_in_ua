@@ -1,19 +1,139 @@
 {% extends 'base.html' %}
 
-{% block title %}Головна - {{ block.super }}{% endblock %}
+{% block title %}Кондиціонери Київ - Продаж, Монтаж, Сервіс | Air In UA{% endblock %}
+
+{% block meta_description %}Кондиціонери у Києві - продаж, монтаж, сервіс, чистка, ремонт. Професійні послуги з
+кондиціонування. Гарантія якості. ☎ Дзвоніть зараз!{% endblock %}
+
+{% block breadcrumb_schema %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Air In UA",
+  "url": "{{ request.build_absolute_uri }}",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": "{{ request.scheme }}://{{ request.get_host }}/catalog/?q={search_term_string}"
+    },
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Air In UA",
+  "url": "{{ request.build_absolute_uri }}",
+  "logo": "{% load static %}{{ request.scheme }}://{{ request.get_host }}{% static 'img/logo.png' %}",
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "telephone": "+380XXXXXXXXX",
+    "contactType": "customer service",
+    "availableLanguage": "Ukrainian"
+  },
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Київ",
+    "addressCountry": "UA"
+  },
+  "foundingDate": "2020",
+  "numberOfEmployees": "10-50",
+  "slogan": "Професійні послуги з кондиціонування у Києві"
+}
+</script>
+{% endblock %}
 
 {% block content %}
 
 <div class="main-title-container">
-    <h1 class="main-page-title">Air in UA</h1>
+    <h1 class="main-page-title">Кондиціонери у Києві</h1>
+    <p style="text-align: center; color: white; font-size: 1.2rem; margin-top: 1rem;">Продаж, монтаж, сервіс від
+        професіоналів</p>
 </div>
 
 <section class="hero-section">
     <div class="hero-option hero-option--catalog" data-url="{% url 'airinua:catalog' %}">
         <h2>Купити кондиціонер</h2>
+        <p>Великий вибір кондиціонерів з гарантією</p>
     </div>
     <div class="hero-option hero-option--services" data-url="{% url 'airinua:services' %}">
         <h2>Замовити послугу</h2>
+        <p>Монтаж, сервіс, чистка, ремонт</p>
+    </div>
+</section>
+
+<!-- Компактний SEO-блок -->
+<section class="seo-section" style="padding: 2rem 0; background: #f8f9fa;">
+    <div class="container">
+        <details class="seo-accordion">
+            <summary>
+                <h2>🏢 Air In UA - кондиціонери у Києві: послуги, райони, марки</h2>
+            </summary>
+            <div class="accordion-content" style="padding: 1.5rem 0;">
+
+                <!-- Послуги в одному рядку -->
+                <div
+                    style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
+                    <div style="text-align: center;">
+                        <h4>🛠️ <a href="{% url 'airinua:montazh-kondytsioneriv-kyiv' %}"
+                                style="color: #667eea; text-decoration: none;">Монтаж</a></h4>
+                        <p style="font-size: 0.9rem; margin: 0.5rem 0;">Гарантія 2 роки</p>
+                    </div>
+                    <div style="text-align: center;">
+                        <h4>🔧 <a href="{% url 'airinua:servis-kondytsioneriv-kyiv' %}"
+                                style="color: #667eea; text-decoration: none;">Сервіс</a></h4>
+                        <p style="font-size: 0.9rem; margin: 0.5rem 0;">Діагностика, ремонт</p>
+                    </div>
+                    <div style="text-align: center;">
+                        <h4>🧽 <a href="{% url 'airinua:chystka-kondytsioneriv-kyiv' %}"
+                                style="color: #667eea; text-decoration: none;">Чистка</a></h4>
+                        <p style="font-size: 0.9rem; margin: 0.5rem 0;">Дезінфекція</p>
+                    </div>
+                </div>
+
+                <!-- Райони компактно -->
+                <div style="margin-bottom: 2rem;">
+                    <h3 style="margin-bottom: 1rem; color: #333;">Райони Києва:</h3>
+                    <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; font-size: 0.9rem; line-height: 1.4;">
+                        <span style="background: #e3f2fd; padding: 0.3rem 0.6rem; border-radius: 4px;">Центр
+                            (Шевченківський, Печерський, Подільський)</span>
+                        <span style="background: #e8f5e8; padding: 0.3rem 0.6rem; border-radius: 4px;">Лівий берег
+                            (Дніпровський, Дарницький, Позняки)</span>
+                        <span style="background: #fff3e0; padding: 0.3rem 0.6rem; border-radius: 4px;">Правий берег
+                            (Оболонський, Солом'янський, Святошинський)</span>
+                        <span style="background: #fce4ec; padding: 0.3rem 0.6rem; border-radius: 4px;">Околиці
+                            (Деснянський, Голосіївський, Київська область)</span>
+                    </div>
+                </div>
+
+                <!-- Марки компактно -->
+                <div style="margin-bottom: 2rem;">
+                    <h3 style="margin-bottom: 1rem; color: #333;">Марки кондиціонерів:</h3>
+                    <div style="font-size: 0.9rem; line-height: 1.6;">
+                        <strong>Преміум:</strong> Daikin, Mitsubishi Electric, Fujitsu, Panasonic •
+                        <strong>Середній:</strong> LG, Samsung, Gree, Midea •
+                        <strong>Бюджет:</strong> Cooper&Hunter, TCL, Haier, Chigo
+                    </div>
+                </div>
+
+                <!-- Виклик майстра -->
+                <div
+                    style="text-align: center; background: linear-gradient(135deg, #fff3cd 0%, #ffffff 100%); padding: 1.5rem; border-radius: 8px; border-left: 4px solid #ffc107;">
+                    <h4 style="margin: 0 0 0.5rem 0; color: #856404;">📞 Коли дзвонити:</h4>
+                    <p style="margin: 0 0 1rem 0; font-size: 0.9rem; color: #6c5600;">🚨 Терміново: не включається,
+                        протікає, запах • ⏰ Планово: погіршення охолодження, шум</p>
+                    <button class="cta-button call-me-button">Викликати майстра</button>
+                    <p style="margin: 0.5rem 0 0 0; font-size: 0.8rem; color: #666;">Виїзд протягом години в межах Києва
+                    </p>
+                </div>
+
+            </div>
+        </details>
     </div>
 </section>
 

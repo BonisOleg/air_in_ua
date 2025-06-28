@@ -1,0 +1,261 @@
+{% extends 'base.html' %}
+
+{% block title %}Ремонт кондиціонерів Київ - Швидко та Якісно | Air In UA{% endblock %}
+
+{% block meta_description %}Ремонт кондиціонерів у Києві ⚡ Виїзд майстра протягом години. Діагностика, заміна деталей,
+гарантія на роботи. ☎ Дзвоніть зараз!{% endblock %}
+
+{% block meta_keywords %}ремонт кондиціонерів Київ, майстер кондиціонерів Київ, діагностика кондиціонера, заміна компресора, ремонт сплит-системи{% endblock %}
+
+{% block breadcrumb_schema %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Головна",
+      "item": "{{ request.scheme }}://{{ request.get_host }}{% url 'airinua:index' %}"
+    },
+    {
+      "@type": "ListItem", 
+      "position": 2,
+      "name": "Ремонт кондиціонерів Київ",
+      "item": "{{ request.build_absolute_uri }}"
+    }
+  ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "Ремонт кондиціонерів у Києві",
+  "description": "Професійний ремонт кондиціонерів всіх марок з гарантією. Швидкий виїзд майстра, діагностика, заміна деталей.",
+  "provider": {
+    "@type": "LocalBusiness",
+    "name": "Air In UA",
+    "telephone": "+380XXXXXXXXX",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Київ",
+      "addressCountry": "UA"
+    }
+  },
+  "areaServed": {
+    "@type": "City",
+    "name": "Київ"
+  },
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Послуги ремонту кондиціонерів",
+    "itemListElement": [
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Діагностика кондиціонера"
+        },
+        "priceSpecification": {
+          "@type": "PriceSpecification",
+          "price": "300",
+          "priceCurrency": "UAH"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Заміна компресора"
+        },
+        "priceSpecification": {
+          "@type": "PriceSpecification",
+          "price": "3500",
+          "priceCurrency": "UAH"
+        }
+      }
+    ]
+  }
+}
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="seo-page">
+    <!-- Hero секція -->
+    <section class="seo-hero">
+        <div class="container">
+            <h1>Ремонт кондиціонерів у Києві</h1>
+            <p class="seo-subtitle">Швидкий виїзд майстра • Діагностика • Гарантія на роботи</p>
+            <div class="cta-section">
+                <button class="cta-button call-me-button">Викликати майстра</button>
+                <p>Виїзд протягом години</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Основний контент -->
+    <section class="seo-content">
+        <div class="container">
+
+            <!-- Ознаки поломки -->
+            <details class="seo-accordion">
+                <summary>
+                    <h2>🚨 Ознаки того, що кондиціонер потребує ремонту</h2>
+                </summary>
+                <div class="accordion-content">
+                    <div class="warning-signs">
+                        <div class="sign-item">
+                            <h4>❄️ Не холодить</h4>
+                            <p>Кондиціонер працює, але не охолоджує повітря або охолоджує недостатньо</p>
+                        </div>
+                        <div class="sign-item">
+                            <h4>💧 Протікає вода</h4>
+                            <p>З внутрішнього блоку капає або тече вода на підлогу</p>
+                        </div>
+                        <div class="sign-item">
+                            <h4>🔊 Дивні звуки</h4>
+                            <p>Кондиціонер видає незвичні звуки: гудіння, клацання, скрип</p>
+                        </div>
+                        <div class="sign-item">
+                            <h4>💨 Слабкий потік повітря</h4>
+                            <p>Повітря виходить слабким потоком або взагалі не виходить</p>
+                        </div>
+                        <div class="sign-item">
+                            <h4>⚡ Часто вимикається</h4>
+                            <p>Кондиціонер самостійно вимикається або не включається</p>
+                        </div>
+                        <div class="sign-item">
+                            <h4>🦠 Неприємний запах</h4>
+                            <p>З кондиціонера йде затхлий, кислий або інший неприємний запах</p>
+                        </div>
+                    </div>
+                </div>
+            </details>
+
+            <!-- Типи ремонту -->
+            <details class="seo-accordion">
+                <summary>
+                    <h2>🔧 Типи ремонту кондиціонерів</h2>
+                </summary>
+                <div class="accordion-content">
+                    <h3>Поточний ремонт</h3>
+                    <ul>
+                        <li>Очищення фільтрів та теплообмінників</li>
+                        <li>Дозаправка фреоном</li>
+                        <li>Заміна дренажної помпи</li>
+                        <li>Ремонт електронної плати</li>
+                    </ul>
+
+                    <h3>Капітальний ремонт</h3>
+                    <ul>
+                        <li>Заміна компресора</li>
+                        <li>Ремонт теплообмінника</li>
+                        <li>Заміна вентилятора</li>
+                        <li>Повна заміна електроніки</li>
+                    </ul>
+
+                    <h3>Аварійний ремонт</h3>
+                    <ul>
+                        <li>Усунення протікання фреону</li>
+                        <li>Ремонт після короткого замикання</li>
+                        <li>Відновлення після попадання води</li>
+                    </ul>
+                </div>
+            </details>
+
+            <!-- Ціни -->
+            <details class="seo-accordion">
+                <summary>
+                    <h2>💰 Ціни на ремонт кондиціонерів у Києві</h2>
+                </summary>
+                <div class="accordion-content">
+                    <div class="price-table">
+                        <div class="price-row">
+                            <span>Діагностика</span>
+                            <span>300 грн</span>
+                        </div>
+                        <div class="price-row">
+                            <span>Дозаправка фреоном</span>
+                            <span>від 800 грн</span>
+                        </div>
+                        <div class="price-row">
+                            <span>Заміна компресора</span>
+                            <span>від 3500 грн</span>
+                        </div>
+                        <div class="price-row">
+                            <span>Ремонт електронної плати</span>
+                            <span>від 1200 грн</span>
+                        </div>
+                        <div class="price-row">
+                            <span>Заміна вентилятора</span>
+                            <span>від 1500 грн</span>
+                        </div>
+                        <div class="price-row">
+                            <span>Усунення протікання</span>
+                            <span>від 600 грн</span>
+                        </div>
+                    </div>
+                    <p><strong>* Точна вартість залежить від марки кондиціонера та складності ремонту</strong></p>
+                </div>
+            </details>
+
+            <!-- FAQ -->
+            <details class="seo-accordion">
+                <summary>
+                    <h2>❓ Часті питання про ремонт кондиціонерів</h2>
+                </summary>
+                <div class="accordion-content">
+                    <div class="faq-item">
+                        <h4>Скільки часу займає ремонт кондиціонера?</h4>
+                        <p>Поточний ремонт зазвичай займає 1-3 години. Капітальний ремонт може потребувати 1-2 дні,
+                            залежно від наявності запчастин.</p>
+                    </div>
+                    <div class="faq-item">
+                        <h4>Чи надаєте гарантію на ремонт?</h4>
+                        <p>Так, ми надаємо гарантію 6 місяців на виконані роботи та 1 рік на встановлені запчастини.</p>
+                    </div>
+                    <div class="faq-item">
+                        <h4>Які марки кондиціонерів ремонтуєте?</h4>
+                        <p>Ми ремонтуємо кондиціонери всіх популярних марок: Daikin, Mitsubishi, LG, Samsung, Gree,
+                            Cooper&Hunter та інші.</p>
+                    </div>
+                    <div class="faq-item">
+                        <h4>Чи можна відремонтувати старий кондиціонер?</h4>
+                        <p>Так, ми ремонтуємо кондиціонери будь-якого віку. Однак для дуже старих моделей може бути
+                            складно знайти оригінальні запчастини.</p>
+                    </div>
+                </div>
+            </details>
+
+            <!-- Процес роботи -->
+            <details class="seo-accordion">
+                <summary>
+                    <h2>📋 Як проходить ремонт кондиціонера</h2>
+                </summary>
+                <div class="accordion-content">
+                    <ol>
+                        <li><strong>Виклик майстра</strong> - Ви дзвоните, ми приїжджаємо протягом години</li>
+                        <li><strong>Діагностика</strong> - Визначаємо причину поломки та складаємо кошторис</li>
+                        <li><strong>Погодження</strong> - Узгоджуємо вартість та терміни ремонту</li>
+                        <li><strong>Ремонт</strong> - Виконуємо необхідні роботи з якісними запчастинами</li>
+                        <li><strong>Тестування</strong> - Перевіряємо роботу кондиціонера у всіх режимах</li>
+                        <li><strong>Гарантія</strong> - Надаємо гарантійний талон та рекомендації</li>
+                    </ol>
+                </div>
+            </details>
+
+            <!-- CTA секція -->
+            <div class="cta-section">
+                <h2>Потрібен ремонт кондиціонера?</h2>
+                <p>Наші майстри приїдуть протягом години та швидко усунуть поломку</p>
+                <button class="cta-button call-me-button">Викликати майстра зараз</button>
+            </div>
+
+        </div>
+    </section>
+</div>
+{% endblock %}

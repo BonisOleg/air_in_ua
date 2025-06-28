@@ -60,8 +60,21 @@ def catalog_view(request):
 
 def services_view(request):
     """Відображає сторінку з переліком послуг."""
-    services = Service.objects.all() # Отримуємо всі послуги
-    # Форма тепер глобально в контексті
+    # Отримуємо всі послуги та сортуємо їх за зображенням та ціною
+    services = list(Service.objects.all())
+    
+    # Перемішуємо послуги так, щоб однакові зображення не були поруч
+    if len(services) > 1:
+        for i in range(len(services)-1):
+            # Якщо поточна послуга має таке ж зображення як наступна
+            if services[i].image == services[i+1].image:
+                # Шукаємо послугу з іншим зображенням для обміну
+                for j in range(i+2, len(services)):
+                    if services[j].image != services[i].image:
+                        # Міняємо місцями послуги
+                        services[i+1], services[j] = services[j], services[i+1]
+                        break
+    
     context = {
         'services': services,
     }
@@ -229,3 +242,45 @@ def error_403_view(request, exception=None):
     Обробник для помилки 403 (Доступ заборонено)
     """
     return render(request, 'errors/403.html', status=403)
+
+# --- SEO-оптимізовані сторінки послуг ---
+
+def montazh_view(request):
+    """Сторінка монтажу кондиціонерів у Києві."""
+    context = {}
+    return render(request, 'montazh-kondytsioneriv.html', context)
+
+def servis_view(request):
+    """Сторінка сервісу кондиціонерів у Києві."""
+    context = {}
+    return render(request, 'servis-kondytsioneriv.html', context)
+
+def chystka_view(request):
+    """Сторінка чистки кондиціонерів у Києві."""
+    context = {}
+    return render(request, 'chystka-kondytsioneriv.html', context)
+
+def remont_view(request):
+    """Сторінка ремонту кондиціонерів у Києві."""
+    context = {}
+    return render(request, 'remont-kondytsioneriv.html', context)
+
+def zapravka_view(request):
+    """Сторінка заправки кондиціонерів у Києві.""" 
+    context = {}
+    return render(request, 'zapravka-kondytsioneriv.html', context)
+
+def contacts_view(request):
+    """Сторінка контактів."""
+    context = {}
+    return render(request, 'contacts.html', context)
+
+def portfolio_view(request):
+    """Сторінка портфоліо."""
+    context = {}
+    return render(request, 'portfolio.html', context)
+
+def faq_view(request):
+    """Сторінка часто задаваних питань."""
+    context = {}
+    return render(request, 'faq.html', context)
