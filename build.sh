@@ -9,4 +9,8 @@ mkdir -p logs
 pip install -r requirements.txt
 
 # Collect static files
-python manage.py collectstatic --no-input 
+python manage.py collectstatic --no-input
+python manage.py migrate
+
+# Створюємо послуги після міграції
+python manage.py populate_services 
