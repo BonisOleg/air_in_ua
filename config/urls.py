@@ -22,6 +22,7 @@ from django.conf.urls.static import static
 from airinua.admin import admin_site # Якщо використовуєш кастомну адмінку
 from django.contrib.sitemaps.views import sitemap
 from airinua.sitemaps import StaticViewSitemap, ProductSitemap, ServiceSitemap
+from django.views.generic import RedirectView
 
 sitemaps = {
     'static': StaticViewSitemap,
@@ -34,6 +35,10 @@ urlpatterns = [
     path('uaadmin/', admin_site.urls), # Якщо використовуєш кастомну адмінку
     path('', include('airinua.urls')), # Підключення URL додатку airinua
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
+    
+    # Favicon та інші статичні файли
+    path('favicon.ico', RedirectView.as_view(url='/static/img/favicon/favicon.ico', permanent=True)),
+    path('robots.txt', RedirectView.as_view(url='/static/robots.txt', permanent=True)),
 ]
 
 # Статичні файли (CSS, JavaScript, Images) в режимі Debug
