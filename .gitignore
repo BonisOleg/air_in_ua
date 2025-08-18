@@ -51,6 +51,9 @@ media/services/
 !static/img/favicon/
 !static/img/favicon/**
 
+# НЕ ігноруємо .gitkeep файли для збереження структури папок
+!media/**/.gitkeep
+
 # IDE / Editor specific files
 .idea/
 .vscode/

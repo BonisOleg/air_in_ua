@@ -10,6 +10,10 @@ pip install -r requirements.txt
 
 # Collect static files
 python manage.py collectstatic --no-input
+
+# Create media directories for file uploads
+python manage.py create_media_dirs
+
 python manage.py migrate
 
 # Створюємо послуги після міграції
