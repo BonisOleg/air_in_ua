@@ -19,9 +19,37 @@ db.sqlite3
 # Django Static files collected by collectstatic
 staticfiles/
 
-# Media files
-mediafiles/
+# Media files (динамічно створені Django)
 media/
+mediafiles/
+media/uploads/
+media/products/
+media/services/
+
+# Зображення та медіа файли
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.bmp
+*.tiff
+*.webp
+*.svg
+*.ico
+*.mp4
+*.avi
+*.mov
+*.wmv
+*.flv
+*.mp3
+*.wav
+*.ogg
+
+# НЕ ігноруємо статичні зображення дизайну
+!static/img/
+!static/img/**
+!static/img/favicon/
+!static/img/favicon/**
 
 # IDE / Editor specific files
 .idea/
