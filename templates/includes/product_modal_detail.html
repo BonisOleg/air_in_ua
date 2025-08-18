@@ -2,8 +2,8 @@
     <h3>{{ product.name }}</h3>
     <p>{{ product.description }}</p>
     <p><strong>{{ product.price }} грн</strong></p>
-    {% if product.image %}
-    <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-detail-image">
+    {% if product.image_url %}
+    <img src="{{ product.image_url }}" alt="{{ product.name }}" class="product-detail-image">
     {% endif %}
     <div class="feedback-form-modal-container">
         {% include 'includes/feedback_form.html' with form=feedback_form product=product %}

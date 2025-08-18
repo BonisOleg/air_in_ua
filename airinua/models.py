@@ -41,7 +41,14 @@ class Product(models.Model):
     btu = models.CharField(max_length=3, choices=BTU_CHOICES, verbose_name=_("Потужність (BTU)"))
     area_coverage = models.CharField(max_length=3, choices=AREA_CHOICES, verbose_name=_("Площа покриття (м²)"))
     description = models.TextField(blank=True, verbose_name=_("Опис"))
-    image = models.ImageField(upload_to='products/', verbose_name=_("Основне зображення"), blank=True, null=True)
+    # Для production (Render) використовуємо URL замість ImageField
+    image_url = models.URLField(
+        max_length=500, 
+        blank=True, 
+        null=True, 
+        verbose_name=_("URL зображення"),
+        help_text=_("URL зображення з Cloudinary або іншого хмарного сервісу")
+    )
     is_available = models.BooleanField(default=True, verbose_name=_("В наявності"))
 
     def __str__(self):
@@ -70,7 +77,13 @@ class Service(models.Model):
 
 class ProductImage(models.Model):
     product = models.ForeignKey(Product, related_name='images', on_delete=models.CASCADE, verbose_name=_("Товар"))
-    image = models.ImageField(upload_to='products/gallery/', verbose_name=_("Зображення"))
+    image_url = models.URLField(
+        max_length=500, 
+        blank=True, 
+        null=True, 
+        verbose_name=_("URL зображення"),
+        help_text=_("URL зображення з Cloudinary або іншого хмарного сервісу")
+    )
     alt_text = models.CharField(max_length=255, blank=True, verbose_name=_("Альтернативний текст (для SEO)"))
     # Можна додати порядок сортування, якщо потрібно
     # sort_order = models.PositiveIntegerField(default=0, blank=False, null=False) 

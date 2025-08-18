@@ -1,14 +1,14 @@
 {% load static %}
 
 <article class="article-card product-card" data-id="{{ product.id }}"
-    data-image-src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/placeholder.png' %}{% endif %}"
+    data-image-src="{% if product.image_url %}{{ product.image_url }}{% else %}{% static 'img/placeholder.png' %}{% endif %}"
     data-title="{{ product.name }}" data-price="{{ product.price }}"
     data-modal-content-id="product-{{ product.id }}-content">
 
     <a href="#" class="article-card-image-link article-modal-trigger">
         <div class="article-card-image">
-            {% if product.image %}
-            <img src="{{ product.image.url }}" alt="{{ product.name }}">
+            {% if product.image_url %}
+            <img src="{{ product.image_url }}" alt="{{ product.name }}">
             {% else %}
             <img src="{% static 'img/placeholder.png' %}" alt="Фото відсутнє" class="product-image-placeholder">
             {% endif %}

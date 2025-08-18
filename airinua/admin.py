@@ -28,7 +28,7 @@ admin_site = UAAdminSite(name='uaadmin')
 class ProductImageInline(admin.TabularInline):
     model = ProductImage
     extra = 1 # Показувати одне порожнє поле для додавання за замовчуванням
-    fields = ('image', 'alt_text') # Поля для редагування
+    fields = ('image_url', 'alt_text') # Поля для редагування
     # Якщо додали сортування, можна використати readonly_fields = ('sort_order',)
     
 # --- Кастомна форма для масового додавання з полями галереї ---
@@ -47,7 +47,7 @@ class ProductBulkForm(forms.ModelForm):
 
     class Meta:
         model = Product
-        fields = ('name', 'manufacturer', 'price', 'btu', 'area_coverage', 'image', 'is_available',
+        fields = ('name', 'manufacturer', 'price', 'btu', 'area_coverage', 'image_url', 'is_available',
                   # Не додаємо gallery_image сюди напряму, вони йдуть окремо
                  )
 
@@ -70,7 +70,7 @@ class ProductAdmin(admin.ModelAdmin):
             'fields': ('btu', 'area_coverage', 'description')
         }),
         (_("Головне зображення (для картки)"), { # Уточнено назву секції
-            'fields': ('image', 'is_available')
+            'fields': ('image_url', 'is_available')
         }),
     )
 

@@ -166,9 +166,18 @@ STATIC_ROOT = BASE_DIR / 'staticfiles' # Куди collectstatic збере фа�
 # Дуже важливо для роботи з статикою на cPanel
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# Media files
+# Media files - Cloudinary для production
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media/' # Використовуємо BASE_DIR / 'media'
+
+# Cloudinary налаштування для збереження медіафайлів
+CLOUDINARY_CLOUD_NAME = os.environ.get('CLOUDINARY_CLOUD_NAME', '')
+CLOUDINARY_API_KEY = os.environ.get('CLOUDINARY_API_KEY', '')
+CLOUDINARY_API_SECRET = os.environ.get('CLOUDINARY_API_SECRET', '')
+
+# Використовуємо Cloudinary storage для production
+if not DEBUG and CLOUDINARY_CLOUD_NAME:
+    DEFAULT_FILE_STORAGE = 'airinua.storage.CloudinaryStorage'
 
 # Default primary key field type
 

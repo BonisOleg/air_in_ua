@@ -38,4 +38,15 @@ services:
       # - key: ADMIN_EMAIL
       #   value: "your_admin_email"
       # - key: DEFAULT_FROM_EMAIL
-      #   value: "your_default_from_email" 
+      #   value: "your_default_from_email"
+      
+      # Cloudinary налаштування для збереження медіафайлів
+      - key: CLOUDINARY_CLOUD_NAME
+        value: "your_cloud_name" # ЗАМІНІТЬ на ваш Cloudinary cloud name
+        sync: false
+      - key: CLOUDINARY_API_KEY
+        value: "your_api_key" # ЗАМІНІТЬ на ваш Cloudinary API key
+        sync: false
+      - key: CLOUDINARY_API_SECRET
+        value: "your_api_secret" # ЗАМІНІТЬ на ваш Cloudinary API secret
+        sync: false 
