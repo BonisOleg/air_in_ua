@@ -88,7 +88,6 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware', # Додано для Whitenoise
-    'airinua.middleware.MediaFileMiddleware', # Додано для обслуговування медіа файлів на Render
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -170,14 +169,14 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media/' # Використовуємо BASE_DIR / 'media'
 
-# Cloudinary налаштування для збереження медіафайлів
+# Cloudinary налаштування для збереження медіафайлів (залишаємо для майбутнього використання)
 CLOUDINARY_CLOUD_NAME = os.environ.get('CLOUDINARY_CLOUD_NAME', '')
 CLOUDINARY_API_KEY = os.environ.get('CLOUDINARY_API_KEY', '')
 CLOUDINARY_API_SECRET = os.environ.get('CLOUDINARY_API_SECRET', '')
 
-# Використовуємо Cloudinary storage для production
-if not DEBUG and CLOUDINARY_CLOUD_NAME:
-    DEFAULT_FILE_STORAGE = 'airinua.storage.CloudinaryStorage'
+# Використовуємо URLField замість ImageField, тому storage не потрібен
+# if not DEBUG and CLOUDINARY_CLOUD_NAME:
+#     DEFAULT_FILE_STORAGE = 'airinua.storage.CloudinaryStorage'
 
 # Default primary key field type
 
