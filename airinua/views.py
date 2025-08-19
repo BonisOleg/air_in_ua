@@ -27,6 +27,10 @@ def catalog_view(request):
     product_list = Product.objects.filter(is_available=True) # Спочатку просто фільтруємо
     manufacturers = Manufacturer.objects.all() # Отримуємо виробників для фільтра
     feedback_form = FeedbackForm() # Створюємо екземпляр форми
+    
+    # Додаткова перевірка для manufacturers
+    if not manufacturers.exists():
+        manufacturers = []
 
     # Отримуємо параметр сортування
     sort_by = request.GET.get('sort_by', '')
@@ -52,7 +56,7 @@ def catalog_view(request):
     
     context = {
         # 'products': products, # Замінюємо повний список на об'єкт сторінки
-        'page_obj': page_obj,
+        'page_obj': page_obj if page_obj else None,
         'manufacturers': manufacturers, # Передаємо виробників
         'form': feedback_form, # Додаємо форму до контексту
     }

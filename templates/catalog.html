@@ -24,9 +24,13 @@
             <div class="filter-group">
                 <select name="manufacturer" class="filter-input">
                     <option value="">Усі виробники</option>
-                    {% for m in manufacturers %}
-                    <option value="{{ m.id }}">{{ m.name }}</option>
-                    {% endfor %}
+                    {% if manufacturers %}
+                        {% for m in manufacturers %}
+                            {% if m and m.id and m.name %}
+                            <option value="{{ m.id }}">{{ m.name }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
                 </select>
             </div>
 
