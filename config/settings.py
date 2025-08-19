@@ -30,7 +30,8 @@ load_dotenv(BASE_DIR / '.env', override=True)
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', get_random_secret_key())
 
 # DEBUG: True локально, False на Render
-DEBUG = 'RENDER' not in os.environ
+# ТИМЧАСОВО увімкнено для дебагу
+DEBUG = True
 
 # Читай список хостів з оточення (розділених комою)
 ALLOWED_HOSTS_STRING = os.environ.get('DJANGO_ALLOWED_HOSTS', '')
@@ -203,20 +204,25 @@ LOGGING = {
     'handlers': {
         'console': {'class': 'logging.StreamHandler'},
         'file': {
-            'level': 'WARNING',
+            'level': 'DEBUG',  # Змінено на DEBUG для детального логування
             'class': 'logging.FileHandler',
-            'filename': BASE_DIR / 'logs/django.log', # Переконайся, що папка logs існує і має права на запис
+            'filename': BASE_DIR / 'logs/django.log',
         },
     },
     'loggers': {
         'django': {
             'handlers': ['console', 'file'],
-            'level': os.environ.get('DJANGO_LOG_LEVEL', 'INFO'),
+            'level': 'DEBUG',  # Змінено на DEBUG
             'propagate': True,
         },
         'django.request': {
-            'handlers': ['file'],
-            'level': 'ERROR',
+            'handlers': ['console', 'file'],  # Додано console
+            'level': 'DEBUG',  # Змінено на DEBUG
+            'propagate': True,
+        },
+        'django.db.backends': {  # Додано логування SQL запитів
+            'handlers': ['console'],
+            'level': 'DEBUG',
             'propagate': True,
         },
     },
