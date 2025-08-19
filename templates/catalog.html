@@ -76,7 +76,7 @@
         <!-- Сітка товарів з анімацією появи -->
         <div class="articles-grid reveal-on-scroll" id="product-list-container">
             {% if page_obj %}
-                {% for product in page_obj %}
+            {% for product in page_obj %}
             <article class="article-card product-card" data-id="{{ product.id }}"
                 data-image-src="{% if product.image_url %}{{ product.image_url }}{% else %}{% static 'img/placeholder.png' %}{% endif %}"
                 data-title="{{ product.name }}" data-price="{{ product.price }}"
@@ -105,11 +105,11 @@
                     <button class="button article-modal-trigger">Детальніше</button>
                 </div>
             </article>
-                {% empty %}
-                <p class="no-products-message">Наразі немає доступних товарів за вашим запитом.</p>
-                {% endfor %}
+            {% empty %}
+            <p class="no-products-message">Наразі немає доступних товарів за вашим запитом.</p>
+            {% endfor %}
             {% else %}
-                <p class="no-products-message">Помилка завантаження товарів.</p>
+            <p class="no-products-message">Помилка завантаження товарів.</p>
             {% endif %}
         </div>
 
@@ -144,7 +144,7 @@
 <!-- Приховані повні описи товарів для модальних вікон -->
 <div class="modal-product-content-storage" id="modalProductContentStorage">
     {% if page_obj %}
-        {% for product in page_obj %}
+    {% for product in page_obj %}
     <div id="product-{{ product.id }}-content">
         {# Замінюємо старий блок зображення на нову галерею #}
         <div class="product-gallery-container">
@@ -202,8 +202,8 @@
         <div class="product-actions">
             <button class="cta-button product-order-btn" data-product-id="{{ product.id }}">Замовити</button>
         </div>
-            </div>
-        {% endfor %}
+    </div>
+    {% endfor %}
     {% endif %}
 </div>
 
