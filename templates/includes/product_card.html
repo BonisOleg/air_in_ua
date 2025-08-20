@@ -1,9 +1,6 @@
 {% load static %}
 
-<article class="article-card product-card" data-id="{{ product.id }}"
-    data-image-src="{% if product.image_url %}{{ product.image_url }}{% else %}{% static 'img/placeholder.png' %}{% endif %}"
-    data-title="{{ product.name }}" data-price="{{ product.price }}"
-    data-modal-content-id="product-{{ product.id }}-content">
+<article class="article-card product-card" data-id="{{ product.id }}">
 
     <a href="{{ product.get_absolute_url }}" class="article-card-image-link">
         <div class="article-card-image">

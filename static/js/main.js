@@ -103,7 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Функція для ініціалізації кнопок замовлення ---
     function initOrderButtonEvents() {
-        // Обробники для кнопок замовлення поза модальними вікнами
+        // Обробники для кнопок замовлення всюди (включаючи сторінки деталей товарів)
         document.querySelectorAll('.product-order-btn, .cta-button[data-product-id], .cta-button[data-service-id]').forEach(button => {
             // Перевіряємо чи вже є обробник
             if (button.hasAttribute('data-listener-added')) return;
@@ -131,7 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Функція для ініціалізації всіх подій на картках товарів ---
     function initProductCardEvents() {
-        // Ініціалізуємо модальні вікна товарів
+        // Ініціалізуємо модальні вікна тільки для послуг (не для товарів)
         document.querySelectorAll('.article-modal-trigger').forEach(trigger => {
             trigger.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -243,6 +243,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Запускаємо всі необхідні ініціалізації під час завантаження сторінки
     initProductCardEvents();
+    initOrderButtonEvents(); // Додано для сторінок деталей товарів
     observeElements();
 
     // --- Логіка для модального вікна деталей товару ---
@@ -250,53 +251,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const productModalContent = document.getElementById('product-modal-content');
     const productModalCloseButton = productModal ? productModal.querySelector('.modal-close') : null;
 
-    function initializeProductCardClicks() {
-        const productCards = document.querySelectorAll('#product-list-container .product-card');
-        productCards.forEach(card => {
-            if (!card.dataset.clickListenerAdded) {
-                card.addEventListener('click', function () {
-                    const productId = this.dataset.id;
-                    productModalContent.innerHTML = '<p>Завантаження...</p><button class="modal-close">Закрити</button>';
-                    productModal.style.display = 'flex';
-
-                    fetch(`/api/product/${productId}/`)
-                        .then(response => response.text())
-                        .then(html => {
-                            productModalContent.innerHTML = html;
-                            // Знаходимо форму ПІСЛЯ додавання HTML
-                            const modalForm = productModalContent.querySelector('#feedback-form-actual');
-                            if (modalForm) {
-                                // Додаємо обробник submit до форми в модалці товару
-                                addSubmitHandlerToForm(modalForm);
-                            }
-                            // Додаємо кнопку закриття
-                            const closeBtn = productModalContent.querySelector('.modal-close');
-                            if (closeBtn) {
-                                closeBtn.addEventListener('click', closeProductModal);
-                            }
-                        })
-                        .catch(error => {
-                            console.error('Product detail error:', error);
-                            productModalContent.innerHTML = `<p>${error.message}</p>`;
-                            if (productModalCloseButton) {
-                                productModalContent.appendChild(productModalCloseButton.cloneNode(true));
-                                const errorCloseButton = productModalContent.querySelector('.modal-close');
-                                if (errorCloseButton) {
-                                    errorCloseButton.addEventListener('click', closeProductModal);
-                                }
-                            } else {
-                                productModalContent.innerHTML += '<button class="modal-close">Закрити</button>';
-                                const newErrorCloseButton = productModalContent.querySelector('.modal-close');
-                                if (newErrorCloseButton) {
-                                    newErrorCloseButton.addEventListener('click', closeProductModal);
-                                }
-                            }
-                        });
-                });
-                card.dataset.clickListenerAdded = 'true';
-            }
-        });
-    }
+    // Функція initializeProductCardClicks видалена - тепер товари відкриваються за звичайними посиланнями
 
     // --- Універсальна функція додавання обробника submit ---
     function addSubmitHandlerToForm(formElement) {
@@ -392,7 +347,7 @@ document.addEventListener('DOMContentLoaded', () => {
         productModalCloseButton.addEventListener('click', closeProductModal);
     }
 
-    initializeProductCardClicks();
+    // initializeProductCardClicks(); - видалено, товари тепер відкриваються за посиланнями
     observeElements();
 
     // --- Обробник для кнопок, що відкривають ГЛОБАЛЬНУ форму без ID --- 
