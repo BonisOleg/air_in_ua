@@ -11,10 +11,8 @@ pip install -r requirements.txt
 # Collect static files
 python manage.py collectstatic --no-input
 
-# Create media directories for file uploads
-python manage.py create_media_dirs
-
+# Run migrations
 python manage.py migrate
 
-# Створюємо послуги після міграції
-python manage.py populate_services 
+# Create superuser if not exists (optional)
+# echo "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser('admin', 'admin@example.com', 'admin') if not User.objects.filter(username='admin').exists() else None" | python manage.py shell 

@@ -1,52 +1,53 @@
 databases:
-  - name: mysitedb # Ви можете змінити це ім'я
-    plan: free # Або інший план, якщо потрібно
-    databaseName: mysite # Назва бази даних
-    user: mysiteuser # Ім'я користувача БД
+  - name: climatedb
+    plan: free
+    databaseName: climatic
+    user: climaticuser
 
 services:
   - type: web
-    name: climat-app # Назва вашого сервісу на Render (використав climat-app)
+    name: airinua-app
     runtime: python
-    plan: free # Або інший план
+    plan: free
     buildCommand: "./build.sh"
-    startCommand: "python manage.py migrate && gunicorn config.wsgi:application" # Спочатку міграції, потім запуск
+    startCommand: "gunicorn config.wsgi:application"
     envVars:
       - key: DATABASE_URL
         fromDatabase:
-          name: mysitedb # Має збігатися з 'name' у секції databases
+          name: climatedb
           property: connectionString
       - key: DJANGO_SECRET_KEY
-        generateValue: true # Render згенерує випадковий ключ
+        generateValue: true
       - key: WEB_CONCURRENCY
-        value: 4 # Рекомендоване значення, можна налаштувати
+        value: 4
       - key: PYTHON_VERSION
-        value: "3.11.9" # Вказано повну версію для Render
+        value: "3.11.9"
       - key: DJANGO_LOG_LEVEL
-        value: "INFO"
+        value: "DEBUG"
       - key: DJANGO_SECURE_HSTS_SECONDS
         value: "31536000"
       - key: DJANGO_ALLOWED_HOSTS
         value: "www.airinua.com,airinua.com"
-      # Обов'язково додайте ваші змінні для пошти та інші сюди або в панелі Render:
-      # - key: DJANGO_ALLOWED_HOSTS
-      #   value: "your-app-name.onrender.com" # Замініть your-app-name
-      # - key: EMAIL_HOST_USER
-      #   value: "your_email_user"
-      # - key: EMAIL_HOST_PASSWORD
-      #   sync: false # Для секретів краще встановлювати через панель Render
-      # - key: ADMIN_EMAIL
-      #   value: "your_admin_email"
-      # - key: DEFAULT_FROM_EMAIL
-      #   value: "your_default_from_email"
-      
-      # Cloudinary налаштування для збереження медіафайлів
+      - key: DEBUG
+        value: "True"
+      - key: EMAIL_HOST_USER
+        value: "your_email_user"
+        sync: false
+      - key: EMAIL_HOST_PASSWORD
+        value: "your_email_password"
+        sync: false
+      - key: ADMIN_EMAIL
+        value: "your_admin_email"
+        sync: false
+      - key: DEFAULT_FROM_EMAIL
+        value: "your_default_from_email"
+        sync: false
       - key: CLOUDINARY_CLOUD_NAME
-        value: "your_cloud_name" # ЗАМІНІТЬ на ваш Cloudinary cloud name
+        value: "your_cloud_name"
         sync: false
       - key: CLOUDINARY_API_KEY
-        value: "your_api_key" # ЗАМІНІТЬ на ваш Cloudinary API key
+        value: "your_api_key"
         sync: false
       - key: CLOUDINARY_API_SECRET
-        value: "your_api_secret" # ЗАМІНІТЬ на ваш Cloudinary API secret
+        value: "your_api_secret"
         sync: false 
