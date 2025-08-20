@@ -11,7 +11,7 @@ import re
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')
 django.setup()
 
-from airinua.models import Product, Manufacturer
+from airinua.models import Product, Manufacturer, ProductImage
 
 def parse_products_file(filename):
     """Парсить файл з даними товарів"""
@@ -103,6 +103,33 @@ def parse_products_file(filename):
     
     return products
 
+def find_product_images(product_name):
+    """Знаходить зображення для товару в папці static/img/product/"""
+    import os
+    import glob
+    
+    # Очищаємо назву товару для пошуку файлів
+    # Замінюємо проблемні символи
+    clean_name = product_name.replace('/', '_').replace(':', '_')
+    
+    # Шляхи для пошуку
+    search_patterns = [
+        f"static/img/product/{clean_name}*.webp",
+        f"static/img/product/{clean_name}*.jpg", 
+        f"static/img/product/{clean_name}*.png",
+        f"static/img/product/{clean_name}*.jpeg"
+    ]
+    
+    images = []
+    for pattern in search_patterns:
+        found_files = glob.glob(pattern)
+        images.extend(found_files)
+    
+    # Сортуємо за назвою (щоб (1) було першим)
+    images.sort()
+    
+    return images
+
 def add_products_to_database(products):
     """Додає товари до бази даних"""
     created_count = 0
@@ -123,6 +150,19 @@ def add_products_to_database(products):
             print(f"ℹ️ Товар вже існує: {product_data['name']}")
             continue
         
+        # Шукаємо зображення для товару
+        product_images = find_product_images(product_data['name'])
+        
+        if product_images:
+            # Використовуємо перше зображення як основне
+            main_image = product_images[0]
+            image_url = f"/static/{main_image.replace('static/', '')}"
+            print(f"📸 Знайдено зображення для {product_data['name']}: {main_image}")
+        else:
+            # Якщо зображення не знайдено, використовуємо placeholder
+            image_url = '/static/img/placeholder.png'
+            print(f"⚠️ Зображення не знайдено для {product_data['name']}, використовую placeholder")
+        
         # Створюємо новий товар
         try:
             product = Product.objects.create(
@@ -132,9 +172,20 @@ def add_products_to_database(products):
                 area_coverage=product_data['area_coverage'],
                 price=product_data['price'],
                 description=product_data['description'],
-                image_url='https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=400&fit=crop&text=Placeholder',
+                image_url=image_url,
                 is_available=True
             )
+            
+            # Додаємо додаткові зображення як ProductImage
+            for i, image_path in enumerate(product_images[1:], 2):  # Починаємо з 2-го зображення
+                try:
+                    ProductImage.objects.create(
+                        product=product,
+                        image_url=f"/static/{image_path.replace('static/', '')}"
+                    )
+                    print(f"  📸 Додано додаткове зображення {i}: {image_path}")
+                except Exception as e:
+                    print(f"  ⚠️ Помилка додавання зображення {image_path}: {str(e)}")
             
             created_count += 1
             print(f"✅ Додано товар: {product_data['name']} - {product_data['price']} грн")
