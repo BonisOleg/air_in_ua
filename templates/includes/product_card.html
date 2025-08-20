@@ -5,7 +5,7 @@
     data-title="{{ product.name }}" data-price="{{ product.price }}"
     data-modal-content-id="product-{{ product.id }}-content">
 
-    <a href="#" class="article-card-image-link article-modal-trigger">
+    <a href="{{ product.get_absolute_url }}" class="article-card-image-link">
         <div class="article-card-image">
             {% if product.image_url %}
             <img src="{{ product.image_url }}" alt="{{ product.name }}">
@@ -17,7 +17,7 @@
 
     <div class="article-card-content">
         <h3 class="article-card-title">
-            <a href="#" class="article-modal-trigger">{{ product.name }}</a>
+            <a href="{{ product.get_absolute_url }}">{{ product.name }}</a>
         </h3>
         <div class="article-card-excerpt">
             {% if product.description %}
@@ -25,6 +25,6 @@
             {% endif %}
         </div>
         <span class="article-card-price">{{ product.price }} грн</span>
-        <button class="button article-modal-trigger">Детальніше</button>
+        <a href="{{ product.get_absolute_url }}" class="button">Детальніше</a>
     </div>
 </article>

@@ -23,6 +23,10 @@ urlpatterns = [
     path('faq/', views.faq_view, name='faq'),
     path('return-policy/', views.return_policy_view, name='return_policy'),
 
+    # Сторінки товарів
+    path('product/<int:product_id>/', views.product_detail_view, name='product_detail'),
+    path('product/<int:product_id>/<slug:product_slug>/', views.product_detail_view, name='product_detail_slug'),
+
     # API Endpoints для AJAX
     path('api/products/filter/', views.filter_products, name='filter_products'),
     path('api/feedback/submit/', views.submit_feedback, name='submit_feedback'),

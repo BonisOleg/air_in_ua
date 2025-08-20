@@ -1,5 +1,7 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from django.utils.text import slugify
+from django.urls import reverse
 
 # Create your models here.
 
@@ -36,6 +38,7 @@ class Product(models.Model):
     ]
 
     name = models.CharField(max_length=255, verbose_name=_("Назва товару"))
+    slug = models.SlugField(max_length=255, unique=True, blank=True, null=True, verbose_name=_("URL slug"), help_text=_("Автоматично генерується з назви товару"))
     price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name=_("Ціна, грн"))
     manufacturer = models.ForeignKey(Manufacturer, on_delete=models.PROTECT, verbose_name=_("Виробник"))
     btu = models.CharField(max_length=3, choices=BTU_CHOICES, verbose_name=_("Потужність (BTU)"))
@@ -50,6 +53,24 @@ class Product(models.Model):
         help_text=_("URL зображення з Cloudinary або іншого хмарного сервісу")
     )
     is_available = models.BooleanField(default=True, verbose_name=_("В наявності"))
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            # Створюємо slug з назви товару та виробника
+            base_slug = slugify(f"{self.manufacturer.name} {self.name}")
+            slug = base_slug
+            counter = 1
+            
+            # Перевіряємо унікальність slug
+            while Product.objects.filter(slug=slug).exists():
+                slug = f"{base_slug}-{counter}"
+                counter += 1
+            
+            self.slug = slug
+        super().save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse('airinua:product_detail_slug', kwargs={'product_id': self.id, 'product_slug': self.slug})
 
     def __str__(self):
         return f"{self.manufacturer} {self.name}"

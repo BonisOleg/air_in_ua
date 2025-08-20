@@ -1,5 +1,6 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import Product, Manufacturer, Service, FeedbackRequest # Додано FeedbackRequest
+from django.db import models
 # FeedbackForm тут більше не потрібна напряму
 from django.http import JsonResponse, HttpResponseNotFound # Додаємо JsonResponse та HttpResponseNotFound
 # csrf_exempt більше не потрібен
@@ -94,6 +95,36 @@ def return_policy_view(request):
     """Відображає сторінку з правилами повернення товару."""
     context = {}
     return render(request, 'return_policy.html', context)
+
+def product_detail_view(request, product_id, product_slug=None):
+    """Відображає детальну сторінку товару."""
+    product = get_object_or_404(Product, id=product_id, is_available=True)
+    
+    # Якщо slug не відповідає, перенаправляємо на правильний URL
+    if product_slug and product.slug != product_slug:
+        return redirect('airinua:product_detail_slug', 
+                       product_id=product.id, 
+                       product_slug=product.slug, 
+                       permanent=True)
+    
+    # Отримуємо додаткові зображення товару
+    additional_images = product.images.all()
+    
+    # Отримуємо схожі товари (того ж виробника або з тими ж BTU)
+    similar_products = Product.objects.filter(
+        is_available=True
+    ).filter(
+        models.Q(manufacturer=product.manufacturer) | 
+        models.Q(btu=product.btu)
+    ).exclude(id=product.id)[:4]
+    
+    context = {
+        'product': product,
+        'additional_images': additional_images,
+        'similar_products': similar_products,
+        'form': FeedbackForm(),  # Для форми зворотного зв'язку
+    }
+    return render(request, 'product_detail.html', context)
 
 # --- AJAX Endpoints --- 
 

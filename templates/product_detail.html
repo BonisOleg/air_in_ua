@@ -1,0 +1,186 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ product.manufacturer.name }} {{ product.name }} - {{ product.price }} грн - Air In UA{% endblock %}
+
+{% block meta_description %}{{ product.manufacturer.name }} {{ product.name }} - {{ product.btu }} BTU, площа до {{ product.area_coverage }} м², ціна {{ product.price }} грн. Безкоштовна доставка та монтаж по Києву.{% endblock %}
+
+{% block meta_keywords %}{{ product.manufacturer.name }}, {{ product.name }}, кондиціонер {{ product.btu }} BTU, {{ product.area_coverage }} м², кондиціонери Київ, {{ product.price }} грн{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="product-detail-page">
+    
+    <!-- Breadcrumbs -->
+    <nav class="breadcrumbs">
+      <a href="{% url 'airinua:index' %}">Головна</a>
+      <span>/</span>
+      <a href="{% url 'airinua:catalog' %}">Каталог</a>
+      <span>/</span>
+      <span>{{ product.manufacturer.name }} {{ product.name }}</span>
+    </nav>
+
+    <div class="product-detail-content">
+      <!-- Product Images -->
+      <div class="product-images">
+        <div class="main-image">
+          <img src="{{ product.image_url|default:'/static/img/placeholder.png' }}" 
+               alt="{{ product.manufacturer.name }} {{ product.name }}" 
+               class="product-main-image">
+        </div>
+        
+        {% if additional_images %}
+        <div class="additional-images">
+          {% for image in additional_images %}
+          <img src="{{ image.image_url }}" 
+               alt="{{ image.alt_text|default:product.name }}" 
+               class="product-thumb"
+               onclick="changeMainImage('{{ image.image_url }}')">
+          {% endfor %}
+        </div>
+        {% endif %}
+      </div>
+
+      <!-- Product Info -->
+      <div class="product-info">
+        <h1>{{ product.manufacturer.name }} {{ product.name }}</h1>
+        
+        <div class="product-specs">
+          <div class="spec-item">
+            <strong>Виробник:</strong> {{ product.manufacturer.name }}
+          </div>
+          <div class="spec-item">
+            <strong>Потужність:</strong> {{ product.btu }} BTU
+          </div>
+          <div class="spec-item">
+            <strong>Площа охолодження:</strong> до {{ product.area_coverage }} м²
+          </div>
+          <div class="spec-item">
+            <strong>Наявність:</strong> 
+            {% if product.is_available %}
+              <span class="in-stock">В наявності</span>
+            {% else %}
+              <span class="out-of-stock">Немає в наявності</span>
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="product-price">
+          <span class="price">{{ product.price }} грн</span>
+        </div>
+
+        {% if product.description %}
+        <div class="product-description">
+          <h3>Опис товару</h3>
+          <p>{{ product.description|linebreaks }}</p>
+        </div>
+        {% endif %}
+
+        <!-- Call to Action -->
+        <div class="product-actions">
+          <button class="cta-button product-order-btn" 
+                  data-product-id="{{ product.id }}"
+                  data-product-name="{{ product.manufacturer.name }} {{ product.name }}">
+            Замовити кондиціонер
+          </button>
+          
+          <div class="product-features">
+            <div class="feature">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+              </svg>
+              Безкоштовна доставка
+            </div>
+            <div class="feature">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+              </svg>
+              Безкоштовний монтаж
+            </div>
+            <div class="feature">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 6l-1.41-1.41L12 10.17 8.41 6.59 7 8l5 5 5-5z"/>
+              </svg>
+              Гарантія виробника
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Similar Products -->
+    {% if similar_products %}
+    <div class="similar-products">
+      <h2>Схожі товари</h2>
+      <div class="products-grid">
+        {% for similar_product in similar_products %}
+        <div class="product-card">
+          <a href="{{ similar_product.get_absolute_url }}">
+            <img src="{{ similar_product.image_url|default:'/static/img/placeholder.png' }}" 
+                 alt="{{ similar_product.manufacturer.name }} {{ similar_product.name }}"
+                 class="product-image">
+            <div class="product-content">
+              <h3>{{ similar_product.manufacturer.name }}</h3>
+              <p class="product-name">{{ similar_product.name }}</p>
+              <div class="product-specs-mini">
+                <span>{{ similar_product.btu }} BTU</span>
+                <span>до {{ similar_product.area_coverage }} м²</span>
+              </div>
+              <div class="product-price">{{ similar_product.price }} грн</div>
+            </div>
+          </a>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+
+  </div>
+</div>
+
+<!-- Schema.org розмітка для товару -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "{{ product.manufacturer.name }} {{ product.name }}",
+  "description": "{{ product.description|default:'' }}",
+  "brand": {
+    "@type": "Brand",
+    "name": "{{ product.manufacturer.name }}"
+  },
+  "category": "Кондиціонери",
+  "image": "{{ product.image_url|default:'/static/img/placeholder.png' }}",
+  "offers": {
+    "@type": "Offer",
+    "price": "{{ product.price }}",
+    "priceCurrency": "UAH",
+    "availability": "{% if product.is_available %}https://schema.org/InStock{% else %}https://schema.org/OutOfStock{% endif %}",
+    "seller": {
+      "@type": "Organization",
+      "name": "Air In UA"
+    }
+  },
+  "additionalProperty": [
+    {
+      "@type": "PropertyValue",
+      "name": "Потужність",
+      "value": "{{ product.btu }} BTU"
+    },
+    {
+      "@type": "PropertyValue", 
+      "name": "Площа охолодження",
+      "value": "до {{ product.area_coverage }} м²"
+    }
+  ]
+}
+</script>
+{% endblock %}
+
+{% block scripts %}
+<script>
+function changeMainImage(imageUrl) {
+  document.querySelector('.product-main-image').src = imageUrl;
+}
+</script>
+{% endblock %}
