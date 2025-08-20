@@ -130,6 +130,19 @@ def find_product_images(product_name):
     
     return images
 
+def clear_existing_products():
+    """Видаляє всі існуючі товари та виробників"""
+    from airinua.models import Product, Manufacturer
+    
+    # Видаляємо всі товари (це також видалить пов'язані ProductImage)
+    products_deleted = Product.objects.all().delete()[0]
+    
+    # Видаляємо виробників, які більше не використовуються
+    manufacturers_deleted = Manufacturer.objects.all().delete()[0]
+    
+    print(f"🗑️ Видалено {products_deleted} товарів та {manufacturers_deleted} виробників")
+    return products_deleted, manufacturers_deleted
+
 def add_products_to_database(products):
     """Додає товари до бази даних"""
     created_count = 0
@@ -223,21 +236,26 @@ def main():
         print(f"   Ціна: {product['price']} грн")
         print(f"   Опис: {product['description'][:100]}...")
     
-    # Якщо автоматичний режим - додаємо без підтвердження
+    # Якщо автоматичний режим - очищаємо та додаємо без підтвердження
     if auto_mode:
-        print(f"\n🤖 АВТОМАТИЧНИЙ РЕЖИМ: Додаю {len(products)} товарів...")
+        print(f"\n🤖 АВТОМАТИЧНИЙ РЕЖИМ: Очищаю базу та додаю {len(products)} товарів...")
+        # Автоматично очищаємо стару базу
+        clear_existing_products()
     else:
         # Питаємо підтвердження
-        response = input(f"\n🤔 Додати {len(products)} товарів до бази даних? (y/n): ")
+        response = input(f"\n🤔 Очистити базу та додати {len(products)} товарів? (y/n): ")
         
         if response.lower() not in ['y', 'yes', 'так', 'д']:
             print("❌ Операцію скасовано.")
             return
+        
+        # Очищаємо стару базу
+        clear_existing_products()
     
     # Додаємо товари
     created_count = add_products_to_database(products)
     
-    print(f"\n✅ ГОТОВО! Додано {created_count} нових товарів.")
+    print(f"\n✅ ГОТОВО! База очищена та додано {created_count} нових товарів.")
     print(f"📊 Всього товарів у базі: {Product.objects.count()}")
 
 if __name__ == "__main__":
