@@ -14,8 +14,5 @@ python manage.py collectstatic --no-input
 # Run migrations
 python manage.py migrate
 
-# Clear all products from catalog (clean slate)
-python manage.py clear_products
-
 # Create superuser if not exists (optional)
 # echo "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser('admin', 'admin@example.com', 'admin') if not User.objects.filter(username='admin').exists() else None" | python manage.py shell 
