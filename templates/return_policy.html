@@ -20,26 +20,26 @@
     "applicableCountry": "UA",
     "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
     "merchantReturnDays": 14,
-    "returnMethod": "https://schema.org/ReturnByMail",
+    "returnMethod": ["https://schema.org/ReturnByMail", "https://schema.org/ReturnAtDropOffLocation"],
     "returnFees": "https://schema.org/FreeReturn",
-    "returnLabelSource": "https://schema.org/ReturnLabelDownloadAndPrint",
-    "returnInstructions": "Товар приймається назад протягом 14 днів з моменту отримання при збереженні оригінальної упаковки та відсутності слідів використання. Безкоштовна доставка кур'єром. Контакти: +38 (097) 216-41-40, email: airinua.sender@gmail.com, адреса: м. Київ, вул. Вербицького, 15.",
+    "returnLabelSource": "https://schema.org/ReturnLabelInThePackage",
+    "returnInstructions": "Товар приймається назад протягом 14 днів. Приймаємо повернення дефектних та недефектних товарів. Тільки нові товари в оригінальній упаковці. Повернення поштою або в пункті видачі. Безкоштовне повернення. Контакти: +38 (097) 216-41-40, email: airinua.sender@gmail.com, адреса: м. Київ, вул. Вербицького, 15.",
     "customerRemorseReturnFees": "https://schema.org/FreeReturn",
-    "customerRemorseReturnLabelSource": "https://schema.org/ReturnLabelDownloadAndPrint",
+    "customerRemorseReturnLabelSource": "https://schema.org/ReturnLabelInThePackage",
     "customerRemorseReturnWindow": 14,
-    "inStoreReturnsOffered": false,
+    "inStoreReturnsOffered": true,
     "returnShippingFeesAmount": {
       "@type": "MonetaryAmount",
       "currency": "UAH",
       "value": "0"
     },
-    "returnPolicySeasonalOverride": {
-      "@type": "ReturnPolicySeasonalOverride",
-      "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
-      "merchantReturnDays": 30,
-      "returnMethod": "https://schema.org/ReturnByMail",
-      "returnFees": "https://schema.org/FreeReturn"
-    }
+    "refundType": "https://schema.org/FullRefund",
+    "restockingFee": {
+      "@type": "MonetaryAmount",
+      "currency": "UAH",
+      "value": "0"
+    },
+    "returnProcessingTime": "P2D"
   },
   "publisher": {
     "@type": "Organization",
@@ -63,23 +63,22 @@
     <div class="return-policy-section">
       <h2>⏰ Термін повернення</h2>
       <ul>
-        <li><strong>14 днів</strong> - стандартний термін повернення товару</li>
-        <li><strong>30 днів</strong> - для товарів з розширеною гарантією</li>
+        <li><strong>14 днів</strong> - термін повернення товару</li>
         <li>Термін починається з моменту отримання товару</li>
-        <li><strong>Миттєве повернення</strong> - при виявленні заводського браку</li>
-        <li><strong>Безкоштовна доставка</strong> - кур'єр забере товар з вашого дому</li>
+        <li><strong>Приймаємо повернення</strong> - як дефектних, так і недефектних товарів</li>
+        <li><strong>Приймаємо обмін</strong> - товарів відповідно до умов</li>
       </ul>
     </div>
 
     <div class="return-policy-section">
-      <h2>✅ Умови прийняття повернення</h2>
-      <p>Товар приймається назад, якщо:</p>
+      <h2>✅ Стан товару для повернення</h2>
+      <p>Приймаємо для повернення та обміну:</p>
       <ul>
+        <li><strong>Тільки нові товари</strong> - в оригінальній упаковці</li>
+        <li><strong>Нерозпаковані товари</strong> - в заводській упаковці</li>
+        <li><strong>Невикористані товари</strong> - без слідів експлуатації</li>
         <li>Збережена оригінальна упаковка та повна комплектація</li>
-        <li>Відсутні сліди використання та пошкодження</li>
-        <li>Збережена товарний вигляд та споживчі властивості</li>
         <li>Наявний товарний чек або рахунок-фактура</li>
-        <li>Товар не був встановлений та підключений до мережі</li>
         <li>Не минуло більше 14 днів з моменту покупки</li>
       </ul>
     </div>
@@ -100,24 +99,30 @@
     <div class="return-policy-section">
       <h2>💰 Вартість повернення</h2>
       <ul>
-        <li><strong>Безкоштовно</strong> - при виявленні заводського браку</li>
-        <li><strong>Безкоштовно</strong> - при помилці з боку компанії</li>
-        <li><strong>Безкоштовно</strong> - при поверненні товару належної якості</li>
-        <li><strong>Безкоштовна доставка</strong> - ми заберемо товар з вашого дому безкоштовно</li>
-        <li><strong>Безкоштовна перевірка</strong> - технічна експертиза товару</li>
+        <li><strong>Безкоштовне повернення</strong> - без комісії за повернення</li>
+        <li><strong>Безкоштовна доставка</strong> - в межах України</li>
+        <li><strong>Мітка для повернення</strong> - включена в пакет</li>
+        <li><strong>Валюта:</strong> UAH (гривня)</li>
       </ul>
     </div>
 
     <div class="return-policy-section">
-      <h2>🔄 Процедура повернення</h2>
+      <h2>🔄 Способи повернення</h2>
+      <p>Ми приймаємо повернення наступними способами:</p>
+      <ul>
+        <li><strong>Поштою</strong> - відправте товар поштовою службою</li>
+        <li><strong>Пункт видачі</strong> - принесіть товар в наш офіс</li>
+      </ul>
+      
+      <h3>Процедура повернення:</h3>
       <ol>
         <li><strong>Зв'яжіться з нами</strong> - зателефонуйте <a href="tel:+380972164140">+38 (097) 216-41-40</a> або
           напишіть на email</li>
         <li><strong>Опишіть причину</strong> - вкажіть причину повернення нашому менеджеру</li>
-        <li><strong>Отримайте номер RMA</strong> - ми надамо унікальний номер повернення</li>
+        <li><strong>Отримайте інструкції</strong> - ми надамо детальні інструкції для повернення</li>
         <li><strong>Підготуйте товар</strong> - упакуйте товар у оригінальну упаковку</li>
-        <li><strong>Безкоштовна доставка</strong> - наш кур'єр забере товар з вашого дому</li>
-        <li><strong>Отримайте гроші</strong> - протягом 1-3 робочих днів після перевірки</li>
+        <li><strong>Відправте товар</strong> - поштою або принесіть в наш офіс</li>
+        <li><strong>Отримайте повернення</strong> - протягом 2 днів після перевірки</li>
       </ol>
     </div>
 
@@ -166,13 +171,26 @@
     </div>
 
     <div class="return-policy-section">
-      <h2>📅 Терміни обробки</h2>
+      <h2>📅 Терміни обробки та доставки</h2>
+      
+      <h3>Час обробки замовлень:</h3>
       <ul>
-        <li><strong>1-2 години</strong> - розгляд заявки на повернення</li>
-        <li><strong>1-2 дні</strong> - безкоштовна доставка кур'єром</li>
-        <li><strong>1-3 дні</strong> - перевірка товару та технічна експертиза</li>
-        <li><strong>1-3 дні</strong> - повернення коштів на рахунок або картку</li>
-        <li><strong>Миттєво</strong> - повернення коштів при самовивозі з офісу</li>
+        <li><strong>Час подачі:</strong> до 18:00 (GMT+02:00) Київський час</li>
+        <li><strong>Обробка:</strong> 1-2 дні (Пн-Сб)</li>
+        <li><strong>Відправлення:</strong> Пн-Сб</li>
+      </ul>
+      
+      <h3>Доставка:</h3>
+      <ul>
+        <li><strong>Тривалість:</strong> 0-2 дні</li>
+        <li><strong>Вартість:</strong> Безкоштовна доставка</li>
+        <li><strong>Всі пункти призначення</strong> в Україні</li>
+      </ul>
+      
+      <h3>Повернення коштів:</h3>
+      <ul>
+        <li><strong>Час обробки:</strong> 2 дні після отримання товару</li>
+        <li><strong>Валюта:</strong> UAH (автоматично конвертується в локальну валюту клієнта)</li>
       </ul>
     </div>
 
@@ -198,12 +216,13 @@
     <div class="return-policy-section">
       <h2>📝 Важливі примітки</h2>
       <ul>
-        <li>Повернення товару можливе тільки в межах Києва та Київської області</li>
-        <li>При поверненні товару з акцій або знижок, повертається повна сума покупки</li>
-        <li>Компанія залишає за собою право відмовити в поверненні при порушенні умов</li>
+        <li><strong>Країна:</strong> Повернення товару можливе тільки в межах України</li>
+        <li><strong>Повернення:</strong> Приймаємо повернення дефектних та недефектних товарів</li>
+        <li><strong>Обмін:</strong> Приймаємо обмін товарів</li>
+        <li><strong>Стан товару:</strong> Тільки нові товари в оригінальній упаковці</li>
+        <li><strong>Термін:</strong> Протягом 14 днів з моменту отримання</li>
+        <li><strong>Вартість:</strong> Безкоштовне повернення та доставка</li>
         <li>Всі спори вирішуються відповідно до законодавства України</li>
-        <li>При самовивозі з офісу гроші повертаються миттєво</li>
-        <li>Безкоштовна доставка діє на всі товари без винятків</li>
       </ul>
     </div>
 
