@@ -1,0 +1,200 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Правила повернення товару - Air In UA{% endblock %}
+
+{% block meta_description %}Правила повернення та обміну кондиціонерів. Гарантія якості та безкоштовне повернення протягом 14 днів.{% endblock %}
+
+{% block content %}
+<!-- Schema.org розмітка для Google Merchant Center -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Правила повернення товару - Air In UA",
+  "description": "Правила повернення та обміну кондиціонерів. Гарантія якості та безкоштовне повернення протягом 14 днів.",
+  "url": "{{ request.build_absolute_uri }}",
+  "mainEntity": {
+    "@type": "ReturnPolicy",
+    "applicableCountry": "UA",
+    "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
+    "merchantReturnDays": 14,
+    "returnMethod": "https://schema.org/ReturnByMail",
+    "returnFees": "https://schema.org/FreeReturn",
+    "returnLabelSource": "https://schema.org/ReturnLabelDownloadAndPrint",
+    "returnInstructions": "Товар приймається назад протягом 14 днів з моменту отримання при збереженні оригінальної упаковки та відсутності слідів використання.",
+    "customerRemorseReturnFees": "https://schema.org/FreeReturn",
+    "customerRemorseReturnLabelSource": "https://schema.org/ReturnLabelDownloadAndPrint",
+    "customerRemorseReturnWindow": 14,
+    "inStoreReturnsOffered": false,
+    "returnShippingFeesAmount": {
+      "@type": "MonetaryAmount",
+      "currency": "UAH",
+      "value": "200"
+    },
+    "returnPolicySeasonalOverride": {
+      "@type": "ReturnPolicySeasonalOverride",
+      "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
+      "merchantReturnDays": 30,
+      "returnMethod": "https://schema.org/ReturnByMail",
+      "returnFees": "https://schema.org/FreeReturn"
+    }
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Air In UA",
+    "url": "https://www.airinua.com"
+  },
+  "dateModified": "{{ 'now'|date:'Y-m-d' }}"
+}
+</script>
+<div class="container">
+  <div class="return-policy-page">
+    <h1>Правила повернення товару</h1>
+    
+    <div class="return-policy-section">
+      <h2>📋 Загальні умови повернення</h2>
+      <p>Компанія "Air In UA" надає можливість повернення товару відповідно до Закону України "Про захист прав споживачів" та вимог Google Merchant Center.</p>
+    </div>
+
+    <div class="return-policy-section">
+      <h2>⏰ Термін повернення</h2>
+      <ul>
+        <li><strong>14 днів</strong> - стандартний термін повернення товару</li>
+        <li><strong>30 днів</strong> - для товарів з розширеною гарантією</li>
+        <li>Термін починається з моменту отримання товару</li>
+      </ul>
+    </div>
+
+    <div class="return-policy-section">
+      <h2>✅ Умови прийняття повернення</h2>
+      <p>Товар приймається назад, якщо:</p>
+      <ul>
+        <li>Збережена оригінальна упаковка та комплектація</li>
+        <li>Відсутні сліди використання та пошкодження</li>
+        <li>Збережена товарний вигляд та споживчі властивості</li>
+        <li>Наявний товарний чек або інший документ, що підтверджує покупку</li>
+      </ul>
+    </div>
+
+    <div class="return-policy-section">
+      <h2>❌ Товари, що не підлягають поверненню</h2>
+      <p>Відповідно до законодавства, не підлягають поверненню:</p>
+      <ul>
+        <li>Товари, зроблені на замовлення (індивідуальні замовлення)</li>
+        <li>Товари, що швидко псуються або мають обмежений термін придатності</li>
+        <li>Товари, що були встановлені та підключені до мережі</li>
+        <li>Товари з пошкодженою упаковкою або комплектацією</li>
+      </ul>
+    </div>
+
+    <div class="return-policy-section">
+      <h2>💰 Вартість повернення</h2>
+      <ul>
+        <li><strong>Безкоштовно</strong> - при виявленні заводського браку</li>
+        <li><strong>Безкоштовно</strong> - при помилці з боку компанії</li>
+        <li><strong>За рахунок покупця</strong> - при поверненні товару належної якості</li>
+        <li>Вартість доставки поверненого товару: від 200 грн</li>
+      </ul>
+    </div>
+
+    <div class="return-policy-section">
+      <h2>🔄 Процедура повернення</h2>
+      <ol>
+        <li><strong>Зв'яжіться з нами</strong> - зателефонуйте або напишіть на email</li>
+        <li><strong>Опишіть причину</strong> - вкажіть причину повернення</li>
+        <li><strong>Отримайте номер RMA</strong> - ми надамо унікальний номер повернення</li>
+        <li><strong>Підготуйте товар</strong> - упакуйте товар у оригінальну упаковку</li>
+        <li><strong>Відправте товар</strong> - за адресою, яку ми надамо</li>
+        <li><strong>Отримайте гроші</strong> - протягом 3-5 робочих днів</li>
+      </ol>
+    </div>
+
+    <div class="return-policy-section">
+      <h2>📞 Контакти для повернення</h2>
+      <div class="return-contacts">
+        <div class="contact-item">
+          <strong>Телефон:</strong> +380 (XX) XXX-XX-XX
+        </div>
+        <div class="contact-item">
+          <strong>Email:</strong> returns@airinua.com
+        </div>
+        <div class="contact-item">
+          <strong>Час роботи:</strong> Пн-Пт 9:00-18:00
+        </div>
+        <div class="contact-item">
+          <strong>Адреса:</strong> м. Київ, [адреса офісу]
+        </div>
+      </div>
+    </div>
+
+    <div class="return-policy-section">
+      <h2>⚡ Швидке повернення</h2>
+      <p>Для швидкого повернення використовуйте наш онлайн-сервіс:</p>
+      <a href="#" class="cta-button return-button">Подати заявку на повернення</a>
+    </div>
+
+    <div class="return-policy-section">
+      <h2>📋 Необхідні документи</h2>
+      <ul>
+        <li>Заява на повернення (заповнюється на сайті)</li>
+        <li>Товарний чек або рахунок-фактура</li>
+        <li>Паспорт або документ, що посвідчує особу</li>
+        <li>Реквізити для повернення коштів (при поверненні грошей)</li>
+      </ul>
+    </div>
+
+    <div class="return-policy-section">
+      <h2>🔒 Гарантія якості</h2>
+      <p>Всі наші товари мають:</p>
+      <ul>
+        <li><strong>Гарантію виробника</strong> - від 1 до 5 років</li>
+        <li><strong>Додаткову гарантію</strong> - на монтаж та сервіс</li>
+        <li><strong>Технічну підтримку</strong> - протягом гарантійного терміну</li>
+        <li><strong>Безкоштовну діагностику</strong> - при виявленні несправностей</li>
+      </ul>
+    </div>
+
+    <div class="return-policy-section">
+      <h2>📅 Терміни обробки</h2>
+      <ul>
+        <li><strong>1-2 дні</strong> - розгляд заявки на повернення</li>
+        <li><strong>1-3 дні</strong> - перевірка товару після отримання</li>
+        <li><strong>3-5 днів</strong> - повернення коштів на рахунок</li>
+        <li><strong>1-2 тижні</strong> - повернення коштів на картку</li>
+      </ul>
+    </div>
+
+    <div class="return-policy-section">
+      <h2>📞 Підтримка клієнтів</h2>
+      <p>Наша служба підтримки готова допомогти вам з будь-якими питаннями щодо повернення товару:</p>
+      <div class="support-contacts">
+        <div class="support-item">
+          <strong>Гаряча лінія:</strong> 0-800-XXX-XXX (безкоштовно)
+        </div>
+        <div class="support-item">
+          <strong>Чат підтримки:</strong> доступний 24/7 на сайті
+        </div>
+        <div class="support-item">
+          <strong>Email підтримки:</strong> support@airinua.com
+        </div>
+      </div>
+    </div>
+
+    <div class="return-policy-section">
+      <h2>📝 Важливі примітки</h2>
+      <ul>
+        <li>Повернення товару можливе тільки в межах України</li>
+        <li>При поверненні товару з акцій або знижок, повертається сума з урахуванням знижки</li>
+        <li>Компанія залишає за собою право відмовити в поверненні при порушенні умов</li>
+        <li>Всі спори вирішуються відповідно до законодавства України</li>
+      </ul>
+    </div>
+
+    <div class="return-policy-footer">
+      <p><strong>Останнє оновлення:</strong> {{ "now"|date:"d.m.Y" }}</p>
+      <p>Ці правила діють для всіх покупок, зроблених після {{ "now"|date:"d.m.Y" }}</p>
+    </div>
+  </div>
+</div>
+{% endblock %}

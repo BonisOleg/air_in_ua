@@ -90,6 +90,11 @@ def about_view(request):
     context = {}
     return render(request, 'about.html', context)
 
+def return_policy_view(request):
+    """Відображає сторінку з правилами повернення товару."""
+    context = {}
+    return render(request, 'return_policy.html', context)
+
 # --- AJAX Endpoints --- 
 
 def filter_products(request):

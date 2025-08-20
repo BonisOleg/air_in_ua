@@ -21,6 +21,7 @@ urlpatterns = [
     path('contacts/', views.contacts_view, name='contacts'),
     path('portfolio/', views.portfolio_view, name='portfolio'),
     path('faq/', views.faq_view, name='faq'),
+    path('return-policy/', views.return_policy_view, name='return_policy'),
 
     # API Endpoints для AJAX
     path('api/products/filter/', views.filter_products, name='filter_products'),
