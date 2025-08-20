@@ -146,6 +146,11 @@ def add_products_to_database(products):
 
 def main():
     """Головна функція"""
+    import sys
+    
+    # Перевіряємо аргументи командного рядка
+    auto_mode = '--auto' in sys.argv
+    
     print("🚀 ПАРСИНГ ТА ДОДАВАННЯ ТОВАРІВ")
     print("=" * 50)
     
@@ -167,12 +172,16 @@ def main():
         print(f"   Ціна: {product['price']} грн")
         print(f"   Опис: {product['description'][:100]}...")
     
-    # Питаємо підтвердження
-    response = input(f"\n🤔 Додати {len(products)} товарів до бази даних? (y/n): ")
-    
-    if response.lower() not in ['y', 'yes', 'так', 'д']:
-        print("❌ Операцію скасовано.")
-        return
+    # Якщо автоматичний режим - додаємо без підтвердження
+    if auto_mode:
+        print(f"\n🤖 АВТОМАТИЧНИЙ РЕЖИМ: Додаю {len(products)} товарів...")
+    else:
+        # Питаємо підтвердження
+        response = input(f"\n🤔 Додати {len(products)} товарів до бази даних? (y/n): ")
+        
+        if response.lower() not in ['y', 'yes', 'так', 'д']:
+            print("❌ Операцію скасовано.")
+            return
     
     # Додаємо товари
     created_count = add_products_to_database(products)
