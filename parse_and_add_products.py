@@ -107,12 +107,16 @@ def find_product_images(product_name):
     """Знаходить зображення для товару в папці static/img/product/"""
     import os
     import glob
+    import re
     
     # Очищаємо назву товару для пошуку файлів
     # Замінюємо проблемні символи
     clean_name = product_name.replace('/', '_').replace(':', '_')
     
-    # Шляхи для пошуку
+    # Видаляємо зайві пробіли та символи
+    clean_name = re.sub(r'\s+', ' ', clean_name).strip()
+    
+    # Шляхи для пошуку (спочатку точний пошук)
     search_patterns = [
         f"static/img/product/{clean_name}*.webp",
         f"static/img/product/{clean_name}*.jpg", 
@@ -124,6 +128,32 @@ def find_product_images(product_name):
     for pattern in search_patterns:
         found_files = glob.glob(pattern)
         images.extend(found_files)
+    
+    # Якщо точний пошук не дав результатів, шукаємо по ключових словах
+    if not images:
+        # Вибираємо ключові слова з назви товару
+        keywords = []
+        
+        # Для GREE
+        if 'GREE' in product_name and 'GWH09AGBXB' in product_name:
+            keywords = ['GREE', 'GWH09AGBXB']
+        # Для TCL  
+        elif 'TCL' in product_name and 'TAC-09CHSD' in product_name:
+            keywords = ['TCL', 'TAC-09CHSD']
+        # Для Cooper&Hunter
+        elif 'Cooper&Hunter' in product_name and 'CH-S09FTXF2-NG' in product_name:
+            keywords = ['Cooper&Hunter', 'CH-S09FTXF2-NG']
+        # Для TKS
+        elif 'TKS' in product_name and '08BDW' in product_name:
+            keywords = ['TKS', '08BDW']
+        
+        if keywords:
+            # Шукаємо файли, що містять ключові слова
+            all_files = glob.glob("static/img/product/*")
+            for file_path in all_files:
+                filename = os.path.basename(file_path)
+                if all(keyword in filename for keyword in keywords):
+                    images.append(file_path)
     
     # Сортуємо за назвою (щоб (1) було першим)
     images.sort()
