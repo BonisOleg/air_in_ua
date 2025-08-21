@@ -1321,7 +1321,8 @@ textarea.input:focus,
 .product-main-image {
     width: 100%;
     height: 400px;
-    object-fit: cover;
+    object-fit: contain;
+    background: var(--color-bg);
 }
 
 .additional-images {
@@ -1333,7 +1334,8 @@ textarea.input:focus,
 .product-thumb {
     width: 80px;
     height: 80px;
-    object-fit: cover;
+    object-fit: contain;
+    background: var(--color-bg);
     border-radius: 8px;
     cursor: pointer;
     border: 2px solid transparent;
@@ -2983,8 +2985,9 @@ textarea.input:focus,
 .gallery-thumb {
     width: 70px;
     height: 55px;
-    object-fit: cover;
-    /* Обрізаємо мініатюру, щоб заповнити квадрат */
+    object-fit: contain;
+    background: var(--color-bg);
+    /* Відображаємо мініатюру повністю з пропорціями */
     border-radius: 6px;
     cursor: pointer;
     border: 2px solid transparent;
