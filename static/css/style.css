@@ -522,11 +522,26 @@ textarea.input:focus,
     border-top: 2px solid var(--color-blue-300);
 }
 
+/* Центральна секція футера */
+.footer-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    flex: 1;
+}
+
+.footer-copyright {
+    margin: 0;
+    font-weight: 500;
+    color: var(--color-text);
+    text-align: center;
+}
+
 /* Footer Links */
 .footer-links {
     display: flex;
     justify-content: center;
-    margin: 20px 0;
     gap: 20px;
 }
 
@@ -534,14 +549,15 @@ textarea.input:focus,
     display: flex;
     align-items: center;
     gap: 8px;
-    padding: 8px 16px;
+    padding: 10px 20px;
     background: var(--color-blue-300);
     color: var(--color-white);
-    border-radius: 8px;
+    border-radius: 12px;
     font-size: 14px;
-    font-weight: 500;
+    font-weight: 600;
     transition: all 0.3s ease;
     text-decoration: none;
+    border: 2px solid transparent;
 }
 
 .footer-link:hover {
@@ -569,15 +585,17 @@ textarea.input:focus,
 .site-footer .container {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    padding-top: 0;
-    padding-bottom: 0;
+    align-items: flex-start;
+    padding: 30px 0;
+    gap: 30px;
 }
 
 .footer-contacts {
     display: flex;
+    flex-direction: column;
     align-items: center;
     gap: 15px;
+    text-align: center;
 }
 
 .footer-contacts-label {
@@ -2889,15 +2907,15 @@ textarea.input:focus,
 
 .footer-icon {
     display: inline-block;
-    padding: 8px 16px;
+    padding: 10px 20px;
     border-radius: 12px;
     background: var(--color-white);
     color: var(--color-blue-300);
     text-align: center;
-    border: 1px solid var(--color-blue-300);
+    border: 2px solid var(--color-blue-300);
     text-decoration: none;
     font-weight: 600;
-    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 .footer-icon:hover {
@@ -3607,8 +3625,8 @@ select:focus {
 
 /* Стилі для розділу послуг у футері */
 .footer-services {
-    margin-bottom: 2rem;
     text-align: center;
+    flex: 1;
 }
 
 .footer-services h3 {
@@ -3640,6 +3658,19 @@ select:focus {
 
 /* Мобільна адаптація */
 @media (max-width: 768px) {
+    .site-footer .container {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        text-align: center;
+    }
+    
+    .footer-services,
+    .footer-center,
+    .footer-contacts {
+        width: 100%;
+    }
+    
     .footer-nav {
         flex-direction: column;
         align-items: center;
