@@ -98,7 +98,7 @@ def return_policy_view(request):
 
 def product_detail_view(request, product_id, product_slug=None):
     """Відображає детальну сторінку товару."""
-    product = get_object_or_404(Product, id=product_id, is_available=True)
+    product = get_object_or_404(Product, id=product_id)
     
     # Якщо slug не відповідає, перенаправляємо на правильний URL
     if product_slug and product.slug != product_slug:

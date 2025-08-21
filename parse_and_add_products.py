@@ -246,6 +246,9 @@ def main():
     auto_mode = '--auto' in sys.argv
     
     print("🚀 ПАРСИНГ ТА ДОДАВАННЯ ТОВАРІВ")
+    print(f"📍 Режим роботи: {'АВТОМАТИЧНИЙ' if auto_mode else 'ІНТЕРАКТИВНИЙ'}")
+    print(f"📂 Поточна директорія: {os.getcwd()}")
+    print(f"📄 Перевіряємо файл: {os.path.exists('products_data.txt')}")
     print("=" * 50)
     
     # Парсимо файл
