@@ -261,7 +261,11 @@ def submit_feedback(request):
 
 def product_detail_modal(request, product_id):
     product = get_object_or_404(Product, id=product_id)
-    return render(request, 'includes/product_modal_detail.html', {'product': product})
+    context = {
+        'product': product,
+        'feedback_form': FeedbackForm(),  # Додаємо форму для модального вікна
+    }
+    return render(request, 'includes/product_modal_detail.html', context)
 
 def error_404_view(request, exception=None):
     """
