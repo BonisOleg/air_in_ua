@@ -935,6 +935,29 @@ textarea.input:focus,
 
 .product-actions {
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.product-actions .button-details {
+    background: var(--color-blue-300);
+    color: var(--color-white);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    border-radius: 14px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.product-actions .button-details:hover {
+    background: var(--color-blue-400);
+    color: var(--color-white);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(53, 142, 211, 0.3);
 }
 
 .product-order-btn {
