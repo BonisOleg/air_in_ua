@@ -753,19 +753,19 @@ textarea.input:focus,
     .return-policy-page {
         padding: 20px 15px;
     }
-    
+
     .return-policy-page h1 {
         font-size: 2rem;
     }
-    
+
     .return-policy-section {
         padding: 20px;
     }
-    
+
     .return-policy-section h2 {
         font-size: 1.3rem;
     }
-    
+
     .return-contacts,
     .support-contacts {
         grid-template-columns: 1fr;
@@ -1232,11 +1232,11 @@ textarea.input:focus,
         grid-template-columns: 1fr;
         gap: 40px;
     }
-    
+
     .product-title {
         font-size: 1.8rem;
     }
-    
+
     .product-price {
         font-size: 2rem;
     }
@@ -1246,32 +1246,32 @@ textarea.input:focus,
     .product-container {
         padding: 15px;
     }
-    
+
     .product-images-section,
     .product-info-section,
     .similar-products-section {
         padding: 20px;
     }
-    
+
     .product-title {
         font-size: 1.5rem;
     }
-    
+
     .product-price {
         font-size: 1.8rem;
     }
-    
+
     .product-availability-price {
         flex-direction: column;
         gap: 15px;
         text-align: center;
     }
-    
+
     .similar-products-grid {
         grid-template-columns: 1fr;
         gap: 20px;
     }
-    
+
     .thumbnail-grid {
         justify-content: center;
     }
@@ -1361,7 +1361,7 @@ textarea.input:focus,
     display: flex;
     justify-content: space-between;
     padding: 8px 0;
-    border-bottom: 1px solid rgba(0,0,0,0.1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .spec-item:last-child {
@@ -1476,19 +1476,19 @@ textarea.input:focus,
         grid-template-columns: 1fr;
         gap: 30px;
     }
-    
+
     .product-info h1 {
         font-size: 1.5rem;
     }
-    
+
     .product-price .price {
         font-size: 2rem;
     }
-    
+
     .product-features {
         flex-direction: column;
     }
-    
+
     .products-grid {
         grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
         gap: 20px;
