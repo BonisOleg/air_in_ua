@@ -50,4 +50,12 @@ services:
         sync: false
       - key: CLOUDINARY_API_SECRET
         value: "your_api_secret"
-        sync: false 
+        sync: false
+      - key: STATIC_URL
+        value: "/static/"
+      - key: STATIC_ROOT
+        value: "staticfiles"
+      - key: MEDIA_URL
+        value: "/media/"
+      - key: MEDIA_ROOT
+        value: "media" 
