@@ -350,6 +350,25 @@ document.addEventListener('DOMContentLoaded', () => {
     // initializeProductCardClicks(); - видалено, товари тепер відкриваються за посиланнями
     observeElements();
 
+    // --- Функціональність галереї зображень на сторінці товару ---
+    function changeMainImage(imageSrc) {
+        const mainImage = document.getElementById('mainProductImage');
+        if (mainImage) {
+            mainImage.src = imageSrc;
+            
+            // Оновлюємо активну мініатюру
+            document.querySelectorAll('.thumbnail').forEach(thumb => {
+                thumb.classList.remove('active-thumbnail');
+                if (thumb.src === imageSrc) {
+                    thumb.classList.add('active-thumbnail');
+                }
+            });
+        }
+    }
+
+    // Робимо функцію глобальною для використання в HTML
+    window.changeMainImage = changeMainImage;
+
     // --- Обробник для кнопок, що відкривають ГЛОБАЛЬНУ форму без ID --- 
     document.querySelectorAll('.open-global-feedback-btn').forEach(button => {
         console.log('Found button to open global feedback:', button);

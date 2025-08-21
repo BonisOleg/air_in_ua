@@ -8,157 +8,234 @@
 {% block meta_keywords %}{{ product.manufacturer.name }}, {{ product.name }}, кондиціонер {{ product.btu }} BTU, {{ product.area_coverage }} м², кондиціонери Київ, {{ product.price }} грн{% endblock %}
 
 {% block content %}
-<div class="container">
-  <div class="product-detail-page">
+<main class="product-detail-page">
+  <div class="product-container">
     
     <!-- Breadcrumbs -->
-    <nav class="breadcrumbs">
-      <a href="{% url 'airinua:index' %}">Головна</a>
-      <span>/</span>
-      <a href="{% url 'airinua:catalog' %}">Каталог</a>
-      <span>/</span>
-      <span>{{ product.manufacturer.name }} {{ product.name }}</span>
+    <nav class="breadcrumbs" aria-label="Навігація">
+      <a href="{% url 'airinua:index' %}" class="breadcrumb-link">Головна</a>
+      <span class="breadcrumb-separator">/</span>
+      <a href="{% url 'airinua:catalog' %}" class="breadcrumb-link">Каталог</a>
+      <span class="breadcrumb-separator">/</span>
+      <span class="breadcrumb-current">{{ product.manufacturer.name }} {{ product.name }}</span>
     </nav>
 
-    <div class="product-detail-content">
-      <!-- Product Images -->
-      <div class="product-images">
-        <div class="main-image">
+    <div class="product-detail-grid">
+      <!-- Product Images Section -->
+      <div class="product-images-section">
+        <div class="main-image-container">
           <img src="{{ product.image_url|default:'/static/img/placeholder.png' }}" 
-               alt="{{ product.manufacturer.name }} {{ product.name }}" 
-               class="product-main-image">
+               alt="{{ product.manufacturer.name }} {{ product.name }} - головне фото" 
+               class="product-main-image"
+               id="mainProductImage">
         </div>
         
         {% if additional_images %}
-        <div class="additional-images">
-          {% for image in additional_images %}
-          <img src="{{ image.image_url }}" 
-               alt="{{ image.alt_text|default:product.name }}" 
-               class="product-thumb"
-               onclick="changeMainImage('{{ image.image_url }}')">
-          {% endfor %}
+        <div class="image-gallery">
+          <div class="thumbnail-grid">
+            <img src="{{ product.image_url|default:'/static/img/placeholder.png' }}" 
+                 alt="{{ product.manufacturer.name }} {{ product.name }} - мініатюра" 
+                 class="thumbnail active-thumbnail"
+                 onclick="changeMainImage('{{ product.image_url|default:'/static/img/placeholder.png' }}')">
+            {% for image in additional_images %}
+            <img src="{{ image.image_url }}" 
+                 alt="{{ image.alt_text|default:product.name }} - додаткове фото" 
+                 class="thumbnail"
+                 onclick="changeMainImage('{{ image.image_url }}')">
+            {% endfor %}
+          </div>
         </div>
         {% endif %}
       </div>
 
-      <!-- Product Info -->
-      <div class="product-info">
-        <h1>{{ product.manufacturer.name }} {{ product.name }}</h1>
+      <!-- Product Info Section -->
+      <div class="product-info-section">
+        <div class="product-header">
+          <h1 class="product-title">{{ product.manufacturer.name }} {{ product.name }}</h1>
+          <div class="product-sku">Артикул: {{ product.id }}</div>
+        </div>
         
-        <div class="product-specs">
-          <div class="spec-item">
-            <strong>Виробник:</strong> {{ product.manufacturer.name }}
-          </div>
-          <div class="spec-item">
-            <strong>Потужність:</strong> {{ product.btu }} BTU
-          </div>
-          <div class="spec-item">
-            <strong>Площа охолодження:</strong> до {{ product.area_coverage }} м²
-          </div>
-          <div class="spec-item">
-            <strong>Наявність:</strong> 
+        <!-- Availability & Price -->
+        <div class="product-availability-price">
+          <div class="availability-badge">
             {% if product.is_available %}
-              <span class="in-stock">В наявності</span>
+              <span class="availability in-stock">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                </svg>
+                В наявності
+              </span>
             {% else %}
-              <span class="out-of-stock">Немає в наявності</span>
+              <span class="availability out-of-stock">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                </svg>
+                Немає в наявності
+              </span>
             {% endif %}
           </div>
+          
+          <div class="product-price-container">
+            <span class="product-price">{{ product.price }} грн</span>
+            <span class="price-note">включає ПДВ</span>
+          </div>
         </div>
 
-        <div class="product-price">
-          <span class="price">{{ product.price }} грн</span>
+        <!-- Product Specifications -->
+        <div class="product-specifications">
+          <h3 class="specs-title">Характеристики</h3>
+          <div class="specs-grid">
+            <div class="spec-item">
+              <span class="spec-label">Виробник</span>
+              <span class="spec-value">{{ product.manufacturer.name }}</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-label">Потужність</span>
+              <span class="spec-value">{{ product.btu }} BTU</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-label">Площа охолодження</span>
+              <span class="spec-value">до {{ product.area_coverage }} м²</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-label">Тип компресора</span>
+              <span class="spec-value">Інверторний</span>
+            </div>
+          </div>
         </div>
-
-        {% if product.description %}
-        <div class="product-description">
-          <h3>Опис товару</h3>
-          <p>{{ product.description|linebreaks }}</p>
-        </div>
-        {% endif %}
 
         <!-- Call to Action -->
         <div class="product-actions">
-          <button class="cta-button product-order-btn" 
+          <button class="cta-button primary-action" 
                   data-product-id="{{ product.id }}"
-                  data-product-name="{{ product.manufacturer.name }} {{ product.name }}">
+                  data-product-name="{{ product.manufacturer.name }} {{ product.name }}"
+                  {% if not product.is_available %}disabled{% endif %}>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+            </svg>
             Замовити кондиціонер
           </button>
           
-          <div class="product-features">
-            <div class="feature">
+          <div class="product-benefits">
+            <div class="benefit-item">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
               </svg>
-              Безкоштовна доставка
+              <span>Безкоштовна доставка</span>
             </div>
-            <div class="feature">
+            <div class="benefit-item">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
               </svg>
-              Безкоштовний монтаж
+              <span>Безкоштовний монтаж</span>
             </div>
-            <div class="feature">
+            <div class="benefit-item">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 6l-1.41-1.41L12 10.17 8.41 6.59 7 8l5 5 5-5z"/>
               </svg>
-              Гарантія виробника
+              <span>Гарантія виробника</span>
             </div>
           </div>
         </div>
+
+        <!-- Product Description -->
+        {% if product.description %}
+        <div class="product-description-section">
+          <h3 class="description-title">Опис товару</h3>
+          <div class="description-content">
+            {{ product.description|linebreaks }}
+          </div>
+        </div>
+        {% endif %}
       </div>
     </div>
 
-    <!-- Similar Products -->
+    <!-- Similar Products Section -->
     {% if similar_products %}
-    <div class="similar-products">
-      <h2>Схожі товари</h2>
-      <div class="products-grid">
+    <section class="similar-products-section">
+      <div class="section-header">
+        <h2 class="section-title">Схожі товари</h2>
+        <p class="section-subtitle">Рекомендовані кондиціонери для вас</p>
+      </div>
+      
+      <div class="similar-products-grid">
         {% for similar_product in similar_products %}
-        <div class="product-card">
-          <a href="{{ similar_product.get_absolute_url }}">
-            <img src="{{ similar_product.image_url|default:'/static/img/placeholder.png' }}" 
-                 alt="{{ similar_product.manufacturer.name }} {{ similar_product.name }}"
-                 class="product-image">
-            <div class="product-content">
-              <h3>{{ similar_product.manufacturer.name }}</h3>
-              <p class="product-name">{{ similar_product.name }}</p>
-              <div class="product-specs-mini">
-                <span>{{ similar_product.btu }} BTU</span>
-                <span>до {{ similar_product.area_coverage }} м²</span>
+        <article class="similar-product-card">
+          <a href="{{ similar_product.get_absolute_url }}" class="product-link">
+            <div class="product-image-container">
+              <img src="{{ similar_product.image_url|default:'/static/img/placeholder.png' }}" 
+                   alt="{{ similar_product.manufacturer.name }} {{ similar_product.name }}"
+                   class="similar-product-image">
+            </div>
+            <div class="product-info">
+              <h3 class="product-brand">{{ similar_product.manufacturer.name }}</h3>
+              <h4 class="product-name">{{ similar_product.name }}</h4>
+              <div class="product-specs">
+                <span class="spec-badge">{{ similar_product.btu }} BTU</span>
+                <span class="spec-badge">до {{ similar_product.area_coverage }} м²</span>
               </div>
               <div class="product-price">{{ similar_product.price }} грн</div>
             </div>
           </a>
-        </div>
+        </article>
         {% endfor %}
       </div>
-    </div>
+    </section>
     {% endif %}
-
   </div>
-</div>
+</main>
 
-<!-- Schema.org розмітка для товару -->
+<!-- Schema.org розмітка для товару (Google Merchant Center 2025) -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Product",
   "name": "{{ product.manufacturer.name }} {{ product.name }}",
-  "description": "{{ product.description|default:'' }}",
+  "description": "{{ product.description|default:''|truncatechars:500 }}",
+  "sku": "AIRINUA-{{ product.id }}",
+  "mpn": "{{ product.name }}",
   "brand": {
     "@type": "Brand",
     "name": "{{ product.manufacturer.name }}"
   },
   "category": "Кондиціонери",
   "image": "{{ product.image_url|default:'/static/img/placeholder.png' }}",
+  "url": "{{ request.build_absolute_uri }}",
   "offers": {
     "@type": "Offer",
+    "url": "{{ request.build_absolute_uri }}",
     "price": "{{ product.price }}",
     "priceCurrency": "UAH",
+    "priceValidUntil": "{{ 'now'|date:'Y-m-d'|add:'365 days' }}",
     "availability": "{% if product.is_available %}https://schema.org/InStock{% else %}https://schema.org/OutOfStock{% endif %}",
+    "itemCondition": "https://schema.org/NewCondition",
     "seller": {
       "@type": "Organization",
-      "name": "Air In UA"
+      "name": "Air In UA",
+      "url": "https://www.airinua.com"
+    },
+    "shippingDetails": {
+      "@type": "OfferShippingDetails",
+      "shippingRate": {
+        "@type": "MonetaryAmount",
+        "value": "0",
+        "currency": "UAH"
+      },
+      "deliveryTime": {
+        "@type": "ShippingDeliveryTime",
+        "handlingTime": {
+          "@type": "QuantitativeValue",
+          "minValue": 1,
+          "maxValue": 2,
+          "unitCode": "DAY"
+        },
+        "transitTime": {
+          "@type": "QuantitativeValue",
+          "minValue": 1,
+          "maxValue": 3,
+          "unitCode": "DAY"
+        }
+      }
     }
   },
   "additionalProperty": [
@@ -184,3 +261,4 @@ function changeMainImage(imageUrl) {
 }
 </script>
 {% endblock %}
+
