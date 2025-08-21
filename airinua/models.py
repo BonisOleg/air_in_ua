@@ -56,8 +56,8 @@ class Product(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            # Створюємо slug з назви товару та виробника
-            base_slug = slugify(f"{self.manufacturer.name} {self.name}")
+            # Створюємо slug тільки з назви товару, щоб уникнути дублювання
+            base_slug = slugify(self.name)
             slug = base_slug
             counter = 1
             

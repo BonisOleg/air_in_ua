@@ -98,10 +98,16 @@ def return_policy_view(request):
 
 def product_detail_view(request, product_id, product_slug=None):
     """Відображає детальну сторінку товару."""
-    product = get_object_or_404(Product, id=product_id)
+    try:
+        product = Product.objects.get(id=product_id)
+    except Product.DoesNotExist:
+        # Логуємо помилку для діагностики
+        logger.error(f"Product with ID {product_id} not found. URL: {request.path}")
+        return render(request, 'errors/404.html', status=404)
     
     # Якщо slug не відповідає, перенаправляємо на правильний URL
     if product_slug and product.slug != product_slug:
+        logger.info(f"Redirecting from {product_slug} to {product.slug} for product {product_id}")
         return redirect('airinua:product_detail_slug', 
                        product_id=product.id, 
                        product_slug=product.slug, 
