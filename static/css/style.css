@@ -99,7 +99,7 @@ main {
 }
 
 .main-page-title {
-    font-size: 56px;
+    font-size: 40px;
     font-weight: 700;
     color: var(--color-white);
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
@@ -770,23 +770,33 @@ textarea.input:focus,
 @media (max-width: 768px) {
     .return-policy-page {
         padding: 20px 15px;
+        text-align: center;
     }
 
     .return-policy-page h1 {
         font-size: 2rem;
+        text-align: center;
+        margin-bottom: 20px;
     }
 
     .return-policy-section {
         padding: 20px;
+        border-radius: 16px;
+        margin-bottom: 20px;
+        text-align: center;
     }
 
     .return-policy-section h2 {
-        font-size: 1.3rem;
+        font-size: 1.5rem;
+        text-align: center;
+        margin-bottom: 15px;
     }
 
     .return-contacts,
     .support-contacts {
         grid-template-columns: 1fr;
+        gap: 15px;
+        justify-items: center;
     }
 }
 
@@ -1263,35 +1273,66 @@ textarea.input:focus,
 @media (max-width: 768px) {
     .product-container {
         padding: 15px;
+        text-align: center;
     }
 
     .product-images-section,
     .product-info-section,
     .similar-products-section {
         padding: 20px;
+        border-radius: 16px;
+        margin-bottom: 20px;
     }
 
     .product-title {
-        font-size: 1.5rem;
+        font-size: 1.8rem;
+        text-align: center;
+        margin-bottom: 15px;
     }
 
     .product-price {
-        font-size: 1.8rem;
+        font-size: 2rem;
+        text-align: center;
     }
 
     .product-availability-price {
         flex-direction: column;
         gap: 15px;
         text-align: center;
+        padding: 15px;
+        border-radius: 12px;
     }
 
     .similar-products-grid {
         grid-template-columns: 1fr;
         gap: 20px;
+        justify-items: center;
     }
 
     .thumbnail-grid {
         justify-content: center;
+        gap: 10px;
+    }
+
+    .product-actions {
+        align-items: center;
+        gap: 15px;
+    }
+
+    .primary-action {
+        width: 100%;
+        max-width: 300px;
+        margin: 0 auto 15px auto;
+    }
+
+    .product-benefits {
+        align-items: center;
+        gap: 10px;
+    }
+
+    .benefit-item {
+        text-align: center;
+        padding: 10px 15px;
     }
 }
 
@@ -1495,23 +1536,38 @@ textarea.input:focus,
     .product-detail-content {
         grid-template-columns: 1fr;
         gap: 30px;
+        text-align: center;
     }
 
     .product-info h1 {
-        font-size: 1.5rem;
+        font-size: 1.8rem;
+        text-align: center;
+        margin-bottom: 20px;
     }
 
     .product-price .price {
-        font-size: 2rem;
+        font-size: 2.2rem;
+        text-align: center;
     }
 
     .product-features {
         flex-direction: column;
+        align-items: center;
+        gap: 15px;
     }
 
     .products-grid {
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        grid-template-columns: 1fr;
         gap: 20px;
+        justify-items: center;
+        max-width: 350px;
+        margin: 0 auto;
+    }
+
+    .product-card {
+        width: 100%;
+        max-width: 350px;
+        margin: 0 auto;
     }
 }
 
@@ -2234,10 +2290,19 @@ textarea.input:focus,
 @media (max-width: 768px) {
     .advantages-container {
         flex-direction: column;
+        gap: 20px;
+        align-items: center;
     }
 
     .advantages-column {
         width: 100%;
+        max-width: 350px;
+    }
+
+    .advantage-item {
+        text-align: center;
+        padding: 20px;
+        margin-bottom: 20px;
     }
 }
 
@@ -2814,15 +2879,19 @@ textarea.input:focus,
         align-items: center;
         padding: 10px 20px;
         position: relative;
+        text-align: center;
     }
 
     .logo-link {
         margin-bottom: 0;
         z-index: 1000;
+        display: flex;
+        align-items: center;
     }
 
     .logo {
-        height: 40px;
+        height: 35px;
+        margin: 0 auto;
     }
 
     /* ВАЖЛИВО: Показуємо бургер-меню тільки на мобільних пристроях */
@@ -2847,12 +2916,13 @@ textarea.input:focus,
         transform: translateY(-100%);
         /* Початковий стан залишається без змін */
         transition: transform 0.3s ease;
-        padding: 50px 0;
+        padding: 50px 20px;
         overflow-y: auto;
         /* Додаємо скрол, якщо контенту багато */
         opacity: 0;
         visibility: hidden;
         pointer-events: none;
+        text-align: center;
     }
 
     .nav.active {
@@ -2867,9 +2937,15 @@ textarea.input:focus,
     .nav a {
         margin: 15px 0;
         font-size: 1.3rem;
-        padding: 10px 20px;
+        padding: 15px 25px;
         color: var(--color-text);
         display: block;
+        text-align: center;
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.1);
+        transition: all 0.3s ease;
+        width: 100%;
+        max-width: 250px;
     }
 
     .nav a:not(:last-of-type)::after {
@@ -2896,12 +2972,39 @@ textarea.input:focus,
 
     .site-footer .container {
         flex-direction: column;
-        gap: 15px;
+        gap: 20px;
+        text-align: center;
+        padding: 20px 15px;
+    }
+
+    .footer-services,
+    .footer-center,
+    .footer-contacts {
+        width: 100%;
+        text-align: center;
     }
 
     .footer-contacts {
         flex-direction: column;
+        gap: 15px;
+        align-items: center;
+    }
+
+    .footer-socials {
+        justify-content: center;
         gap: 10px;
+    }
+
+    .footer-nav {
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .footer-nav a {
+        padding: 8px 15px;
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.1);
+        transition: all 0.3s ease;
     }
 }
 
