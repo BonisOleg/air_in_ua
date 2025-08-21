@@ -902,7 +902,7 @@ textarea.input:focus,
     width: 80px;
     height: 80px;
     border-radius: 12px;
-    object-fit: cover;
+    object-fit: contain;
     cursor: pointer;
     border: 3px solid transparent;
     transition: all 0.3s ease;
@@ -1662,7 +1662,8 @@ textarea.input:focus,
 .article-card-image img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
+    background: var(--color-bg);
 }
 
 .article-card-content {
@@ -2038,7 +2039,8 @@ textarea.input:focus,
 .article-card-image img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
+    background: var(--color-bg);
     transition: transform 0.5s ease;
 }
 
