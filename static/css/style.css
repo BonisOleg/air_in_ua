@@ -772,6 +772,39 @@ textarea.input:focus,
     }
 }
 
+/* --- Modal Buttons Styles --- */
+.modal-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.modal-buttons .button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    width: 100%;
+    text-align: center;
+}
+
+.modal-buttons .button-details {
+    background: var(--color-blue-300);
+    color: var(--color-white);
+}
+
+.modal-buttons .button-details:hover {
+    background: var(--color-blue-400);
+    color: var(--color-white);
+}
+
+@media (max-width: 768px) {
+    .modal-buttons {
+        gap: 12px;
+    }
+}
+
 /* --- Product Detail Page Styles --- */
 .product-detail-page {
     max-width: 1200px;
