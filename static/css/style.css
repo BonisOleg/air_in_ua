@@ -3767,13 +3767,13 @@ select:focus {
         gap: 20px;
         text-align: center;
     }
-    
+
     .footer-services,
     .footer-center,
     .footer-contacts {
         width: 100%;
     }
-    
+
     .footer-nav {
         flex-direction: column;
         align-items: center;
