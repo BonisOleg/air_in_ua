@@ -17,9 +17,6 @@ python manage.py migrate
 # Add products from data file
 python3 parse_and_add_products.py --auto
 
-# Update product slugs to fix URL issues
-python3 update_slugs.py
-
 # Force rebuild timestamp
 echo "Build completed at: $(date)" > build_timestamp.txt
 echo "Modal buttons fix deployed at: $(date)" > modal_fix.txt

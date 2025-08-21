@@ -191,6 +191,10 @@ def add_products_to_database(products):
         
         if existing_product:
             print(f"ℹ️ Товар вже існує: {product_data['name']}")
+            # Оновлюємо slug для існуючого товару
+            if not existing_product.slug:
+                existing_product.save()  # Це викличе генерацію slug
+                print(f"  🔄 Оновлено slug для існуючого товару: {existing_product.slug}")
             continue
         
         # Шукаємо зображення для товару
