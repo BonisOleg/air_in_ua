@@ -24,23 +24,31 @@
       <!-- Product Images Section -->
       <div class="product-images-section">
         <div class="main-image-container">
-          <img src="{{ product.image_url|default:'/static/img/placeholder.png' }}" 
+          {% if product.images.first %}
+          <img src="{{ product.images.first.image_url }}" 
+               alt="{{ product.images.first.alt_text|default:product.name }}" 
+               class="product-main-image"
+               id="mainProductImage">
+          {% elif product.image_url %}
+          <img src="{{ product.image_url }}" 
                alt="{{ product.manufacturer.name }} {{ product.name }} - головне фото" 
                class="product-main-image"
                id="mainProductImage">
+          {% else %}
+          <img src="{% static 'img/placeholder.png' %}" 
+               alt="{{ product.manufacturer.name }} {{ product.name }} - фото відсутнє" 
+               class="product-main-image"
+               id="mainProductImage">
+          {% endif %}
         </div>
         
-        {% if additional_images %}
+        {% if product.images.count > 1 %}
         <div class="image-gallery">
           <div class="thumbnail-grid">
-            <img src="{{ product.image_url|default:'/static/img/placeholder.png' }}" 
-                 alt="{{ product.manufacturer.name }} {{ product.name }} - мініатюра" 
-                 class="thumbnail active-thumbnail"
-                 onclick="changeMainImage('{{ product.image_url|default:'/static/img/placeholder.png' }}')">
-            {% for image in additional_images %}
+            {% for image in product.images.all %}
             <img src="{{ image.image_url }}" 
-                 alt="{{ image.alt_text|default:product.name }} - додаткове фото" 
-                 class="thumbnail"
+                 alt="{{ image.alt_text|default:product.name }} - фото {{ forloop.counter }}" 
+                 class="thumbnail {% if forloop.first %}active-thumbnail{% endif %}"
                  onclick="changeMainImage('{{ image.image_url }}')">
             {% endfor %}
           </div>

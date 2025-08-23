@@ -132,17 +132,34 @@ def import_products_with_photos():
                 photos_found = list(set(photos_found))
                 photos_found.sort(key=lambda x: x.name)
                 
-                # Add photos
+                # Add photos and set main image_url for product
+                main_image_url = None
                 for i, photo_file in enumerate(photos_found):
                     try:
+                        image_url = f'/static/img/product/{photo_file.name}'
+                        
+                        # Create ProductImage record
                         product_image = ProductImage.objects.create(
                             product=product,
+                            image_url=image_url,
                             alt_text=f'{name} - фото {i+1}'
                         )
-                        product_image.image_url = f'/static/img/product/{photo_file.name}'
-                        product_image.save()
+                        
+                        # Set first photo as main image_url for product
+                        if i == 0:
+                            main_image_url = image_url
+                            product.image_url = image_url
+                            product.save()
+                        
+                        print(f'    Added photo: {photo_file.name}')
+                        
                     except Exception as e:
-                        print(f'Error adding photo {photo_file.name}: {e}')
+                        print(f'    Error adding photo {photo_file.name}: {e}')
+                
+                if main_image_url:
+                    print(f'  Set main image: {main_image_url}')
+                else:
+                    print(f'  No photos found for: {name}')
             
         except Exception as e:
             print(f'Error processing product: {e}')

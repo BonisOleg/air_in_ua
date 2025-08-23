@@ -4,7 +4,9 @@
 
     <a href="{{ product.get_absolute_url }}" class="article-card-image-link">
         <div class="article-card-image">
-            {% if product.image_url %}
+            {% if product.images.first %}
+            <img src="{{ product.images.first.image_url }}" alt="{{ product.images.first.alt_text|default:product.name }}">
+            {% elif product.image_url %}
             <img src="{{ product.image_url }}" alt="{{ product.name }}">
             {% else %}
             <img src="{% static 'img/placeholder.png' %}" alt="Фото відсутнє" class="product-image-placeholder">
