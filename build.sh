@@ -36,7 +36,7 @@ def import_products_with_photos():
     with open('products_data.txt', 'r', encoding='utf-8') as f:
         content = f.read()
     
-    products_data = content.split('\n\n')
+    products_data = content.strip().split('\n\n')
     
     for product_block in products_data:
         if not product_block.strip():
@@ -94,10 +94,14 @@ def import_products_with_photos():
                 # Remove old photos
                 ProductImage.objects.filter(product=product).delete()
                 
-                # Search variants
+                # Create comprehensive search variants
                 search_variants = [name]
+                
+                # Basic variants
                 if name.startswith('Кондиціонер '):
                     search_variants.append(name.replace('Кондиціонер ', ''))
+                
+                # End variants
                 if name.endswith(' inverter'):
                     search_variants.append(name.replace(' inverter', ''))
                 if name.endswith(' On-Off Elite'):
@@ -110,22 +114,63 @@ def import_products_with_photos():
                     search_variants.append(name.replace(' WI-FI Ready', ''))
                 if name.endswith(' Inverter R32'):
                     search_variants.append(name.replace(' Inverter R32', ''))
+                
+                # Character replacements
                 search_variants.append(name.replace('/', ':'))
                 search_variants.append(name.replace('&', '&'))
                 
+                # Add variants with different separators
+                search_variants.append(name.replace(' ', '-'))
+                search_variants.append(name.replace(' ', '_'))
+                
+                # Add variants with common abbreviations
+                if 'Supreme Continental silver' in name:
+                    search_variants.append(name.replace('Supreme Continental silver', 'Supreme-Continental-silver'))
+                    search_variants.append(name.replace('Supreme Continental silver', 'Supreme-Continental-silver'))
+                
+                if 'On-Off Elite' in name:
+                    search_variants.append(name.replace('On-Off Elite', 'On-Off-Elite'))
+                
+                if 'Winter, Two Stage' in name:
+                    search_variants.append(name.replace('Winter, Two Stage', 'Winter-Two-Stage'))
+                
+                # Word-based variants
                 words = name.split()
                 if len(words) >= 2:
                     search_variants.append(' '.join(words[:2]))
                     if len(words) >= 3:
                         search_variants.append(' '.join(words[:3]))
                 
+                # Add manufacturer-specific variants
+                if 'TCL' in name:
+                    search_variants.append('TCL')
+                if 'Cooper&Hunter' in name:
+                    search_variants.append('Cooper&Hunter')
+                if 'GREE' in name:
+                    search_variants.append('GREE')
+                if 'Hoapp' in name:
+                    search_variants.append('Hoapp')
+                if 'Daikin' in name:
+                    search_variants.append('Daikin')
+                if 'Gorenje' in name:
+                    search_variants.append('Gorenje')
+                if 'TKS' in name:
+                    search_variants.append('TKS')
+                
+                # Remove duplicates
+                search_variants = list(set(search_variants))
+                
+                print(f'  🔍 Пошук фото для: {name}')
+                print(f'     Варіанти пошуку: {len(search_variants)}')
+                
                 # Find photos
                 photos_found = []
                 for photo_file in photo_dir.iterdir():
                     if photo_file.is_file() and photo_file.suffix in ['.webp', '.jpg', '.png']:
                         for variant in search_variants:
-                            if variant in photo_file.name:
+                            if variant and variant in photo_file.name:
                                 photos_found.append(photo_file)
+                                print(f'     ✅ Знайдено: {photo_file.name} (варіант: {variant})')
                                 break
                 
                 # Remove duplicates and sort
@@ -151,23 +196,23 @@ def import_products_with_photos():
                             product.image_url = image_url
                             product.save()
                         
-                        print(f'    Added photo: {photo_file.name}')
+                        print(f'    ✅ Додано фото: {photo_file.name}')
                         
                     except Exception as e:
-                        print(f'    Error adding photo {photo_file.name}: {e}')
+                        print(f'    ❌ Помилка додавання {photo_file.name}: {e}')
                 
                 if main_image_url:
-                    print(f'  Set main image: {main_image_url}')
+                    print(f'  🎯 Встановлено головне фото: {main_image_url}')
                 else:
-                    print(f'  No photos found for: {name}')
+                    print(f'  ⚠️  Для цього товару немає фото')
             
         except Exception as e:
-            print(f'Error processing product: {e}')
+            print(f'❌ Помилка обробки товару: {e}')
             continue
 
 # Run import
 import_products_with_photos()
-print('Products with photos imported successfully!')
+print('🎉 Товари з фото успішно імпортовано!')
 "
 
 # Force rebuild timestamp

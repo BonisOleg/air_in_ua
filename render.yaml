@@ -58,4 +58,10 @@ services:
       - key: MEDIA_URL
         value: "/media/"
       - key: MEDIA_ROOT
-        value: "media" 
+        value: "media"
+      - key: DJANGO_SETTINGS_MODULE
+        value: "config.settings"
+      - key: FORCE_HTTPS_REDIRECT
+        value: "False"
+      - key: SECURE_SSL_REDIRECT
+        value: "False" 

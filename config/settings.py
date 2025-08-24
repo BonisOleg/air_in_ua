@@ -31,7 +31,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', get_random_secret_key())
 
 # DEBUG: True локально, False на Render
 # ТИМЧАСОВО увімкнено для дебагу
-DEBUG = True
+DEBUG = os.environ.get('DEBUG', 'True').lower() == 'true'
 
 # Читай список хостів з оточення (розділених комою)
 ALLOWED_HOSTS_STRING = os.environ.get('DJANGO_ALLOWED_HOSTS', '')
@@ -60,7 +60,7 @@ else:
 if not DEBUG:
     CSRF_COOKIE_SECURE = True
     SESSION_COOKIE_SECURE = True
-    SECURE_SSL_REDIRECT = True
+    SECURE_SSL_REDIRECT = os.environ.get('SECURE_SSL_REDIRECT', 'False').lower() == 'true'
     SECURE_HSTS_SECONDS = int(os.environ.get('DJANGO_SECURE_HSTS_SECONDS', 31536000)) # 1 рік
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     SECURE_HSTS_PRELOAD = True
@@ -159,16 +159,24 @@ LOCALE_PATHS = [
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = os.environ.get('STATIC_URL', '/static/')
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')] # Для локальної розробки
-STATIC_ROOT = BASE_DIR / 'staticfiles' # Куди collectstatic збере файли для продакшену
+STATIC_ROOT = os.environ.get('STATIC_ROOT', BASE_DIR / 'staticfiles') # Куди collectstatic збере файли для продакшену
 
-# Дуже важливо для роботи з статикою на cPanel
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# Налаштування для production на Render
+if not DEBUG:
+    # Використовуємо Whitenoise для статичних файлів
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+    # Додаємо додаткові налаштування для Whitenoise
+    WHITENOISE_USE_FINDERS = True
+    WHITENOISE_AUTOREFRESH = True
+else:
+    # Для development використовуємо стандартне зберігання
+    STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
 # Media files - Cloudinary для production
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media/' # Використовуємо BASE_DIR / 'media'
+MEDIA_URL = os.environ.get('MEDIA_URL', '/media/')
+MEDIA_ROOT = os.environ.get('MEDIA_ROOT', BASE_DIR / 'media/') # Використовуємо BASE_DIR / 'media'
 
 # Cloudinary налаштування для збереження медіафайлів (залишаємо для майбутнього використання)
 CLOUDINARY_CLOUD_NAME = os.environ.get('CLOUDINARY_CLOUD_NAME', '')
