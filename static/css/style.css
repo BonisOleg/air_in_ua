@@ -204,24 +204,7 @@ main {
     color: var(--color-white) !important;
 }
 
-/* Стилі для телефонних посилань у footer */
-.footer-phone-link {
-    display: inline-block;
-    color: var(--color-blue-300);
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 1.1rem;
-    transition: color 0.2s ease;
-    padding: 8px 16px;
-    border-radius: 8px;
-    background: var(--color-white);
-    border: 2px solid var(--color-blue-300);
-}
 
-.footer-phone-link:hover {
-    color: var(--color-white);
-    background: var(--color-blue-300);
-}
 
 /* Стилі для кнопок месенджерів */
 .messenger-buttons {
@@ -691,27 +674,7 @@ textarea.input:focus,
     color: var(--color-white);
 }
 
-.footer-phone {
-    margin: 10px 0;
-}
 
-.footer-phone-link {
-    display: inline-block;
-    color: var(--color-blue-300);
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 1.1rem;
-    transition: color 0.2s ease;
-    padding: 8px 16px;
-    border-radius: 8px;
-    background: var(--color-white);
-    border: 2px solid var(--color-blue-300);
-}
-
-.footer-phone-link:hover {
-    color: var(--color-white);
-    background: var(--color-blue-300);
-}
 
 .site-footer p {
     margin-bottom: 0;
