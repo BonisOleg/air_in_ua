@@ -212,10 +212,59 @@ main {
     font-weight: 600;
     font-size: 1.1rem;
     transition: color 0.2s ease;
+    padding: 8px 16px;
+    border-radius: 8px;
+    background: var(--color-white);
+    border: 2px solid var(--color-blue-300);
 }
 
 .footer-phone-link:hover {
-    color: var(--color-blue-400);
+    color: var(--color-white);
+    background: var(--color-blue-300);
+}
+
+/* Стилі для кнопок месенджерів */
+.messenger-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+}
+
+.messenger-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    text-decoration: none;
+    border-radius: 12px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.messenger-button.telegram {
+    background: #0088cc;
+    color: white;
+}
+
+.messenger-button.telegram:hover {
+    background: #006699;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 136, 204, 0.3);
+}
+
+.messenger-button.viber {
+    background: #7360f2;
+    color: white;
+}
+
+.messenger-button.viber:hover {
+    background: #5a4bc7;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(115, 96, 242, 0.3);
 }
 
 .button-details,
