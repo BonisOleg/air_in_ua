@@ -123,6 +123,27 @@ def import_products_with_photos():
                 search_variants.append(name.replace(' ', '-'))
                 search_variants.append(name.replace(' ', '_'))
                 
+                # Add variants with different separators for specific characters
+                search_variants.append(name.replace(':', '-'))
+                search_variants.append(name.replace(':', ':'))
+                search_variants.append(name.replace('/', '-'))
+                search_variants.append(name.replace('/', ':'))
+                search_variants.append(name.replace('&', '&'))
+                
+                # Add uppercase variants for specific brands
+                if 'Clair' in name:
+                    search_variants.append('CLAIR')
+                if 'Gree' in name:
+                    search_variants.append('GREE')
+                if 'Samsung' in name:
+                    search_variants.append('Samsung')
+                if 'Daikin' in name:
+                    search_variants.append('Daikin')
+                if 'Hisense' in name:
+                    search_variants.append('Hisense')
+                if 'Skylux' in name:
+                    search_variants.append('Skylux')
+                
                 # Add variants with common abbreviations
                 if 'Supreme Continental silver' in name:
                     search_variants.append(name.replace('Supreme Continental silver', 'Supreme-Continental-silver'))
@@ -141,6 +162,11 @@ def import_products_with_photos():
                     search_variants.append(name.replace('RXF', 'RXF'))
                     search_variants.append(name.replace('FTX', 'FTX'))
                     search_variants.append(name.replace('RX', 'RX'))
+                    # Add specific model variants
+                    if 'FTXF35' in name:
+                        search_variants.append('FTXA35:RXA35A-Stylish')
+                    if 'FTXF25' in name:
+                        search_variants.append('FTXA25:RXA25A-Stylish')
                 
                 if 'So Cool' in name:
                     search_variants.append(name.replace('So Cool', 'So-Cool'))
@@ -167,21 +193,41 @@ def import_products_with_photos():
                     search_variants.append(name.replace('Neo', 'Neo'))
                     search_variants.append('Neo 09A')
                     search_variants.append('Neo 12A')
+                    # Add specific Clair variants
+                    if '09A' in name:
+                        search_variants.append('CLAIR NEO-09A-R32')
+                    if '12A' in name:
+                        search_variants.append('CLAIR NEO-12A-R32')
                 
                 if 'Saros' in name:
                     search_variants.append(name.replace('Saros', 'Saros'))
                     search_variants.append('GWH09BBCXD-K6DNA1A')
                     search_variants.append('GWH12BBCXD-K6DNA1A')
+                    # Add specific Gree Saros variants
+                    if 'GWH09BBCXD' in name:
+                        search_variants.append('Gree-Saros-GWH09BBCXD-K6DNA1A:I')
+                    if 'GWH12BBCXD' in name:
+                        search_variants.append('Gree-Saros-GWH12BBCXD-K6DNA1A:I')
                 
                 if 'Skylux' in name:
                     search_variants.append(name.replace('Skylux', 'Skylux'))
                     search_variants.append('SK-09CDR3DI')
                     search_variants.append('SK-12CDR3DI')
+                    # Add specific Skylux variants
+                    if 'SK-09CDR3DI' in name:
+                        search_variants.append('Skylux-SK-09CDR3DI')
+                    if 'SK-12CDR3DI' in name:
+                        search_variants.append('Skylux-SK-12CDR3DI')
                 
                 if 'Omega' in name:
                     search_variants.append(name.replace('Omega', 'Omega'))
                     search_variants.append('CF25YR1D')
                     search_variants.append('CF35YR1D')
+                    # Add specific Hisense variants
+                    if 'CF25YR1D' in name:
+                        search_variants.append('Hisense-CF25YR1D-Omega')
+                    if 'CF35YR1D' in name:
+                        search_variants.append('Hisense-CF35YR1D-Omega')
                 
                 # Word-based variants
                 words = name.split()
