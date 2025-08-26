@@ -134,6 +134,55 @@ def import_products_with_photos():
                 if 'Winter, Two Stage' in name:
                     search_variants.append(name.replace('Winter, Two Stage', 'Winter-Two-Stage'))
                 
+                # Add variants for new products
+                if 'Sensira' in name:
+                    search_variants.append(name.replace('Sensira', 'Sensira'))
+                    search_variants.append(name.replace('FTXF', 'FTXF'))
+                    search_variants.append(name.replace('RXF', 'RXF'))
+                    search_variants.append(name.replace('FTX', 'FTX'))
+                    search_variants.append(name.replace('RX', 'RX'))
+                
+                if 'So Cool' in name:
+                    search_variants.append(name.replace('So Cool', 'So-Cool'))
+                    search_variants.append('GWH12APAXF-S6DBA3A')
+                
+                if 'Vital Plus' in name:
+                    search_variants.append(name.replace('Vital Plus', 'Vital-Plus'))
+                    search_variants.append('CH-S12FTXF6')
+                
+                if 'Inverter R32 WI-FI' in name:
+                    search_variants.append(name.replace('Inverter R32 WI-FI', 'Inverter-R32-WI-FI'))
+                    search_variants.append('TAC-09CHSD')
+                    search_variants.append('TAC-12CHSD')
+                
+                if 'Wind-Free' in name:
+                    search_variants.append(name.replace('Wind-Free', 'Wind-Free'))
+                    search_variants.append('AR60F09C1BWNUA')
+                
+                if 'WindFree WI-FI Mass' in name:
+                    search_variants.append(name.replace('WindFree WI-FI Mass', 'WindFree-WI-FI-Mass'))
+                    search_variants.append('AR12BXFAMWKNUA')
+                
+                if 'Neo' in name:
+                    search_variants.append(name.replace('Neo', 'Neo'))
+                    search_variants.append('Neo 09A')
+                    search_variants.append('Neo 12A')
+                
+                if 'Saros' in name:
+                    search_variants.append(name.replace('Saros', 'Saros'))
+                    search_variants.append('GWH09BBCXD-K6DNA1A')
+                    search_variants.append('GWH12BBCXD-K6DNA1A')
+                
+                if 'Skylux' in name:
+                    search_variants.append(name.replace('Skylux', 'Skylux'))
+                    search_variants.append('SK-09CDR3DI')
+                    search_variants.append('SK-12CDR3DI')
+                
+                if 'Omega' in name:
+                    search_variants.append(name.replace('Omega', 'Omega'))
+                    search_variants.append('CF25YR1D')
+                    search_variants.append('CF35YR1D')
+                
                 # Word-based variants
                 words = name.split()
                 if len(words) >= 2:
@@ -156,6 +205,14 @@ def import_products_with_photos():
                     search_variants.append('Gorenje')
                 if 'TKS' in name:
                     search_variants.append('TKS')
+                if 'Samsung' in name:
+                    search_variants.append('Samsung')
+                if 'Clair' in name:
+                    search_variants.append('Clair')
+                if 'Skylux' in name:
+                    search_variants.append('Skylux')
+                if 'Hisense' in name:
+                    search_variants.append('Hisense')
                 
                 # Remove duplicates
                 search_variants = list(set(search_variants))
