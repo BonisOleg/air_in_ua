@@ -130,6 +130,18 @@ def import_products_with_photos():
                 search_variants.append(name.replace('/', ':'))
                 search_variants.append(name.replace('&', '&'))
                 
+                # Add variants with spaces replaced by hyphens
+                search_variants.append(name.replace(' ', '-'))
+                search_variants.append(name.replace(' ', '_'))
+                
+                # Add specific product name variants
+                if 'GEO Wind-Free' in name:
+                    search_variants.append('Samsung-Wind-Free')
+                if 'GEO WindFree WI-FI Mass' in name:
+                    search_variants.append('Samsung-WindFree-WI-FI-Mass')
+                if 'So Cool R-32' in name:
+                    search_variants.append('Gree-So-Cool')
+                
                 # Add uppercase variants for specific brands
                 if 'Clair' in name:
                     search_variants.append('CLAIR')
@@ -184,10 +196,14 @@ def import_products_with_photos():
                 if 'Wind-Free' in name:
                     search_variants.append(name.replace('Wind-Free', 'Wind-Free'))
                     search_variants.append('AR60F09C1BWNUA')
+                    # Add specific Samsung variants
+                    search_variants.append('Samsung-Wind-Free-AR60F09C1BWNUA')
                 
                 if 'WindFree WI-FI Mass' in name:
                     search_variants.append(name.replace('WindFree WI-FI Mass', 'WindFree-WI-FI-Mass'))
                     search_variants.append('AR12BXFAMWKNUA')
+                    # Add specific Samsung variants
+                    search_variants.append('Samsung-WindFree-WI-FI-Mass-AR12BXFAMWKNUA')
                 
                 if 'Neo' in name:
                     search_variants.append(name.replace('Neo', 'Neo'))
