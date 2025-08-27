@@ -46,10 +46,12 @@
         <div class="image-gallery">
           <div class="thumbnail-grid">
             {% for image in product.images.all %}
+            {% if not forloop.first %}
             <img src="{{ image.image_url }}" 
                  alt="{{ image.alt_text|default:product.name }} - фото {{ forloop.counter }}" 
-                 class="thumbnail {% if forloop.first %}active-thumbnail{% endif %}"
+                 class="thumbnail"
                  onclick="changeMainImage('{{ image.image_url }}')">
+            {% endif %}
             {% endfor %}
           </div>
         </div>
@@ -171,9 +173,19 @@
         <article class="similar-product-card">
           <a href="{{ similar_product.get_absolute_url }}" class="product-link">
             <div class="product-image-container">
-              <img src="{{ similar_product.image_url|default:'/static/img/placeholder.png' }}" 
+              {% if similar_product.images.first %}
+              <img src="{{ similar_product.images.first.image_url }}" 
+                   alt="{{ similar_product.images.first.alt_text|default:similar_product.name }}"
+                   class="similar-product-image">
+              {% elif similar_product.image_url %}
+              <img src="{{ similar_product.image_url }}" 
                    alt="{{ similar_product.manufacturer.name }} {{ similar_product.name }}"
                    class="similar-product-image">
+              {% else %}
+              <img src="{% static 'img/placeholder.png' %}" 
+                   alt="{{ similar_product.manufacturer.name }} {{ similar_product.name }}"
+                   class="similar-product-image">
+              {% endif %}
             </div>
             <div class="product-info">
               <h3 class="product-brand">{{ similar_product.manufacturer.name }}</h3>
@@ -207,7 +219,7 @@
     "name": "{{ product.manufacturer.name }}"
   },
   "category": "Кондиціонери",
-  "image": "{{ product.image_url|default:'/static/img/placeholder.png' }}",
+  "image": "{% if product.images.first %}{{ product.images.first.image_url }}{% elif product.image_url %}{{ product.image_url }}{% else %}{% static 'img/placeholder.png' %}{% endif %}",
   "url": "{{ request.build_absolute_uri }}",
   "offers": {
     "@type": "Offer",
