@@ -334,6 +334,10 @@ import_products_with_photos()
 print('🎉 Товари з фото успішно імпортовано!')
 "
 
+# Additional safety: restore products using our custom command
+echo "Running additional product restoration..."
+python3 manage.py restore_products
+
 # Force rebuild timestamp
 echo "Build completed at: $(date)" > build_timestamp.txt
 echo "Products with photos deployed at: $(date)" > products_photos_deploy.txt
