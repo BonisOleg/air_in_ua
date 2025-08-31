@@ -94,187 +94,133 @@ def import_products_with_photos():
                 # Remove old photos
                 ProductImage.objects.filter(product=product).delete()
                 
-                # Create comprehensive search variants
-                search_variants = [name]
+                # Create comprehensive search variants based on actual file names
+                search_variants = []
                 
-                # Basic variants
-                if name.startswith('Кондиціонер '):
-                    search_variants.append(name.replace('Кондиціонер ', ''))
+                # Extract key parts from product name
+                product_name_clean = name.replace('Кондиціонер ', '').replace(' настінний', '')
                 
-                # End variants
-                if name.endswith(' inverter'):
-                    search_variants.append(name.replace(' inverter', ''))
-                if name.endswith(' On-Off Elite'):
-                    search_variants.append(name.replace(' On-Off Elite', ''))
-                if name.endswith(' Supreme Continental silver'):
-                    search_variants.append(name.replace(' Supreme Continental silver', ''))
-                if name.endswith(' Winter, Two Stage'):
-                    search_variants.append(name.replace(' Winter, Two Stage', ''))
-                if name.endswith(' WI-FI Ready'):
-                    search_variants.append(name.replace(' WI-FI Ready', ''))
-                if name.endswith(' Inverter R32'):
-                    search_variants.append(name.replace(' Inverter R32', ''))
+                # Brand-specific search patterns
+                if 'Kaisai' in name:
+                    if 'KEX-09KTH2I' in name:
+                        search_variants.extend(['Kaisai-KEX-09KTH2I:KEX-09KTH2O-серій-ECO', 'KEX-09KTH2I'])
+                    elif 'KEX-12KTH2I' in name:
+                        search_variants.extend(['Kaisai-KEX-12KTH2I:KEX-12KTH2O-серій-ECO', 'KEX-12KTH2I'])
+                    elif 'KGE-09GRHI' in name:
+                        search_variants.extend(['Kaisai-KGE-09GRHI:KGE-09GRHO-серій-GEO', 'KGE-09GRHI'])
+                    elif 'KGE-12GRHI' in name:
+                        search_variants.extend(['Kaisai-KGE-12GRHI:KGE-12GRHO-серій-GEO', 'KGE-12GRHI'])
+                    search_variants.extend(['Kaisai', 'KEX', 'KGE'])
                 
-                # Character replacements
-                search_variants.append(name.replace('/', ':'))
-                search_variants.append(name.replace('&', '&'))
+                elif 'Gree' in name:
+                    if 'GWH07AWAXA' in name:
+                        search_variants.extend(['Gree-Cosmo-R-32-GWH07AWAXA-K6DNA1B:I', 'GWH07AWAXA'])
+                    elif 'GWH09AWCXB' in name:
+                        search_variants.extend(['Gree-Cosmo-R-32-GWH09AWCXB-K6DNA1A:I', 'GWH09AWCXB'])
+                    elif 'GWH12AWCXB' in name:
+                        search_variants.extend(['Gree-Cosmo-R-32-GWH12AWCXB-K6DNA1A:I', 'GWH12AWCXB'])
+                    search_variants.extend(['Gree', 'Cosmo', 'GWH'])
                 
-                # Add variants with different separators
-                search_variants.append(name.replace(' ', '-'))
-                search_variants.append(name.replace(' ', '_'))
+                elif 'Olmo' in name:
+                    if 'OSH-09HH' in name:
+                        search_variants.extend(['Olmo-OSH-09FWH-Серія-Premion-HEAT-PUMP', 'OSH-09HH', 'OSH-09FWH'])
+                    elif 'OSH-12HH' in name:
+                        search_variants.extend(['Olmo-OSH-12FWH-Серія-Premion-HEAT-PUMP', 'OSH-12HH', 'OSH-12FWH'])
+                    search_variants.extend(['Olmo', 'OSH'])
                 
-                # Add variants with different separators for specific characters
-                search_variants.append(name.replace(':', '-'))
-                search_variants.append(name.replace(':', ':'))
-                search_variants.append(name.replace('/', '-'))
-                search_variants.append(name.replace('/', ':'))
-                search_variants.append(name.replace('&', '&'))
+                elif 'TCL' in name:
+                    if 'TAC-09CHSD' in name and 'FAI' in name:
+                        search_variants.extend(['TCL-TAC-09CHSD:FAI-Inverter-R32 WI-FI', 'TAC-09CHSD:FAI'])
+                    elif 'TAC-12CHSD' in name and 'FAI' in name:
+                        search_variants.extend(['TCL-TAC-12CHSD:FAI-Inverter-R32-WI-FI', 'TAC-12CHSD:FAI'])
+                    search_variants.extend(['TCL', 'TAC-09CHSD', 'TAC-12CHSD'])
                 
-                # Add variants with spaces replaced by hyphens
-                search_variants.append(name.replace(' ', '-'))
-                search_variants.append(name.replace(' ', '_'))
+                elif 'AUX' in name:
+                    if 'ASW-AS-H09JAR3DI' in name and 'Black' in name:
+                        search_variants.extend(['AUX-ASW:AS-H09JAR3DI-J-Smart-Inverter-Black', 'ASW:AS-H09JAR3DI-J-Smart-Inverter-Black'])
+                    elif 'ASW-AS-H09JAR3DI' in name:
+                        search_variants.extend(['AUX-ASW:AS-H09JAR3DI-Серія-J-Smart-Inverter', 'ASW:AS-H09JAR3DI-Серія-J-Smart-Inverter'])
+                    elif 'ASW-AS-H12JAR3DI' in name:
+                        search_variants.extend(['AUX-ASW:AS-H12JAR3DI-Серія-J-Smart-Inverter', 'ASW:AS-H12JAR3DI-Серія-J-Smart-Inverter'])
+                    search_variants.extend(['AUX', 'ASW:AS-H09JAR3DI', 'ASW:AS-H12JAR3DI'])
                 
-                # Add specific product name variants
-                if 'GEO Wind-Free' in name:
-                    search_variants.append('Samsung-Wind-Free')
-                if 'GEO WindFree WI-FI Mass' in name:
-                    search_variants.append('Samsung-WindFree-WI-FI-Mass')
-                if 'So Cool R-32' in name:
-                    search_variants.append('Gree-So-Cool')
+                elif 'Osaka' in name:
+                    if 'STVP-09HH' in name:
+                        search_variants.extend(['OSAKA-STVP-09HH-POWER-PRO-DC-INVERTER', 'STVP-09HH'])
+                    elif 'STVP-12HH' in name:
+                        search_variants.extend(['OSAKA-STVP-12HH-POWER-PRO-DC-INVERTER', 'STVP-12HH'])
+                    elif 'STV-09HH' in name:
+                        search_variants.extend(['OSAKA-STV-09HH-BASIC-INVERTER', 'STV-09HH'])
+                    elif 'STV-12HH' in name:
+                        search_variants.extend(['OSAKA-STV-12HH-BASIC-INVERTER', 'STV-12HH'])
+                    search_variants.extend(['OSAKA', 'STVP', 'STV'])
                 
-                # Add uppercase variants for specific brands
-                if 'Clair' in name:
-                    search_variants.append('CLAIR')
-                if 'Gree' in name:
-                    search_variants.append('GREE')
-                if 'Samsung' in name:
-                    search_variants.append('Samsung')
-                if 'Daikin' in name:
-                    search_variants.append('Daikin')
-                if 'Hisense' in name:
-                    search_variants.append('Hisense')
-                if 'Skylux' in name:
-                    search_variants.append('Skylux')
+                elif 'LG' in name:
+                    if 'S09EQ' in name:
+                        search_variants.extend(['LG-S09EQ', 'S09EQ'])
+                    elif 'S12EQ' in name:
+                        search_variants.extend(['LG-S12EQ', 'S12EQ'])
+                    search_variants.extend(['LG', 'S09EQ', 'S12EQ'])
                 
-                # Add variants with common abbreviations
-                if 'Supreme Continental silver' in name:
-                    search_variants.append(name.replace('Supreme Continental silver', 'Supreme-Continental-silver'))
-                    search_variants.append(name.replace('Supreme Continental silver', 'Supreme-Continental-silver'))
-                
-                if 'On-Off Elite' in name:
-                    search_variants.append(name.replace('On-Off Elite', 'On-Off-Elite'))
-                
-                if 'Winter, Two Stage' in name:
-                    search_variants.append(name.replace('Winter, Two Stage', 'Winter-Two-Stage'))
-                
-                # Add variants for new products
-                if 'Sensira' in name:
-                    search_variants.append(name.replace('Sensira', 'Sensira'))
-                    search_variants.append(name.replace('FTXF', 'FTXF'))
-                    search_variants.append(name.replace('RXF', 'RXF'))
-                    search_variants.append(name.replace('FTX', 'FTX'))
-                    search_variants.append(name.replace('RX', 'RX'))
-                    # Add specific model variants
-                    if 'FTXF35' in name:
-                        search_variants.append('FTXA35:RXA35A-Stylish')
-                    if 'FTXF25' in name:
-                        search_variants.append('FTXA25:RXA25A-Stylish')
-                
-                if 'So Cool' in name:
-                    search_variants.append(name.replace('So Cool', 'So-Cool'))
-                    search_variants.append('GWH12APAXF-S6DBA3A')
-                
-                if 'Vital Plus' in name:
-                    search_variants.append(name.replace('Vital Plus', 'Vital-Plus'))
-                    search_variants.append('CH-S12FTXF6')
-                
-                if 'Inverter R32 WI-FI' in name:
-                    search_variants.append(name.replace('Inverter R32 WI-FI', 'Inverter-R32-WI-FI'))
-                    search_variants.append('TAC-09CHSD')
-                    search_variants.append('TAC-12CHSD')
-                
-                if 'Wind-Free' in name:
-                    search_variants.append(name.replace('Wind-Free', 'Wind-Free'))
-                    search_variants.append('AR60F09C1BWNUA')
-                    # Add specific Samsung variants
-                    search_variants.append('Samsung-Wind-Free-AR60F09C1BWNUA')
-                
-                if 'WindFree WI-FI Mass' in name:
-                    search_variants.append(name.replace('WindFree WI-FI Mass', 'WindFree-WI-FI-Mass'))
-                    search_variants.append('AR12BXFAMWKNUA')
-                    # Add specific Samsung variants
-                    search_variants.append('Samsung-WindFree-WI-FI-Mass-AR12BXFAMWKNUA')
-                
-                if 'Neo' in name:
-                    search_variants.append(name.replace('Neo', 'Neo'))
-                    search_variants.append('Neo 09A')
-                    search_variants.append('Neo 12A')
-                    # Add specific Clair variants
-                    if '09A' in name:
-                        search_variants.append('CLAIR NEO-09A-R32')
-                    if '12A' in name:
-                        search_variants.append('CLAIR NEO-12A-R32')
-                
-                if 'Saros' in name:
-                    search_variants.append(name.replace('Saros', 'Saros'))
-                    search_variants.append('GWH09BBCXD-K6DNA1A')
-                    search_variants.append('GWH12BBCXD-K6DNA1A')
-                    # Add specific Gree Saros variants
-                    if 'GWH09BBCXD' in name:
-                        search_variants.append('Gree-Saros-GWH09BBCXD-K6DNA1A:I')
-                    if 'GWH12BBCXD' in name:
-                        search_variants.append('Gree-Saros-GWH12BBCXD-K6DNA1A:I')
-                
-                if 'Skylux' in name:
-                    search_variants.append(name.replace('Skylux', 'Skylux'))
-                    search_variants.append('SK-09CDR3DI')
-                    search_variants.append('SK-12CDR3DI')
-                    # Add specific Skylux variants
-                    if 'SK-09CDR3DI' in name:
-                        search_variants.append('Skylux-SK-09CDR3DI')
-                    if 'SK-12CDR3DI' in name:
-                        search_variants.append('Skylux-SK-12CDR3DI')
-                
-                if 'Omega' in name:
-                    search_variants.append(name.replace('Omega', 'Omega'))
-                    search_variants.append('CF25YR1D')
-                    search_variants.append('CF35YR1D')
-                    # Add specific Hisense variants
+                elif 'Hisense' in name:
                     if 'CF25YR1D' in name:
-                        search_variants.append('Hisense-CF25YR1D-Omega')
-                    if 'CF35YR1D' in name:
-                        search_variants.append('Hisense-CF35YR1D-Omega')
+                        search_variants.extend(['Hisense-CF25YR1D-Omega', 'CF25YR1D'])
+                    elif 'CF35YR1D' in name:
+                        search_variants.extend(['Hisense-CF35YR1D-Omega', 'CF35YR1D'])
+                    search_variants.extend(['Hisense', 'CF25YR1D', 'CF35YR1D'])
                 
-                # Word-based variants
-                words = name.split()
-                if len(words) >= 2:
-                    search_variants.append(' '.join(words[:2]))
-                    if len(words) >= 3:
-                        search_variants.append(' '.join(words[:3]))
+                elif 'Daikin' in name:
+                    if 'FTXA25' in name:
+                        search_variants.extend(['Daikin-FTXA25:RXA25A-Stylish', 'FTXA25:RXA25A-Stylish'])
+                    elif 'FTXA35' in name:
+                        search_variants.extend(['Daikin-FTXA35:RXA35A-Stylish', 'FTXA35:RXA35A-Stylish'])
+                    search_variants.extend(['Daikin', 'FTXA25', 'FTXA35'])
                 
-                # Add manufacturer-specific variants
-                if 'TCL' in name:
-                    search_variants.append('TCL')
-                if 'Cooper&Hunter' in name:
-                    search_variants.append('Cooper&Hunter')
-                if 'GREE' in name:
-                    search_variants.append('GREE')
-                if 'Hoapp' in name:
-                    search_variants.append('Hoapp')
-                if 'Daikin' in name:
-                    search_variants.append('Daikin')
-                if 'Gorenje' in name:
-                    search_variants.append('Gorenje')
-                if 'TKS' in name:
-                    search_variants.append('TKS')
-                if 'Samsung' in name:
-                    search_variants.append('Samsung')
-                if 'Clair' in name:
-                    search_variants.append('Clair')
-                if 'Skylux' in name:
-                    search_variants.append('Skylux')
-                if 'Hisense' in name:
-                    search_variants.append('Hisense')
+                # Legacy products search patterns
+                elif 'GEO Wind-Free' in name:
+                    search_variants.extend(['Samsung-Wind-Free-AR60F09C1BWNUA', 'Wind-Free', 'AR60F09C1BWNUA'])
+                elif 'GEO WindFree WI-FI Mass' in name:
+                    search_variants.extend(['Samsung-WindFree-WI-FI-Mass-AR12BXFAMWKNUA', 'WindFree-WI-FI-Mass', 'AR12BXFAMWKNUA'])
+                elif 'So Cool R-32' in name:
+                    search_variants.extend(['Gree-So-Cool', 'So-Cool', 'GWH12APAXF-S6DBA3A'])
+                elif 'Vital Plus' in name:
+                    search_variants.extend(['Gree-Vital-Plus', 'Vital-Plus', 'CH-S12FTXF6'])
+                elif 'Neo' in name:
+                    if '09A' in name:
+                        search_variants.extend(['CLAIR NEO-09A-R32', 'NEO-09A-R32'])
+                    elif '12A' in name:
+                        search_variants.extend(['CLAIR NEO-12A-R32', 'NEO-12A-R32'])
+                    search_variants.extend(['CLAIR', 'NEO'])
+                elif 'Saros' in name:
+                    if 'GWH09BBCXD' in name:
+                        search_variants.extend(['Gree-Saros-GWH09BBCXD-K6DNA1A:I', 'Saros-GWH09BBCXD'])
+                    elif 'GWH12BBCXD' in name:
+                        search_variants.extend(['Gree-Saros-GWH12BBCXD-K6DNA1A:I', 'Saros-GWH12BBCXD'])
+                    search_variants.extend(['Gree-Saros', 'Saros'])
+                elif 'Skylux' in name:
+                    if 'SK-09CDR3DI' in name:
+                        search_variants.extend(['Skylux-SK-09CDR3DI', 'SK-09CDR3DI'])
+                    elif 'SK-12CDR3DI' in name:
+                        search_variants.extend(['Skylux-SK-12CDR3DI', 'SK-12CDR3DI'])
+                    search_variants.extend(['Skylux', 'SK-09CDR3DI', 'SK-12CDR3DI'])
+                
+                # Generic fallback patterns
+                search_variants.extend([
+                    name,
+                    product_name_clean,
+                    name.replace('Кондиціонер ', ''),
+                    name.replace(' настінний', ''),
+                    name.replace(' ', '-'),
+                    name.replace(' ', '_'),
+                    name.replace('/', ':'),
+                    name.replace('&', '&')
+                ])
+                
+                # Add manufacturer name
+                if manufacturer_name:
+                    search_variants.append(manufacturer_name)
+                    search_variants.append(manufacturer_name.upper())
+                    search_variants.append(manufacturer_name.lower())
                 
                 # Remove duplicates
                 search_variants = list(set(search_variants))
